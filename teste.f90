@@ -3,7 +3,7 @@ module prandtll
     double precision , dimension(:) , allocatable :: vPrt , T , u , e
     double precision , dimension(:,:) , allocatable :: Tdns
     integer , dimension(3) :: p
-    double precision:: Ret , Re, Pr , Prt , vc , dy , incre , um
+    double precision:: Ret , Re, Pr , Prt , vc , dy , incre , um, L2
     integer:: N
     character(len=:), allocatable :: dirname
 end module
@@ -22,8 +22,8 @@ program teste
 
     ! Parameters
 
-    Ret = 395.d0                                                                       ! 150.d0  !180.d0   !395.d0   ! 640.d0    !1020.d0
-    Pr = 10.d0                                                                         !0.71d0   !10.d0
+    Ret = 640.d0                                                                       ! 150.d0  !180.d0   !395.d0   ! 640.d0    !1020.d0
+    Pr = 0.71d0                                                                        !0.71d0   !10.d0
 
     ! Controles numéricos
 
@@ -42,7 +42,13 @@ program teste
     ! Adequação aos parâmetros padrão
     call AdequaParametro()
     ! Adequação numérica final (usuário)
-    vc = 25.677d0
+
+
+
+    ! ...
+
+
+
     ! Alocando-se os alocáveis
     allocate(e(N))
     allocate(u(N))
@@ -58,6 +64,14 @@ program teste
     deallocate(vPrt)
     deallocate(e)
     deallocate(u)
+
+
+    ! Amostrando resultados:
+
+    print*, "------------------------------------------------"
+    print*, "Ret = " , Ret
+    print*, "Pr = " , Pr
+    print*, "L2 = " , L2
 
 end program
 
@@ -86,8 +100,7 @@ subroutine Program()
     call DNSinput()
     ! Tirando norma L2
     call L2norm()
-
-
+    return
 
     end subroutine Program
 
@@ -349,23 +362,26 @@ subroutine SOUT(string)
 
 
 
+! Tira a norma L2 da temperatura.
 subroutine L2norm()
 
     use prandtll
     implicit none
-    k1 = 0
-    k2 = 0
+    double precision :: ly , k1
+    integer :: i , ii , iii
+    k1 = 0.d0
+    iii = 0
     do i = 2 , N
-        do ii = 1 , iii
-          if((Ret - s(1 , ii)) < e(i) .and. (Ret - s(1 , ii)) > e(i-1) )then
-               ly = (T(i) - T(i-1))*((Ret - s(1,ii)) - e(i-1))/(e(i) - e(i-1))
+        do ii = 1 , p(1)
+          if((Ret - Tdns(1 , ii)) < e(i) .and. (Ret - Tdns(1 , ii)) > e(i-1) )then
+               ly = (T(i) - T(i-1))*((Ret - Tdns(1,ii)) - e(i-1))/(e(i) - e(i-1))
                ly = T(i-1) + ly
-               k1 = k1 + (ly - s(2,ii))**2
-               k2 = k2 + 1
+               k1 = k1 + (ly - Tdns(2,ii))**2
+               iii = iii + 1
           end if
         end do
     end do
-    k1 = sqrt(k1 / (k2 - 1))
+    L2 = sqrt(k1 / (iii))
     return
 
     end subroutine L2norm

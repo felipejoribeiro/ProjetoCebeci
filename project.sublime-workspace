@@ -4,12 +4,40 @@
 		"selected_items":
 		[
 			[
-				"G",
-				"GetScale"
+				"L2",
+				"L2norm"
+			],
+			[
+				"DNS",
+				"DNSinput"
+			],
+			[
+				"Prandtl",
+				"Prandtlvector"
+			],
+			[
+				"prandtl",
+				"prandtll"
 			],
 			[
 				"p",
-				"player"
+				"p"
+			],
+			[
+				"adeq",
+				"adequa"
+			],
+			[
+				"N",
+				"N"
+			],
+			[
+				"incre",
+				"inccrelog"
+			],
+			[
+				"G",
+				"GetScale"
 			],
 			[
 				"Get",
@@ -44,15 +72,6 @@
 	"buffers":
 	[
 		{
-			"file": ".gitignore",
-			"settings":
-			{
-				"buffer_size": 80,
-				"encoding": "UTF-8",
-				"line_ending": "Unix"
-			}
-		},
-		{
 			"file": "README",
 			"settings":
 			{
@@ -65,13 +84,31 @@
 			"file": "grafics.py",
 			"settings":
 			{
-				"buffer_size": 252,
+				"buffer_size": 1719,
+				"encoding": "UTF-8",
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "teste.f90",
+			"settings":
+			{
+				"buffer_size": 8582,
+				"encoding": "UTF-8",
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "referencias/pós moderno/prandtlfinal.f90",
+			"settings":
+			{
+				"buffer_size": 17585,
 				"encoding": "UTF-8",
 				"line_ending": "Unix"
 			}
 		}
 	],
-	"build_system": "Packages/Python/Python.sublime-build",
+	"build_system": "Packages/Fortran/build-systems/GFortran.sublime-build",
 	"build_system_choices":
 	[
 		[
@@ -405,6 +442,8 @@
 	],
 	"file_history":
 	[
+		"/home/felipe/Documents/ProjetoCebeci/.gitignore",
+		"/home/felipe/Documents/ProjetoCebeci/oloco.py",
 		"/home/felipe/.config/sublime-text-3/Packages/Python/Python.sublime-build",
 		"/home/felipe/Documents/Prandtl_et_Cebeci /Metamodelagem/sublime/teste.f90",
 		"/home/felipe/Documents/Prandtl_et_Cebeci /Metamodelagem/sublime/README",
@@ -454,7 +493,7 @@
 	],
 	"find":
 	{
-		"height": 22.0
+		"height": 24.0
 	},
 	"find_in_files":
 	{
@@ -468,6 +507,7 @@
 		"case_sensitive": false,
 		"find_history":
 		[
+			"inport",
 			"pr",
 			"player",
 			"player1",
@@ -496,34 +536,6 @@
 			[
 				{
 					"buffer": 0,
-					"file": ".gitignore",
-					"semi_transient": false,
-					"settings":
-					{
-						"buffer_size": 80,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								77,
-								77
-							]
-						],
-						"settings":
-						{
-							"syntax": "Packages/Theme - SoDaReloaded/settings/langs/Git.tmLanguage"
-						},
-						"translation.x": 0.0,
-						"translation.y": 0.0,
-						"zoom_level": 1.0
-					},
-					"stack_index": 2,
-					"type": "text"
-				},
-				{
-					"buffer": 1,
 					"file": "README",
 					"semi_transient": false,
 					"settings":
@@ -535,8 +547,8 @@
 						"selection":
 						[
 							[
-								3863,
-								3863
+								2346,
+								2346
 							]
 						],
 						"settings":
@@ -547,24 +559,24 @@
 						"translation.y": 0.0,
 						"zoom_level": 1.0
 					},
-					"stack_index": 1,
+					"stack_index": 3,
 					"type": "text"
 				},
 				{
-					"buffer": 2,
+					"buffer": 1,
 					"file": "grafics.py",
 					"semi_transient": false,
 					"settings":
 					{
-						"buffer_size": 252,
+						"buffer_size": 1719,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								58,
-								58
+								1648,
+								1648
 							]
 						],
 						"settings":
@@ -575,7 +587,67 @@
 						"translation.y": 0.0,
 						"zoom_level": 1.0
 					},
+					"stack_index": 1,
+					"type": "text"
+				},
+				{
+					"buffer": 2,
+					"file": "teste.f90",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 8582,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								7813,
+								7813
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/Fortran/grammars/FortranModern.sublime-syntax",
+							"tab_size": 4,
+							"translate_tabs_to_spaces": true
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
 					"stack_index": 0,
+					"type": "text"
+				},
+				{
+					"buffer": 3,
+					"file": "referencias/pós moderno/prandtlfinal.f90",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 17585,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								10554,
+								10554
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/Fortran/grammars/FortranModern.sublime-syntax",
+							"tab_size": 2,
+							"translate_tabs_to_spaces": true
+						},
+						"translation.x": 0.0,
+						"translation.y": 7746.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 2,
 					"type": "text"
 				}
 			]
@@ -583,7 +655,7 @@
 	],
 	"incremental_find":
 	{
-		"height": 22.0
+		"height": 24.0
 	},
 	"input":
 	{
@@ -628,7 +700,7 @@
 	"project": "project.sublime-project",
 	"replace":
 	{
-		"height": 40.0
+		"height": 44.0
 	},
 	"save_all_on_build": true,
 	"select_file":
