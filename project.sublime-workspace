@@ -43,6 +43,33 @@
 	},
 	"buffers":
 	[
+		{
+			"file": ".gitignore",
+			"settings":
+			{
+				"buffer_size": 80,
+				"encoding": "UTF-8",
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "README",
+			"settings":
+			{
+				"buffer_size": 4566,
+				"encoding": "UTF-8",
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "grafics.py",
+			"settings":
+			{
+				"buffer_size": 252,
+				"encoding": "UTF-8",
+				"line_ending": "Unix"
+			}
+		}
 	],
 	"build_system": "Packages/Python/Python.sublime-build",
 	"build_system_choices":
@@ -332,11 +359,19 @@
 		"selected_items":
 		[
 			[
-				"packages",
+				"prv",
 				"PackageResourceViewer: Open Resource"
 			],
 			[
 				"package",
+				"View Package File"
+			],
+			[
+				"package control install",
+				"Package Control: Install Package"
+			],
+			[
+				"packages",
 				"PackageResourceViewer: Open Resource"
 			],
 			[
@@ -364,8 +399,13 @@
 		"side_bar_visible": false,
 		"status_bar_visible": false
 	},
+	"expanded_folders":
+	[
+		"/home/felipe/Documents/ProjetoCebeci"
+	],
 	"file_history":
 	[
+		"/home/felipe/.config/sublime-text-3/Packages/Python/Python.sublime-build",
 		"/home/felipe/Documents/Prandtl_et_Cebeci /Metamodelagem/sublime/teste.f90",
 		"/home/felipe/Documents/Prandtl_et_Cebeci /Metamodelagem/sublime/README",
 		"/C/Users/felip/AppData/Roaming/Sublime Text 3/Packages/User/fortrandif.sublime-build",
@@ -451,8 +491,93 @@
 	"groups":
 	[
 		{
+			"selected": 2,
 			"sheets":
 			[
+				{
+					"buffer": 0,
+					"file": ".gitignore",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 80,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								77,
+								77
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/Theme - SoDaReloaded/settings/langs/Git.tmLanguage"
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 2,
+					"type": "text"
+				},
+				{
+					"buffer": 1,
+					"file": "README",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 4566,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								3863,
+								3863
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/Text/Plain text.tmLanguage"
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 1,
+					"type": "text"
+				},
+				{
+					"buffer": 2,
+					"file": "grafics.py",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 252,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								58,
+								58
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/Python/Python.sublime-syntax"
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 0,
+					"type": "text"
+				}
 			]
 		}
 	],
