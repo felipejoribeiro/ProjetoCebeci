@@ -1,10 +1,11 @@
 !variaveis globais definidas (para que as funções que as tenham)
 module prandtll
     double precision , dimension(:) , allocatable :: vPrt , T , u , e
+    double precision , dimension(:,:) , allocatable :: Tdns
     integer , dimension(3) :: p
     double precision:: Ret , Re, Pr , Prt , vc , dy , incre , um
-    integer:: N , increlog
-    character*200 :: dirname
+    integer:: N
+    character(len=:), allocatable :: dirname
 end module
 
 
@@ -28,36 +29,33 @@ program teste
 
     N = 100                                                                            ! Número de células
     incre = 1.d-9                                                                      ! incremento para convergência do método implícito
-    increlog = int(- log10(incre))                                                     ! Número de casas após a vírgula.
     R = 1.d0                                                                           ! Raio do canal
     dy = (R/(dble(N) - 0.5d0)) * Ret/R;                                                ! i_1 = dy/2 ... i_n = R
 
     ! Méta modelos a partir da referência
 
     prt = ((1.3d0 * 10.d0 ** (-11.d0) ) * Ret**3 - &
-    (7.1d0 * 10.d0 **(-8.d0)) * Ret**2.d0 + 0.0001d0 * Ret + 0.87d0)* (pr/0.71)**(0.000006)
+    (7.1d0 * 10.d0 **(-8.d0)) * Ret**2.d0 + 0.0001d0 * Ret + 0.87d0)* (pr/0.71)**(-0.04d0)
 
     vc = (Ret**(log(Ret) * 0.045d0) * exp(5.3) ) / (Ret ** 0.61d0)
 
     ! Adequação aos parâmetros padrão
-
     call AdequaParametro()
-
     ! Adequação numérica final (usuário)
-
-    !!...
-
+    vc = 25.677d0
     ! Alocando-se os alocáveis
-
     allocate(e(N))
     allocate(u(N))
-
+    allocate(vPrt(N))
+    allocate(T(N))
+    allocate (Tdns(2 , p(1)))
+    dirname = '                                                 '
     ! Desenvolvimento do método
-
     call Program()
-
     ! Desalocando-se os desalocáveis
-
+    deallocate(Tdns)
+    deallocate(T)
+    deallocate(vPrt)
     deallocate(e)
     deallocate(u)
 
@@ -66,23 +64,28 @@ end program
 
 
 
+
+
 ! Desenvolvimento computacional
 subroutine Program()
 
     use prandtll
-
     ! Identificando diretório atual
     Call getcwd( dirname )
+    dirname = trim(dirname)
     ! Criação do vetor espaco discretizado
     call SpaceVector()
     ! Simulação do vetor velocidade e valor médio
     call VelocitySimu()
     call VelocityMedia()
+    ! Setagem do vetor Prandtl turbulento
+    call Prandtlvector()
     ! Simulação do vetor temperatura
     call TemperatureSimu()
-
-
-
+    ! Importando o DNS
+    call DNSinput()
+    ! Tirando norma L2
+    call L2norm()
 
 
 
@@ -214,13 +217,157 @@ function L(position)
     end function L
 
 
+
+
+! Setagem do vetor Prandtl turbulento
+subroutine Prandtlvector()
+
+    use prandtll
+    implicit none
+    integer :: i
+    do i= 1 , N
+        vPrt(i) = prt
+    end do
+    return
+
+    end subroutine Prandtlvector
+
+
+
+
 ! Desenvolve o vetor temperatura
 subroutine TemperatureSimu()
 
     use prandtll
     implicit none
+    integer :: i
+    double precision :: k2 , f
+    do i = 1 , N
+        T(i) = 0.d0
+    end do
+    k2 = 10.d0
+    do while ( abs( T(1) - k2  ) > incre )
+    k2 = T(1)
+    T(1) = T(2) + ( dy**2.d0 *(u(1)/um ))/f(e(1) + dy/2.d0 , 1)
+        do i = 2 , N - 1
+            T(i) =( (dy**2.d0)*(u(i)/um) &
+            + T(i-1)*f(e(i) - dy/2.d0 , i - 1) + T(i+1)*f(e(i) + dy/2.0d0, i))/(f(e(i)-dy/2.d0,i-1) &
+            + f(e(i) + dy/2.d0, i) )
+        end do
+        print*, t(1)
+    end do
     return
 
     end subroutine TemperatureSimu
 
-! Do geito
+
+
+
+! f(Y)
+function f(s, i)
+
+    use prandtll
+    implicit none
+    double precision, intent(in) :: s
+    integer, intent(in) :: i
+    double precision :: f , ff , L
+    f = ( Ret/Pr - ((((L(s))**2 )*Ret**3)/vPrt(i) ) * ff(s)  )
+    return
+
+end function f
+
+
+
+
+! importanto o DNS
+subroutine DNSinput()
+
+    use prandtll
+    implicit none
+    integer :: i
+    double precision :: ly
+    character(len=:), allocatable :: m
+    ! Abertura de arquivo
+    if (Ret == 1020.d0)then
+        m = trim(dirname) // '/DNS/DNS_RE_1000.txt'
+        open(unit=10,file= m)
+    elseif(Ret == 150.d0)then
+        m = trim(dirname) // '/DNS/DNS_RE_150.txt'
+        open(unit=10,file=m)
+    elseif(Ret == 640.d0)then
+        m = trim(dirname) // '/DNS/DNS_RE_640.txt'
+        open(unit=10,file=m)
+    elseif(Ret == 395.d0)then
+        m = dirname // '/DNS/DNS_RE_395_10.txt'
+        open(unit=10,file=m)
+    elseif(Ret == 180.d0)then
+        m = trim(dirname) // '/DNS/DNS_RE_180.txt'
+        open(unit=10,file=m)
+    end if
+    ! Leitura
+    if(Ret == 180.d0)then
+        Do i = 1 ,  p(1)
+            read(10,*) ly , Tdns(1, i), Tdns(2, i)
+        End Do
+    else
+        Do i = 1 ,  p(1)
+            read(10,*) ly , Tdns(1, i), Tdns(2, i)
+        End Do
+    end if
+    close (10)
+    return
+
+    end subroutine DNSinput
+
+
+
+
+! Tira espaços do meio de string
+subroutine SOUT(string)
+
+    character(len=*) :: string
+    integer :: stringLen
+    integer :: last, actual
+    stringLen = len (string)
+    last = 1
+    actual = 1
+    do while (actual < stringLen)
+        if (string(last:last) == ' ') then
+            actual = actual + 1
+            string(last:last) = string(actual:actual)
+            string(actual:actual) = ' '
+        else
+            last = last + 1
+            if (actual < last) &
+                actual = last
+        endif
+    end do
+    return
+
+    end subroutine SOUT
+
+
+
+
+subroutine L2norm()
+
+    use prandtll
+    implicit none
+    k1 = 0
+    k2 = 0
+    do i = 2 , N
+        do ii = 1 , iii
+          if((Ret - s(1 , ii)) < e(i) .and. (Ret - s(1 , ii)) > e(i-1) )then
+               ly = (T(i) - T(i-1))*((Ret - s(1,ii)) - e(i-1))/(e(i) - e(i-1))
+               ly = T(i-1) + ly
+               k1 = k1 + (ly - s(2,ii))**2
+               k2 = k2 + 1
+          end if
+        end do
+    end do
+    k1 = sqrt(k1 / (k2 - 1))
+    return
+
+    end subroutine L2norm
+
+
