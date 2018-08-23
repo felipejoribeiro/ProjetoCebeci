@@ -4,8 +4,8 @@ module prandtll
     double precision , dimension(:,:) , allocatable :: Tdns
     integer , dimension(3) :: p
     double precision:: Ret , Re, Pr , Prt , vc , dy , incre , um, L2 , L1 , Li
-    integer:: N
-    character(len=:), allocatable :: dirname
+    integer:: N , Parameters
+    character*100:: dirname
 end module
 
 
@@ -20,60 +20,77 @@ program teste
 
     double precision :: R
 
-    ! Parameters
+    ! Controle dos parametros
 
-    Ret = 1020.d0                                                                      ! 150.d0  !180.d0   !395.d0   ! 640.d0    !1020.d0
-    Pr = 0.71d0                                                                        !0.71d0   !10.d0
+    do Parameters = 1 , 12
+        !
+        !   1 - Ret = 150  , Pr = 0.025
+        !   2 - Ret = 150  , Pr = 0.71
+        !   3 - Ret = 395  , Pr = 0.025
+        !   4 - Ret = 395  , Pr = 0.71
+        !   5 - Ret = 395  , Pr = 1
+        !   6 - Ret = 395  , Pr = 2
+        !   7 - Ret = 395  , Pr = 5
+        !   8 - Ret = 395  , Pr = 7
+        !   9 - Ret = 395  , Pr = 10
+        !   10- Ret = 640  , Pr = 0.025
+        !   11- Ret = 640  , Pr = 0.71
+        !   12- Ret = 1020 , Pr = 0.71
+        !
+        call DeterminaParametros()
 
-    ! Controles numéricos
+        ! Controles numéricos
 
-    N = 100                                                                            ! Número de células
-    incre = 1.d-9                                                                      ! incremento para convergência do método implícito
-    R = 1.d0                                                                           ! Raio do canal
-    dy = (R/(dble(N) - 0.5d0)) * Ret/R;                                                ! i_1 = dy/2 ... i_n = R
+        N = 400                                                                            ! Número de células
+        incre = 1.d-9                                                                      ! incremento para convergência do método implícito
+        R = 1.d0                                                                           ! Raio do canal
+        dy = (R/(dble(N) - 0.5d0)) * Ret/R;                                                ! i_1 = dy/2 ... i_n = R
 
-    ! Méta modelos a partir da referência
+        ! Méta modelos a partir da referência
 
-    prt = ((1.3d0 * 10.d0 ** (-11.d0) ) * Ret**3 - &
-    (7.1d0 * 10.d0 **(-8.d0)) * Ret**2.d0 + 0.0001d0 * Ret + 0.87d0)* (pr/0.71)**(-0.04d0)
+        prt = ((1.3d0 * 10.d0 ** (-11.d0) ) * Ret**3 - &
+        (7.1d0 * 10.d0 **(-8.d0)) * Ret**2.d0 + 0.0001d0 * Ret + 0.87d0)* (pr/0.71)**(-0.04d0)
 
-    vc = (Ret**(log(Ret) * 0.045d0) * exp(5.3) ) / (Ret ** 0.61d0)
+        vc = (Ret**(log(Ret) * 0.045d0) * exp(5.3) ) / (Ret ** 0.61d0)
 
-    ! Adequação aos parâmetros padrão
-    call AdequaParametro()
-    ! Adequação numérica final (usuário)
+        ! Adequação aos parâmetros padrão
+        call AdequaParametro()
+        ! Adequação numérica final (usuário)
 
+        ! result 1 = com os meta modelos
+        ! eesult 2 = sem os meta modelos
 
-
-    ! ...
-
-
-
-    ! Alocando-se os alocáveis
-    allocate(e(N))
-    allocate(u(N))
-    allocate(vPrt(N))
-    allocate(T(N))
-    allocate (Tdns(2 , p(1)))
-    dirname = '                                                 '
-    ! Desenvolvimento do método
-    call Program()
-    ! Desalocando-se os desalocáveis
-    deallocate(Tdns)
-    deallocate(T)
-    deallocate(vPrt)
-    deallocate(e)
-    deallocate(u)
+        prt = 0.7
+        vc = 26
 
 
-    ! Amostrando resultados:
 
-    print*, "------------------------------------------------"
-    print*, "Ret = " , Ret
-    print*, "Pr = " , Pr
-    print*, "L2 = " , L2
-    print*, "L1 = " , L1
-    print*, "Li = " , Li
+        ! Alocando-se os alocáveis
+        allocate(e(N))
+        allocate(u(N))
+        allocate(vPrt(N))
+        allocate(T(N))
+        allocate (Tdns(2 , p(1)))
+        ! Desenvolvimento do método
+        call Program()
+        ! Desalocando-se os desalocáveis
+        deallocate(Tdns)
+        deallocate(T)
+        deallocate(vPrt)
+        deallocate(e)
+        deallocate(u)
+
+
+        ! Amostrando resultados:
+
+        print*, "------------------------------------------------"
+        print*, "Ret = " , Ret
+        print*, "Pr = " , Pr
+        print*, "L2 = " , L2
+        print*, "L1 = " , L1
+        print*, "Li = " , Li
+
+        end do
 
 end program
 
@@ -88,7 +105,6 @@ subroutine Program()
     use prandtll
     ! Identificando diretório atual
     Call getcwd( dirname )
-    dirname = trim(dirname)
     ! Criação do vetor espaco discretizado
     call SpaceVector()
     ! Simulação do vetor velocidade e valor médio
@@ -106,6 +122,8 @@ subroutine Program()
     call L1norm()
     ! Tirando norma Li
     call Linorm()
+    ! Registrando resultado
+    call EscreverArquivo()
     return
 
     end subroutine Program
@@ -121,20 +139,41 @@ subroutine Program()
 subroutine AdequaParametro()
 
     use prandtll
-    if(Ret == 1020.d0)then
+    if(Ret == 1020.d0 .and. Pr == 0.71d0)then
         p(1) = 224
         Re = 41441.d0
-    elseif(Ret == 150.d0)then
+    elseif(Ret == 150.d0 .and. Pr == 0.71d0)then
         p(1) = 73
         Re = 4560.d0
-    elseif(Ret == 640.d0)then
+    elseif(Ret == 150.d0 .and. Pr == 0.025d0)then
+        p(1) = 73
+        Re = 4560.d0
+    elseif(Ret == 640.d0 .and. Pr == 0.71d0)then
         p(1) = 128
         Re = 24428.d0
-    elseif(Ret == 180.d0)then
-        p(1) = 64
-        Re = 5683.d0
-    elseif(Ret == 395.d0)then
+    elseif(Ret == 640.d0 .and. Pr == 0.025d0)then
+        p(1) = 128
+        Re = 24428.d0
+    elseif(Ret == 395.d0 .and. Pr == 10.d0)then
         p(1) = 240
+        Re = 14062.d0
+    elseif(Ret == 395.d0 .and. Pr == 0.71d0)then
+        p(1) = 96
+        Re = 14062.d0
+    elseif(Ret == 395.d0 .and. Pr == 7.d0)then
+        p(1) = 240
+        Re = 14062.d0
+    elseif(Ret == 395.d0 .and. Pr == 5.d0)then
+        p(1) = 240
+        Re = 14062.d0
+    elseif(Ret == 395.d0 .and. Pr == 2.d0)then
+        p(1) = 240
+        Re = 14062.d0
+    elseif(Ret == 395.d0 .and. Pr == 1.d0)then
+        p(1) = 240
+        Re = 14062.d0
+    elseif(Ret == 395.d0 .and. Pr == 0.025d0)then
+        p(1) = 96
         Re = 14062.d0
     end if
     return
@@ -263,7 +302,6 @@ subroutine TemperatureSimu()
             + T(i-1)*f(e(i) - dy/2.d0 , i - 1) + T(i+1)*f(e(i) + dy/2.0d0, i))/(f(e(i)-dy/2.d0,i-1) &
             + f(e(i) + dy/2.d0, i) )
         end do
-        print*, t(1)
     end do
     return
 
@@ -297,38 +335,61 @@ subroutine DNSinput()
     double precision :: ly
     character(len=:), allocatable :: m
     ! Abertura de arquivo
-    if (Ret == 1020.d0)then
+    if (Ret == 1020.d0 .and. Pr == 0.71d0)then
         allocate(character(len=len(dirname // '/DNS/DNS_RE_1000_071.txt')) :: m)
         m = trim(dirname) // '/DNS/DNS_RE_1000_071.txt'
         open(unit=10,file= m)
-    elseif(Ret == 150.d0)then
+    elseif(Ret == 150.d0 .and. Pr == 0.71d0)then
         allocate(character(len=len(dirname // '/DNS/DNS_RE_150_071.txt')) :: m)
         m = trim(dirname) // '/DNS/DNS_RE_150_071.txt'
         open(unit=10,file=m)
-    elseif(Ret == 640.d0)then
+    elseif(Ret == 150.d0 .and. Pr == 0.025d0)then
+        allocate(character(len=len(dirname // '/DNS/DNS_RE_150_0025.txt')) :: m)
+        m = trim(dirname) // '/DNS/DNS_RE_150_0025.txt'
+        open(unit=10,file=m)
+    elseif(Ret == 640.d0 .and. Pr == 0.71d0)then
         allocate(character(len=len(dirname // '/DNS/DNS_RE_640_071.txt')):: m)
         m = trim(dirname) // '/DNS/DNS_RE_640_071.txt'
         open(unit=10,file=m)
-    elseif(Ret == 395.d0)then
-        allocate(character(len=len(dirname // '/DNS/DNS_RE_395_10.txt')) :: m)
-        m = dirname // '/DNS/DNS_RE_395_10.txt'
+    elseif(Ret == 640.d0 .and. Pr == 0.025d0)then
+        allocate(character(len=len(dirname // '/DNS/DNS_RE_640_0025.txt')):: m)
+        m = trim(dirname) // '/DNS/DNS_RE_640_0025.txt'
         open(unit=10,file=m)
-    elseif(Ret == 180.d0)then
-        allocate(character(len=len(dirname // '/DNS/DNS_RE_180_071.txt')) :: m)
-        m = trim(dirname) // '/DNS/DNS_RE_180_071.txt'
+    elseif(Ret == 395.d0 .and. Pr == 0.71d0)then
+        allocate(character(len=len(dirname // '/DNS/DNS_RE_395_071.txt')) :: m)
+        m = trim(dirname) // '/DNS/DNS_RE_395_071.txt'
+        open(unit=10,file=m)
+    elseif(Ret == 395.d0 .and. Pr == 10.d0)then
+        allocate(character(len=len(dirname // '/DNS/DNS_RE_395_10.txt')) :: m)
+        m = trim(dirname) // '/DNS/DNS_RE_395_10.txt'
+        open(unit=10,file=m)
+    elseif(Ret == 395.d0 .and. Pr == 7.d0)then
+        allocate(character(len=len(dirname // '/DNS/DNS_RE_395_7.txt')) :: m)
+        m = trim(dirname) // '/DNS/DNS_RE_395_7.txt'
+        open(unit=10,file=m)
+    elseif(Ret == 395.d0 .and. Pr == 5.d0)then
+        allocate(character(len=len(dirname // '/DNS/DNS_RE_395_5.txt')) :: m)
+        m = trim(dirname) // '/DNS/DNS_RE_395_5.txt'
+        open(unit=10,file=m)
+    elseif(Ret == 395.d0 .and. Pr == 2.d0)then
+        allocate(character(len=len(dirname // '/DNS/DNS_RE_395_2.txt')) :: m)
+        m = trim(dirname) // '/DNS/DNS_RE_395_2.txt'
+        open(unit=10,file=m)
+    elseif(Ret == 395.d0 .and. Pr == 1.d0)then
+        allocate(character(len=len(dirname // '/DNS/DNS_RE_395_1.txt')) :: m)
+        m = trim(dirname) // '/DNS/DNS_RE_395_1.txt'
+        open(unit=10,file=m)
+    elseif(Ret == 395.d0 .and. Pr == 0.025d0)then
+        allocate(character(len=len(dirname // '/DNS/DNS_RE_395_0025.txt')) :: m)
+        m = trim(dirname) // '/DNS/DNS_RE_395_0025.txt'
         open(unit=10,file=m)
     end if
     ! Leitura
-    if(Ret == 180.d0)then
-        Do i = 1 ,  p(1)
+    Do i = 1 ,  p(1)
             read(10,*) ly , Tdns(1, i), Tdns(2, i)
-        End Do
-    else
-        Do i = 1 ,  p(1)
-            read(10,*) ly , Tdns(1, i), Tdns(2, i)
-        End Do
-    end if
+    End Do
     close (10)
+    deallocate(m)
     return
 
     end subroutine DNSinput
@@ -437,7 +498,110 @@ subroutine Linorm()
             end if
         end do
     end do
-    Li = k1 
+    Li = k1
     return
 
     end subroutine Linorm
+
+
+! Determinando parametros
+subroutine DeterminaParametros()
+
+    use prandtll
+    implicit none
+    allocate(Tdns(12 , 2))
+    Tdns(1, 1) = 150.d0
+    Tdns(1, 2) = 0.025d0
+    Tdns(2, 1) = 150.d0
+    Tdns(2, 2) = 0.71d0
+    Tdns(3, 1) = 395.d0
+    Tdns(3, 2) = 0.025d0
+    Tdns(4, 1) = 395.d0
+    Tdns(4, 2) = 0.71d0
+    Tdns(5, 1) = 395.d0
+    Tdns(5, 2) = 1.d0
+    Tdns(6, 1) = 395.d0
+    Tdns(6, 2) = 2.d0
+    Tdns(7, 1) = 395.d0
+    Tdns(7, 2) = 5.d0
+    Tdns(8, 1) = 395.d0
+    Tdns(8, 2) = 7.d0
+    Tdns(9, 1) = 395.d0
+    Tdns(9, 2) = 10.d0
+    Tdns(10, 1) = 640.d0
+    Tdns(10, 2) = 0.025d0
+    Tdns(11, 1) = 640.d0
+    Tdns(11, 2) = 0.71d0
+    Tdns(12, 1) = 1020.d0
+    Tdns(12, 2) = 0.71d0
+    Ret = Tdns(Parameters , 1)
+    Pr = Tdns(Parameters , 2)
+    deallocate(Tdns)
+    return
+
+    end subroutine DeterminaParametros
+
+
+
+
+! Escreve Arquivo em pasta resultados
+subroutine EscreverArquivo()
+
+    use prandtll
+    implicit none
+    integer :: i
+    double precision :: k1 , k2 , k3 , k4 , k5
+    character*12 :: char
+    character(len = :), allocatable :: m
+
+    if(parameters == 1)then
+        allocate(character(len=len(dirname // '/results/temp2.txt')) :: m)
+        m = trim(dirname) // '/results/temp2.txt'
+        open(unit=10,file=m)
+        deallocate(m)
+
+        Write(10,*) Ret , Pr , L1 , L2 , Li
+
+
+        close(10)
+    else
+        allocate(character(len=len(dirname // '/results/ResultsTeste2.txt')) :: m)
+        m = trim(dirname) // '/results/ResultsTeste2.txt'
+        open(unit=10,file=m)
+        deallocate(m)
+            allocate(character(len=len(dirname // '/results/temp2.txt')) :: m)
+            m = trim(dirname) // '/results/temp2.txt'
+            open(unit=11,file=m)
+            deallocate(m)
+            do i = 1 , parameters - 1
+                read(11,*) k1 , k2 , k3 , k4 , k5
+                write(10,*) k1 , k2 , k3 , k4 , k5
+            end do
+            close(11)
+        Write(10,*) Ret , Pr , L1 , L2 , Li
+        close(10)
+
+        allocate(character(len=len(dirname // '/results/ResultsTeste2.txt')) :: m)
+        m = trim(dirname) // '/results/ResultsTeste2.txt'
+        open(unit=10,file=m)
+        deallocate(m)
+        allocate(character(len=len(dirname // '/results/temp2.txt')) :: m)
+        m = trim(dirname) // '/results/temp2.txt'
+        open(unit=11,file=m)
+        deallocate(m)
+
+
+        do i = 1 , parameters
+        read(10,*) k1 , k2 , k3 , k4 , k5
+        write(11,*) k1 , k2 , k3 , k4 , k5
+        end do
+
+        close(11)
+        close(10)
+
+
+
+    end if
+    return
+
+    end subroutine EscreverArquivo

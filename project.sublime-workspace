@@ -4,8 +4,12 @@
 		"selected_items":
 		[
 			[
-				"all",
-				"allocate"
+				"L",
+				"L2"
+			],
+			[
+				"parame",
+				"Parameters"
 			],
 			[
 				"L2",
@@ -79,31 +83,13 @@
 			"file": "teste.f90",
 			"settings":
 			{
-				"buffer_size": 10190,
+				"buffer_size": 15428,
 				"encoding": "UTF-8",
-				"line_ending": "Windows"
-			}
-		},
-		{
-			"file": "README",
-			"settings":
-			{
-				"buffer_size": 4792,
-				"encoding": "UTF-8",
-				"line_ending": "Windows"
-			}
-		},
-		{
-			"file": "grafics.py",
-			"settings":
-			{
-				"buffer_size": 1719,
-				"encoding": "UTF-8",
-				"line_ending": "Windows"
+				"line_ending": "Unix"
 			}
 		}
 	],
-	"build_system": "Packages/User/fortranterm.sublime-build",
+	"build_system": "Packages/User/fortran2win.sublime-build",
 	"build_system_choices":
 	[
 		[
@@ -253,6 +239,26 @@
 					"Run"
 				],
 				[
+					"Packages/User/fortran2win.sublime-build",
+					""
+				]
+			],
+			[
+				"Packages/User/fortran2win.sublime-build",
+				""
+			]
+		],
+		[
+			[
+				[
+					"Packages/Fortran/build-systems/GFortran.sublime-build",
+					""
+				],
+				[
+					"Packages/Fortran/build-systems/GFortran.sublime-build",
+					"Run"
+				],
+				[
 					"Packages/User/gplusplusPiloto.sublime-build",
 					""
 				]
@@ -329,30 +335,6 @@
 		[
 			[
 				[
-					"Packages/MinimalFortran/MinimalFortran.sublime-build",
-					""
-				],
-				[
-					"Packages/MinimalFortran/MinimalFortran.sublime-build",
-					"Run"
-				],
-				[
-					"Packages/User/fortrandif.sublime-build",
-					""
-				],
-				[
-					"Packages/User/fortranterm.sublime-build",
-					""
-				]
-			],
-			[
-				"Packages/User/fortranterm.sublime-build",
-				""
-			]
-		],
-		[
-			[
-				[
 					"Packages/Python/Python.sublime-build",
 					""
 				],
@@ -362,30 +344,6 @@
 				],
 				[
 					"Packages/User/fortrandif.sublime-build",
-					""
-				]
-			],
-			[
-				"Packages/Python/Python.sublime-build",
-				""
-			]
-		],
-		[
-			[
-				[
-					"Packages/Python/Python.sublime-build",
-					""
-				],
-				[
-					"Packages/Python/Python.sublime-build",
-					"Syntax Check"
-				],
-				[
-					"Packages/User/fortrandif.sublime-build",
-					""
-				],
-				[
-					"Packages/User/fortranterm.sublime-build",
 					""
 				]
 			],
@@ -439,12 +397,12 @@
 		"selected_items":
 		[
 			[
-				"package",
+				"prv",
 				"PackageResourceViewer: Open Resource"
 			],
 			[
-				"prv",
-				"PackageResourceViewer: Open Resource"
+				"package",
+				"View Package File"
 			],
 			[
 				"package control install",
@@ -481,25 +439,35 @@
 	},
 	"expanded_folders":
 	[
-		"/E/WORK/programing/fortran/ProjetoCebeci"
+		"/home/felipe/Documents/ProjetoCebeci"
 	],
 	"file_history":
 	[
-		"/C/Users/felip/AppData/Roaming/Sublime Text 3/Packages/Python/Python.sublime-build",
-		"/C/Users/felip/AppData/Roaming/Sublime Text 3/Packages/User/fortrandif.sublime-build",
-		"/C/Users/felip/AppData/Roaming/Sublime Text 3/Packages/User/fortranterm.sublime-build",
-		"/E/WORK/programing/fortran/ProjetoCebeci/DNS/DNS_RE_640_071.txt",
-		"/E/WORK/programing/fortran/ProjetoCebeci/README",
-		"/E/WORK/programing/fortran/ProjetoCebeci/grafics.py",
-		"/E/WORK/programing/fortran/ProjetoCebeci/teste.f90",
-		"/E/WORK/programing/fortran/ProjetoCebeci/referencias/pós moderno/prandtlfinal.f90",
+		"/home/felipe/Documents/ProjetoCebeci/results/temp.txt",
+		"/home/felipe/Documents/ProjetoCebeci/results/teste.txt",
+		"/home/felipe/Documents/ProjetoCebeci/DNS/DNS_RE_640_0025.txt",
+		"/home/felipe/Documents/ProjetoCebeci/DNS/DNS_RE_395_0025.txt",
+		"/home/felipe/Documents/ProjetoCebeci/referencias/posmoderno/prandtlfinal.f90",
+		"/home/felipe/Documents/ProjetoCebeci/referencias/pós moderno/prandtlfinal.f90",
+		"/home/felipe/Documents/ProjetoCebeci/DNS/DNS_RE_395_1.txt",
+		"/home/felipe/Documents/ProjetoCebeci/DNS/DNS_RE_395_2.txt",
+		"/home/felipe/Documents/ProjetoCebeci/DNS/DNS_RE_395_5.txt",
+		"/home/felipe/Documents/ProjetoCebeci/DNS/DNS_RE_395_7.txt",
+		"/home/felipe/Documents/ProjetoCebeci/DNS/DNS_RE_150_0025.txt",
+		"/home/felipe/Documents/ProjetoCebeci/grafics.py",
+		"/home/felipe/Documents/ProjetoCebeci/README",
+		"/home/felipe/Documents/ProjetoCebeci/DNS/DNS_RE_395_071.txt",
+		"/home/felipe/Documents/ProjetoCebeci/DNS/DNS_RE_180_07.txt",
+		"/home/felipe/.config/sublime-text-3/Packages/User/fortran2win.sublime-build",
 		"/home/felipe/Documents/ProjetoCebeci/.gitignore",
 		"/home/felipe/Documents/ProjetoCebeci/oloco.py",
 		"/home/felipe/.config/sublime-text-3/Packages/Python/Python.sublime-build",
 		"/home/felipe/Documents/Prandtl_et_Cebeci /Metamodelagem/sublime/teste.f90",
 		"/home/felipe/Documents/Prandtl_et_Cebeci /Metamodelagem/sublime/README",
+		"/C/Users/felip/AppData/Roaming/Sublime Text 3/Packages/User/fortrandif.sublime-build",
 		"/C/Users/felip/OneDrive/Documentos/programing/Experimental/IC.ARISTEU - Fluidos !!/programas/prandtl foto/pós moderno/prandtlfinal.f90",
 		"/F/IC.ARISTEU - Fluidos !!/programas/prandtl foto/pós moderno/pós férias/README",
+		"/C/Users/felip/AppData/Roaming/Sublime Text 3/Packages/Python/Python.sublime-build",
 		"/home/felipe/Documents/programing/Experimental/IC.ARISTEU - Fluidos !!/programas/prandtl foto/pós moderno/grafico.py",
 		"/media/felipe/chest/IC.ARISTEU - Fluidos !!/programas/prandtl foto/pós moderno/pós férias/grafics.py",
 		"/home/felipe/Documents/programing/Experimental/IC.ARISTEU - Fluidos !!/programas/prandtl foto/pós moderno/prandtlfinal.f90",
@@ -542,7 +510,7 @@
 	],
 	"find":
 	{
-		"height": 23.0
+		"height": 37.0
 	},
 	"find_in_files":
 	{
@@ -556,6 +524,8 @@
 		"case_sensitive": false,
 		"find_history":
 		[
+			"print",
+			"write",
 			"inport",
 			"pr",
 			"player",
@@ -580,7 +550,7 @@
 	"groups":
 	[
 		{
-			"selected": 1,
+			"selected": 0,
 			"sheets":
 			[
 				{
@@ -589,87 +559,28 @@
 					"semi_transient": false,
 					"settings":
 					{
-						"buffer_size": 10190,
+						"buffer_size": 15428,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								2088,
-								2088
+								1813,
+								1813
 							]
 						],
 						"settings":
 						{
-							"SL.24.region_keys":
-							[
-							],
-							"syntax": "Packages/MinimalFortran/MinimalFortran.tmLanguage",
+							"syntax": "Packages/Fortran/grammars/FortranModern.sublime-syntax",
 							"tab_size": 4,
 							"translate_tabs_to_spaces": true
 						},
 						"translation.x": 0.0,
-						"translation.y": 618.0,
-						"zoom_level": 1.0
-					},
-					"stack_index": 1,
-					"type": "text"
-				},
-				{
-					"buffer": 1,
-					"file": "README",
-					"semi_transient": true,
-					"settings":
-					{
-						"buffer_size": 4792,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								0,
-								0
-							]
-						],
-						"settings":
-						{
-							"syntax": "Packages/Text/Plain text.tmLanguage"
-						},
-						"translation.x": 0.0,
-						"translation.y": 1170.0,
+						"translation.y": 405.0,
 						"zoom_level": 1.0
 					},
 					"stack_index": 0,
-					"type": "text"
-				},
-				{
-					"buffer": 2,
-					"file": "grafics.py",
-					"semi_transient": false,
-					"settings":
-					{
-						"buffer_size": 1719,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								1352,
-								1352
-							]
-						],
-						"settings":
-						{
-							"syntax": "Packages/Python/Python.sublime-syntax"
-						},
-						"translation.x": 0.0,
-						"translation.y": 0.0,
-						"zoom_level": 1.0
-					},
-					"stack_index": 2,
 					"type": "text"
 				}
 			]
@@ -677,7 +588,7 @@
 	],
 	"incremental_find":
 	{
-		"height": 22.0
+		"height": 24.0
 	},
 	"input":
 	{
@@ -712,7 +623,7 @@
 	},
 	"output.exec":
 	{
-		"height": 132.0
+		"height": 151.0
 	},
 	"output.find_results":
 	{
@@ -722,7 +633,7 @@
 	"project": "project.sublime-project",
 	"replace":
 	{
-		"height": 42.0
+		"height": 44.0
 	},
 	"save_all_on_build": true,
 	"select_file":
@@ -768,7 +679,7 @@
 	"show_open_files": false,
 	"show_tabs": true,
 	"side_bar_visible": true,
-	"side_bar_width": 190.0,
+	"side_bar_width": 243.0,
 	"status_bar_visible": true,
 	"template_settings":
 	{
