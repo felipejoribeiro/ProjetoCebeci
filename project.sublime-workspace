@@ -4,6 +4,10 @@
 		"selected_items":
 		[
 			[
+				"all",
+				"allocate"
+			],
+			[
 				"L2",
 				"L2norm"
 			],
@@ -72,12 +76,21 @@
 	"buffers":
 	[
 		{
+			"file": "teste.f90",
+			"settings":
+			{
+				"buffer_size": 10190,
+				"encoding": "UTF-8",
+				"line_ending": "Windows"
+			}
+		},
+		{
 			"file": "README",
 			"settings":
 			{
-				"buffer_size": 4566,
+				"buffer_size": 4792,
 				"encoding": "UTF-8",
-				"line_ending": "Unix"
+				"line_ending": "Windows"
 			}
 		},
 		{
@@ -86,29 +99,11 @@
 			{
 				"buffer_size": 1719,
 				"encoding": "UTF-8",
-				"line_ending": "Unix"
-			}
-		},
-		{
-			"file": "teste.f90",
-			"settings":
-			{
-				"buffer_size": 8582,
-				"encoding": "UTF-8",
-				"line_ending": "Unix"
-			}
-		},
-		{
-			"file": "referencias/pós moderno/prandtlfinal.f90",
-			"settings":
-			{
-				"buffer_size": 17585,
-				"encoding": "UTF-8",
-				"line_ending": "Unix"
+				"line_ending": "Windows"
 			}
 		}
 	],
-	"build_system": "Packages/Fortran/build-systems/GFortran.sublime-build",
+	"build_system": "Packages/User/fortranterm.sublime-build",
 	"build_system_choices":
 	[
 		[
@@ -334,6 +329,30 @@
 		[
 			[
 				[
+					"Packages/MinimalFortran/MinimalFortran.sublime-build",
+					""
+				],
+				[
+					"Packages/MinimalFortran/MinimalFortran.sublime-build",
+					"Run"
+				],
+				[
+					"Packages/User/fortrandif.sublime-build",
+					""
+				],
+				[
+					"Packages/User/fortranterm.sublime-build",
+					""
+				]
+			],
+			[
+				"Packages/User/fortranterm.sublime-build",
+				""
+			]
+		],
+		[
+			[
+				[
 					"Packages/Python/Python.sublime-build",
 					""
 				],
@@ -343,6 +362,30 @@
 				],
 				[
 					"Packages/User/fortrandif.sublime-build",
+					""
+				]
+			],
+			[
+				"Packages/Python/Python.sublime-build",
+				""
+			]
+		],
+		[
+			[
+				[
+					"Packages/Python/Python.sublime-build",
+					""
+				],
+				[
+					"Packages/Python/Python.sublime-build",
+					"Syntax Check"
+				],
+				[
+					"Packages/User/fortrandif.sublime-build",
+					""
+				],
+				[
+					"Packages/User/fortranterm.sublime-build",
 					""
 				]
 			],
@@ -396,12 +439,12 @@
 		"selected_items":
 		[
 			[
-				"prv",
+				"package",
 				"PackageResourceViewer: Open Resource"
 			],
 			[
-				"package",
-				"View Package File"
+				"prv",
+				"PackageResourceViewer: Open Resource"
 			],
 			[
 				"package control install",
@@ -438,19 +481,25 @@
 	},
 	"expanded_folders":
 	[
-		"/home/felipe/Documents/ProjetoCebeci"
+		"/E/WORK/programing/fortran/ProjetoCebeci"
 	],
 	"file_history":
 	[
+		"/C/Users/felip/AppData/Roaming/Sublime Text 3/Packages/Python/Python.sublime-build",
+		"/C/Users/felip/AppData/Roaming/Sublime Text 3/Packages/User/fortrandif.sublime-build",
+		"/C/Users/felip/AppData/Roaming/Sublime Text 3/Packages/User/fortranterm.sublime-build",
+		"/E/WORK/programing/fortran/ProjetoCebeci/DNS/DNS_RE_640_071.txt",
+		"/E/WORK/programing/fortran/ProjetoCebeci/README",
+		"/E/WORK/programing/fortran/ProjetoCebeci/grafics.py",
+		"/E/WORK/programing/fortran/ProjetoCebeci/teste.f90",
+		"/E/WORK/programing/fortran/ProjetoCebeci/referencias/pós moderno/prandtlfinal.f90",
 		"/home/felipe/Documents/ProjetoCebeci/.gitignore",
 		"/home/felipe/Documents/ProjetoCebeci/oloco.py",
 		"/home/felipe/.config/sublime-text-3/Packages/Python/Python.sublime-build",
 		"/home/felipe/Documents/Prandtl_et_Cebeci /Metamodelagem/sublime/teste.f90",
 		"/home/felipe/Documents/Prandtl_et_Cebeci /Metamodelagem/sublime/README",
-		"/C/Users/felip/AppData/Roaming/Sublime Text 3/Packages/User/fortrandif.sublime-build",
 		"/C/Users/felip/OneDrive/Documentos/programing/Experimental/IC.ARISTEU - Fluidos !!/programas/prandtl foto/pós moderno/prandtlfinal.f90",
 		"/F/IC.ARISTEU - Fluidos !!/programas/prandtl foto/pós moderno/pós férias/README",
-		"/C/Users/felip/AppData/Roaming/Sublime Text 3/Packages/Python/Python.sublime-build",
 		"/home/felipe/Documents/programing/Experimental/IC.ARISTEU - Fluidos !!/programas/prandtl foto/pós moderno/grafico.py",
 		"/media/felipe/chest/IC.ARISTEU - Fluidos !!/programas/prandtl foto/pós moderno/pós férias/grafics.py",
 		"/home/felipe/Documents/programing/Experimental/IC.ARISTEU - Fluidos !!/programas/prandtl foto/pós moderno/prandtlfinal.f90",
@@ -493,7 +542,7 @@
 	],
 	"find":
 	{
-		"height": 24.0
+		"height": 23.0
 	},
 	"find_in_files":
 	{
@@ -531,24 +580,57 @@
 	"groups":
 	[
 		{
-			"selected": 2,
+			"selected": 1,
 			"sheets":
 			[
 				{
 					"buffer": 0,
-					"file": "README",
+					"file": "teste.f90",
 					"semi_transient": false,
 					"settings":
 					{
-						"buffer_size": 4566,
+						"buffer_size": 10190,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								2346,
-								2346
+								2088,
+								2088
+							]
+						],
+						"settings":
+						{
+							"SL.24.region_keys":
+							[
+							],
+							"syntax": "Packages/MinimalFortran/MinimalFortran.tmLanguage",
+							"tab_size": 4,
+							"translate_tabs_to_spaces": true
+						},
+						"translation.x": 0.0,
+						"translation.y": 618.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 1,
+					"type": "text"
+				},
+				{
+					"buffer": 1,
+					"file": "README",
+					"semi_transient": true,
+					"settings":
+					{
+						"buffer_size": 4792,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								0,
+								0
 							]
 						],
 						"settings":
@@ -556,14 +638,14 @@
 							"syntax": "Packages/Text/Plain text.tmLanguage"
 						},
 						"translation.x": 0.0,
-						"translation.y": 0.0,
+						"translation.y": 1170.0,
 						"zoom_level": 1.0
 					},
-					"stack_index": 3,
+					"stack_index": 0,
 					"type": "text"
 				},
 				{
-					"buffer": 1,
+					"buffer": 2,
 					"file": "grafics.py",
 					"semi_transient": false,
 					"settings":
@@ -575,8 +657,8 @@
 						"selection":
 						[
 							[
-								1648,
-								1648
+								1352,
+								1352
 							]
 						],
 						"settings":
@@ -587,66 +669,6 @@
 						"translation.y": 0.0,
 						"zoom_level": 1.0
 					},
-					"stack_index": 1,
-					"type": "text"
-				},
-				{
-					"buffer": 2,
-					"file": "teste.f90",
-					"semi_transient": false,
-					"settings":
-					{
-						"buffer_size": 8582,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								7813,
-								7813
-							]
-						],
-						"settings":
-						{
-							"syntax": "Packages/Fortran/grammars/FortranModern.sublime-syntax",
-							"tab_size": 4,
-							"translate_tabs_to_spaces": true
-						},
-						"translation.x": 0.0,
-						"translation.y": 0.0,
-						"zoom_level": 1.0
-					},
-					"stack_index": 0,
-					"type": "text"
-				},
-				{
-					"buffer": 3,
-					"file": "referencias/pós moderno/prandtlfinal.f90",
-					"semi_transient": false,
-					"settings":
-					{
-						"buffer_size": 17585,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								10554,
-								10554
-							]
-						],
-						"settings":
-						{
-							"syntax": "Packages/Fortran/grammars/FortranModern.sublime-syntax",
-							"tab_size": 2,
-							"translate_tabs_to_spaces": true
-						},
-						"translation.x": 0.0,
-						"translation.y": 7746.0,
-						"zoom_level": 1.0
-					},
 					"stack_index": 2,
 					"type": "text"
 				}
@@ -655,7 +677,7 @@
 	],
 	"incremental_find":
 	{
-		"height": 24.0
+		"height": 22.0
 	},
 	"input":
 	{
@@ -700,7 +722,7 @@
 	"project": "project.sublime-project",
 	"replace":
 	{
-		"height": 44.0
+		"height": 42.0
 	},
 	"save_all_on_build": true,
 	"select_file":

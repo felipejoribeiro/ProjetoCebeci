@@ -3,7 +3,7 @@ module prandtll
     double precision , dimension(:) , allocatable :: vPrt , T , u , e
     double precision , dimension(:,:) , allocatable :: Tdns
     integer , dimension(3) :: p
-    double precision:: Ret , Re, Pr , Prt , vc , dy , incre , um, L2
+    double precision:: Ret , Re, Pr , Prt , vc , dy , incre , um, L2 , L1 , Li
     integer:: N
     character(len=:), allocatable :: dirname
 end module
@@ -22,7 +22,7 @@ program teste
 
     ! Parameters
 
-    Ret = 640.d0                                                                       ! 150.d0  !180.d0   !395.d0   ! 640.d0    !1020.d0
+    Ret = 1020.d0                                                                      ! 150.d0  !180.d0   !395.d0   ! 640.d0    !1020.d0
     Pr = 0.71d0                                                                        !0.71d0   !10.d0
 
     ! Controles numéricos
@@ -72,6 +72,8 @@ program teste
     print*, "Ret = " , Ret
     print*, "Pr = " , Pr
     print*, "L2 = " , L2
+    print*, "L1 = " , L1
+    print*, "Li = " , Li
 
 end program
 
@@ -97,9 +99,13 @@ subroutine Program()
     ! Simulação do vetor temperatura
     call TemperatureSimu()
     ! Importando o DNS
-    call DNSinput()
+    Call DNSinput()
     ! Tirando norma L2
     call L2norm()
+    ! Tirando norma L1
+    call L1norm()
+    ! Tirando norma Li
+    call Linorm()
     return
 
     end subroutine Program
@@ -117,28 +123,18 @@ subroutine AdequaParametro()
     use prandtll
     if(Ret == 1020.d0)then
         p(1) = 224
-        p(2) = p(1)
-        p(3) = P(1)
         Re = 41441.d0
     elseif(Ret == 150.d0)then
         p(1) = 73
-        p(2) = p(1)
-        p(3) = 64
         Re = 4560.d0
     elseif(Ret == 640.d0)then
         p(1) = 128
-        p(2) = p(1)
-        p(3) = p(1)
         Re = 24428.d0
     elseif(Ret == 180.d0)then
         p(1) = 64
-        p(2) = p(1)
-        p(3) = p(1)
         Re = 5683.d0
     elseif(Ret == 395.d0)then
         p(1) = 240
-        p(2) = 96
-        p(3) = p(2)
         Re = 14062.d0
     end if
     return
@@ -302,19 +298,24 @@ subroutine DNSinput()
     character(len=:), allocatable :: m
     ! Abertura de arquivo
     if (Ret == 1020.d0)then
-        m = trim(dirname) // '/DNS/DNS_RE_1000.txt'
+        allocate(character(len=len(dirname // '/DNS/DNS_RE_1000_071.txt')) :: m)
+        m = trim(dirname) // '/DNS/DNS_RE_1000_071.txt'
         open(unit=10,file= m)
     elseif(Ret == 150.d0)then
-        m = trim(dirname) // '/DNS/DNS_RE_150.txt'
+        allocate(character(len=len(dirname // '/DNS/DNS_RE_150_071.txt')) :: m)
+        m = trim(dirname) // '/DNS/DNS_RE_150_071.txt'
         open(unit=10,file=m)
     elseif(Ret == 640.d0)then
-        m = trim(dirname) // '/DNS/DNS_RE_640.txt'
+        allocate(character(len=len(dirname // '/DNS/DNS_RE_640_071.txt')):: m)
+        m = trim(dirname) // '/DNS/DNS_RE_640_071.txt'
         open(unit=10,file=m)
     elseif(Ret == 395.d0)then
+        allocate(character(len=len(dirname // '/DNS/DNS_RE_395_10.txt')) :: m)
         m = dirname // '/DNS/DNS_RE_395_10.txt'
         open(unit=10,file=m)
     elseif(Ret == 180.d0)then
-        m = trim(dirname) // '/DNS/DNS_RE_180.txt'
+        allocate(character(len=len(dirname // '/DNS/DNS_RE_180_071.txt')) :: m)
+        m = trim(dirname) // '/DNS/DNS_RE_180_071.txt'
         open(unit=10,file=m)
     end if
     ! Leitura
@@ -362,7 +363,7 @@ subroutine SOUT(string)
 
 
 
-! Tira a norma L2 da temperatura.
+! Tira a norma L2 da temperatura
 subroutine L2norm()
 
     use prandtll
@@ -373,12 +374,12 @@ subroutine L2norm()
     iii = 0
     do i = 2 , N
         do ii = 1 , p(1)
-          if((Ret - Tdns(1 , ii)) < e(i) .and. (Ret - Tdns(1 , ii)) > e(i-1) )then
-               ly = (T(i) - T(i-1))*((Ret - Tdns(1,ii)) - e(i-1))/(e(i) - e(i-1))
-               ly = T(i-1) + ly
-               k1 = k1 + (ly - Tdns(2,ii))**2
-               iii = iii + 1
-          end if
+            if((Ret - Tdns(1 , ii)) < e(i) .and. (Ret - Tdns(1 , ii)) > e(i-1) )then
+                ly = (T(i) - T(i-1))*((Ret - Tdns(1,ii)) - e(i-1))/(e(i) - e(i-1))
+                ly = T(i-1) + ly
+                k1 = k1 + (ly - Tdns(2,ii))**2
+                iii = iii + 1
+            end if
         end do
     end do
     L2 = sqrt(k1 / (iii))
@@ -387,3 +388,56 @@ subroutine L2norm()
     end subroutine L2norm
 
 
+
+
+! Tirando norma L1 da temperatura
+subroutine L1norm()
+
+    use prandtll
+    implicit none
+    double precision :: ly , k1
+    integer :: i , ii , iii
+    k1 = 0.d0
+    iii = 0
+    do i = 2 , N
+        do ii = 1 , p(1)
+            if((Ret - Tdns(1 , ii)) < e(i) .and. (Ret - Tdns(1 , ii)) > e(i-1) )then
+                ly = (T(i) - T(i-1))*((Ret - Tdns(1,ii)) - e(i-1))/(e(i) - e(i-1))
+                ly = T(i-1) + ly
+                k1 = k1 + abs(ly - Tdns(2,ii))
+                iii = iii + 1
+            end if
+        end do
+    end do
+    L1 = k1 / iii
+    return
+
+    end subroutine L1norm
+
+
+
+
+! Tirando a L infinito da temperatura
+subroutine Linorm()
+
+    use prandtll
+    implicit none
+    double precision :: ly , k1
+    integer :: i , ii , iii
+    k1 = 0.d0
+    iii = 0
+    do i = 2 , N
+        do ii = 1 , p(1)
+            if((Ret - Tdns(1 , ii)) < e(i) .and. (Ret - Tdns(1 , ii)) > e(i-1) )then
+                ly = (T(i) - T(i-1))*((Ret - Tdns(1,ii)) - e(i-1))/(e(i) - e(i-1))
+                ly = T(i-1) + ly
+                if(abs(ly - Tdns(2,ii)) > k1)then
+                    k1 = abs(ly - Tdns(2,ii))
+                end if
+            end if
+        end do
+    end do
+    Li = k1 
+    return
+
+    end subroutine Linorm

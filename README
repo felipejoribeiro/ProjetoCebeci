@@ -104,3 +104,13 @@ Resumo do projeto:
 |                                                                                                 |
 |                                                                                                 |
 ---------------------------------------------------------------------------------------------------
+
+
+
+bom build pra fortran:
+
+{
+    "cmd": [ "start", "cmd", "gfortran",  "-Wall", "-time", "$file", "-o" ,"$file_base_name" , "&" , "start", "cmd", "/k", "$file_base_name" ],
+    "working_dir" : "$file_path",
+    "shell":true
+}
