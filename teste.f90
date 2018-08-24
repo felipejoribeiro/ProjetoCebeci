@@ -57,10 +57,7 @@ program teste
         call AdequaParametro()
         ! Adequação numérica final (usuário)
 
-        ! result 1 = com os meta modelos
-        ! eesult 2 = sem os meta modelos
-
-        prt = 0.7
+        prt = 0.905
         vc = 26
 
 
@@ -81,7 +78,7 @@ program teste
         deallocate(u)
 
 
-        ! Amostrando resultados:
+        ! Amostrando resultados
 
         print*, "------------------------------------------------"
         print*, "Ret = " , Ret
@@ -91,6 +88,11 @@ program teste
         print*, "Li = " , Li
 
         end do
+
+        ! Encerramento
+
+        print*, " "
+        print*, "Fim das simulações!"
 
 end program
 

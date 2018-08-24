@@ -83,13 +83,30 @@
 			"file": "teste.f90",
 			"settings":
 			{
-				"buffer_size": 15428,
+				"buffer_size": 15510,
 				"encoding": "UTF-8",
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "grafics.py",
+			"settings":
+			{
+				"buffer_size": 4590,
+				"encoding": "UTF-8",
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "results/ResultadosGeraisOrtodoxos.txt",
+			"settings":
+			{
+				"buffer_size": 1572,
 				"line_ending": "Unix"
 			}
 		}
 	],
-	"build_system": "Packages/User/fortran2win.sublime-build",
+	"build_system": "Packages/Python/Python.sublime-build",
 	"build_system_choices":
 	[
 		[
@@ -343,6 +360,26 @@
 					"Syntax Check"
 				],
 				[
+					"Packages/User/fortran2win.sublime-build",
+					""
+				]
+			],
+			[
+				"Packages/Python/Python.sublime-build",
+				""
+			]
+		],
+		[
+			[
+				[
+					"Packages/Python/Python.sublime-build",
+					""
+				],
+				[
+					"Packages/Python/Python.sublime-build",
+					"Syntax Check"
+				],
+				[
 					"Packages/User/fortrandif.sublime-build",
 					""
 				]
@@ -439,10 +476,12 @@
 	},
 	"expanded_folders":
 	[
-		"/home/felipe/Documents/ProjetoCebeci"
+		"/home/felipe/Documents/ProjetoCebeci",
+		"/home/felipe/Documents/ProjetoCebeci/results"
 	],
 	"file_history":
 	[
+		"/home/felipe/Documents/ProjetoCebeci/results/ResultadosGeraisAjustados.txt",
 		"/home/felipe/Documents/ProjetoCebeci/results/temp.txt",
 		"/home/felipe/Documents/ProjetoCebeci/results/teste.txt",
 		"/home/felipe/Documents/ProjetoCebeci/DNS/DNS_RE_640_0025.txt",
@@ -510,7 +549,7 @@
 	],
 	"find":
 	{
-		"height": 37.0
+		"height": 24.0
 	},
 	"find_in_files":
 	{
@@ -550,7 +589,7 @@
 	"groups":
 	[
 		{
-			"selected": 0,
+			"selected": 2,
 			"sheets":
 			[
 				{
@@ -559,15 +598,15 @@
 					"semi_transient": false,
 					"settings":
 					{
-						"buffer_size": 15428,
+						"buffer_size": 15510,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								1813,
-								1813
+								1885,
+								1885
 							]
 						],
 						"settings":
@@ -577,7 +616,65 @@
 							"translate_tabs_to_spaces": true
 						},
 						"translation.x": 0.0,
-						"translation.y": 405.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 2,
+					"type": "text"
+				},
+				{
+					"buffer": 1,
+					"file": "grafics.py",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 4590,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								2803,
+								2803
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/Python/Python.sublime-syntax"
+						},
+						"translation.x": 0.0,
+						"translation.y": 544.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 1,
+					"type": "text"
+				},
+				{
+					"buffer": 2,
+					"file": "results/ResultadosGeraisOrtodoxos.txt",
+					"semi_transient": true,
+					"settings":
+					{
+						"buffer_size": 1572,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								0,
+								0
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/Text/Plain text.tmLanguage",
+							"tab_size": 3,
+							"translate_tabs_to_spaces": true
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
 						"zoom_level": 1.0
 					},
 					"stack_index": 0,
@@ -623,7 +720,7 @@
 	},
 	"output.exec":
 	{
-		"height": 151.0
+		"height": 353.0
 	},
 	"output.find_results":
 	{
@@ -679,7 +776,7 @@
 	"show_open_files": false,
 	"show_tabs": true,
 	"side_bar_visible": true,
-	"side_bar_width": 243.0,
+	"side_bar_width": 280.0,
 	"status_bar_visible": true,
 	"template_settings":
 	{
