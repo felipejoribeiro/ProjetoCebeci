@@ -41,7 +41,7 @@ program teste
 
         ! Controles numéricos
 
-        N = 400                                                                            ! Número de células
+        N = 40                                                                            ! Número de células
         incre = 1.d-9                                                                      ! incremento para convergência do método implícito
         R = 1.d0                                                                           ! Raio do canal
         dy = (R/(dble(N) - 0.5d0)) * Ret/R;                                                ! i_1 = dy/2 ... i_n = R
@@ -553,7 +553,6 @@ subroutine EscreverArquivo()
     implicit none
     integer :: i
     double precision :: k1 , k2 , k3 , k4 , k5
-    character*12 :: char
     character(len = :), allocatable :: m
 
     if(parameters == 1)then

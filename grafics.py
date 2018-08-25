@@ -111,6 +111,7 @@ plt.show()
 # ax = fig.gca(projection='3d')
 # surf = ax.plot_surface(X, Y, Z, rcount=rcount, ccount=ccount, facecolors=colors, shade=False)
 # surf.set_facecolor((0,0,0,0))
+# plt.show()
 
 
 ############################################# EXEMPLO FUNCIONAL INTELIGIVEL SCATTER:

@@ -80,33 +80,25 @@
 	"buffers":
 	[
 		{
-			"file": "teste.f90",
-			"settings":
-			{
-				"buffer_size": 15510,
-				"encoding": "UTF-8",
-				"line_ending": "Unix"
-			}
-		},
-		{
 			"file": "grafics.py",
 			"settings":
 			{
-				"buffer_size": 4590,
+				"buffer_size": 4603,
 				"encoding": "UTF-8",
 				"line_ending": "Unix"
 			}
 		},
 		{
-			"file": "results/ResultadosGeraisOrtodoxos.txt",
+			"file": "teste.f90",
 			"settings":
 			{
-				"buffer_size": 1572,
-				"line_ending": "Unix"
+				"buffer_size": 15403,
+				"encoding": "UTF-8",
+				"line_ending": "Windows"
 			}
 		}
 	],
-	"build_system": "Packages/Python/Python.sublime-build",
+	"build_system": "Packages/User/fortranterm.sublime-build",
 	"build_system_choices":
 	[
 		[
@@ -352,6 +344,30 @@
 		[
 			[
 				[
+					"Packages/MinimalFortran/MinimalFortran.sublime-build",
+					""
+				],
+				[
+					"Packages/MinimalFortran/MinimalFortran.sublime-build",
+					"Run"
+				],
+				[
+					"Packages/User/fortrandif.sublime-build",
+					""
+				],
+				[
+					"Packages/User/fortranterm.sublime-build",
+					""
+				]
+			],
+			[
+				"Packages/User/fortranterm.sublime-build",
+				""
+			]
+		],
+		[
+			[
+				[
 					"Packages/Python/Python.sublime-build",
 					""
 				],
@@ -381,6 +397,30 @@
 				],
 				[
 					"Packages/User/fortrandif.sublime-build",
+					""
+				]
+			],
+			[
+				"Packages/Python/Python.sublime-build",
+				""
+			]
+		],
+		[
+			[
+				[
+					"Packages/Python/Python.sublime-build",
+					""
+				],
+				[
+					"Packages/Python/Python.sublime-build",
+					"Syntax Check"
+				],
+				[
+					"Packages/User/fortrandif.sublime-build",
+					""
+				],
+				[
+					"Packages/User/fortranterm.sublime-build",
 					""
 				]
 			],
@@ -434,12 +474,12 @@
 		"selected_items":
 		[
 			[
-				"prv",
-				"PackageResourceViewer: Open Resource"
+				"package",
+				"Package Control: Install Package"
 			],
 			[
-				"package",
-				"View Package File"
+				"prv",
+				"PackageResourceViewer: Open Resource"
 			],
 			[
 				"package control install",
@@ -476,11 +516,13 @@
 	},
 	"expanded_folders":
 	[
-		"/home/felipe/Documents/ProjetoCebeci",
-		"/home/felipe/Documents/ProjetoCebeci/results"
+		"/E/WORK/programing/fortran/ProjetoCebeci",
+		"/E/WORK/programing/fortran/ProjetoCebeci/results"
 	],
 	"file_history":
 	[
+		"/E/WORK/programing/fortran/ProjetoCebeci/teste.f90",
+		"/E/WORK/programing/fortran/ProjetoCebeci/results/ResultadosGeraisOrtodoxos.txt",
 		"/home/felipe/Documents/ProjetoCebeci/results/ResultadosGeraisAjustados.txt",
 		"/home/felipe/Documents/ProjetoCebeci/results/temp.txt",
 		"/home/felipe/Documents/ProjetoCebeci/results/teste.txt",
@@ -549,7 +591,7 @@
 	],
 	"find":
 	{
-		"height": 24.0
+		"height": 23.0
 	},
 	"find_in_files":
 	{
@@ -563,6 +605,7 @@
 		"case_sensitive": false,
 		"find_history":
 		[
+			"char",
 			"print",
 			"write",
 			"inport",
@@ -589,92 +632,68 @@
 	"groups":
 	[
 		{
-			"selected": 2,
+			"selected": 1,
 			"sheets":
 			[
 				{
 					"buffer": 0,
-					"file": "teste.f90",
-					"semi_transient": false,
-					"settings":
-					{
-						"buffer_size": 15510,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								1885,
-								1885
-							]
-						],
-						"settings":
-						{
-							"syntax": "Packages/Fortran/grammars/FortranModern.sublime-syntax",
-							"tab_size": 4,
-							"translate_tabs_to_spaces": true
-						},
-						"translation.x": 0.0,
-						"translation.y": 0.0,
-						"zoom_level": 1.0
-					},
-					"stack_index": 2,
-					"type": "text"
-				},
-				{
-					"buffer": 1,
 					"file": "grafics.py",
 					"semi_transient": false,
 					"settings":
 					{
-						"buffer_size": 4590,
+						"buffer_size": 4603,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								2803,
-								2803
+								2611,
+								2611
 							]
 						],
 						"settings":
 						{
+							"SL.19.region_keys":
+							[
+							],
 							"syntax": "Packages/Python/Python.sublime-syntax"
 						},
 						"translation.x": 0.0,
-						"translation.y": 544.0,
+						"translation.y": 0.0,
 						"zoom_level": 1.0
 					},
 					"stack_index": 1,
 					"type": "text"
 				},
 				{
-					"buffer": 2,
-					"file": "results/ResultadosGeraisOrtodoxos.txt",
+					"buffer": 1,
+					"file": "teste.f90",
 					"semi_transient": true,
 					"settings":
 					{
-						"buffer_size": 1572,
+						"buffer_size": 15403,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								0,
-								0
+								5634,
+								5634
 							]
 						],
 						"settings":
 						{
-							"syntax": "Packages/Text/Plain text.tmLanguage",
-							"tab_size": 3,
+							"SL.26.region_keys":
+							[
+							],
+							"syntax": "Packages/Fortran/grammars/FortranModern.sublime-syntax",
+							"tab_size": 4,
 							"translate_tabs_to_spaces": true
 						},
 						"translation.x": 0.0,
-						"translation.y": 0.0,
+						"translation.y": 2262.0,
 						"zoom_level": 1.0
 					},
 					"stack_index": 0,
@@ -685,7 +704,7 @@
 	],
 	"incremental_find":
 	{
-		"height": 24.0
+		"height": 22.0
 	},
 	"input":
 	{
@@ -720,7 +739,7 @@
 	},
 	"output.exec":
 	{
-		"height": 353.0
+		"height": 285.0
 	},
 	"output.find_results":
 	{
@@ -730,7 +749,7 @@
 	"project": "project.sublime-project",
 	"replace":
 	{
-		"height": 44.0
+		"height": 42.0
 	},
 	"save_all_on_build": true,
 	"select_file":
