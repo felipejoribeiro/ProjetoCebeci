@@ -4,12 +4,12 @@
 |Quest from professor:   Tentar modificar o expoente da parcela dependente do Prandtl.                         |
 ----------------------------------------------------------------------------------------------------------------
 .                                                                                                              .
-.             Todas as linguagens serão treinadas nesse projeto, ou seja: FORTRAN, Python e C++                .
-.                  Isso signifoca dizer que todos os programas "main" fazem a mesma coisa:                     .
+.             Todas as linguagens serão treinadas nesse projeto, ou seja: FORTRAN, Python, C++ e JAVA.         .
+.                  Isso significa dizer que todos os programas "main" fazem a mesma coisa:                     .
 .                                                                                                              .
 .          Simular em cascata todos os DNS's gerando resultados parciais conforme são rodadas as simulações    .
-.       desenvolvendo um gráfico comparativo no final entre os métodos. Para isso, no caso do fortran e c++    .
-.       recomenda-se utilizar uma biblioteca python externa.                                                   .
+.       desenvolvendo. Para isso, no caso do fortran, c++ e JAVA, para se montar gráficos, recomenda-se        .
+.       utilizar uma biblioteca python externa.                                                                .
 .                                                                                                              .
 ----------------------------------------------------------------------------------------------------------------
 
@@ -23,21 +23,23 @@ Resumo do projeto:
 
 		- main.f90            (simulations in FORTRAN)
 		- main.py             (simulations in python)
-		- main.cpp            (cpp file of simulations in c++)
-		- main.h              (header file of simulations in c++)
-		- grafics.py          (gráficos situacionais, para cada situação, consultar índice grafcs abaixo)
+		- main.cpp            (main file of simulations in c++)
+		- functions.h         (header file of simulations in c++)
+		- functions.cpp       (file with the functions in c++)
+        - grafics.py          (various graphics, for knowing for what, view grafics.py as follows)
 		- teste.f90           (Quest from the professor)
 
 
     + grafics.py:
 
-        - análise do ajuste para a constante V no ajuste do Pr_t, a partir do programa "teste.f90"
+        - Análise do ajuste para a constante V no ajuste do Pr_t, a partir do programa "teste.f90"
+        - Comparação das análises gerais em um gráfico completo 3D
+        - Exemplos para estudo do matplotlib.
 
 
 	+ DNS disponível:
 
 		- 150  | 0.71
-		- 180  | 0.025 , 0.05 , 0.1 , 0.2 , 0.4 , 0.6 , 0.71 , 1 , 2 , 5 , 7 , 10
 		- 395  | 0.025 , 0.71 , 1 , 2 , 5 , 7 , 10
 		- 640  | 0.025 , 0.71
 		- 1020 | 0.71
@@ -60,10 +62,10 @@ Resumo do projeto:
 
 		- Prt = 0.906
 
-		- 150  | 0.884
-		- 395  | 0.900
-		- 640  | 0.909
-		- 1020 | 0.912
+		- 150  | 0.884  |  28.610
+		- 395  | 0.900  |  25.677
+		- 640  | 0.909  |  25.001
+		- 1020 | 0.912  |  25.002
 
 	+ Em função do Reynolds:
 

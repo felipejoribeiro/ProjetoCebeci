@@ -4,8 +4,8 @@ module prandtll
     double precision , dimension(:,:) , allocatable :: Tdns
     integer , dimension(3) :: p
     double precision:: Ret , Re, Pr , Prt , vc , dy , incre , um, L2 , L1 , Li
-    integer:: N
-    character*100:: dirname
+    integer:: N , y , Parameters
+    character*100:: dirname , filename
 end module
 
 
@@ -21,9 +21,23 @@ program teste
     double precision :: R
 
     ! Controle dos parametros
+    y = 12
+    do Parameters = 1 , y
 
-        Ret = 390.d0
-        Pr = 10.d0
+        !   1 - Ret = 150  , Pr = 0.025
+        !   2 - Ret = 150  , Pr = 0.71
+        !   3 - Ret = 395  , Pr = 0.025
+        !   4 - Ret = 395  , Pr = 0.71
+        !   5 - Ret = 395  , Pr = 1
+        !   6 - Ret = 395  , Pr = 2
+        !   7 - Ret = 395  , Pr = 5
+        !   8 - Ret = 395  , Pr = 7
+        !   9 - Ret = 395  , Pr = 10
+        !   10- Ret = 640  , Pr = 0.025
+        !   11- Ret = 640  , Pr = 0.71
+        !   12- Ret = 1020 , Pr = 0.71
+
+        call DeterminaParametros()
 
         ! Controles numéricos
 
@@ -34,17 +48,18 @@ program teste
 
         ! Méta modelos a partir da referência
 
-        prt = ((1.3d0 * 10.d0 ** (-11.d0) ) * Ret**3.d0 - &
-        (7.1d0 * 10.d0 **(-8.d0)) * Ret**2.d0 + 0.0001d0 * Ret + 0.87d0)* (pr/0.71d0)**(-0.008d0)
+        prt = ((1.3d0 * 10.d0 ** (-11.d0) ) * Ret**3 - &
+        (7.1d0 * 10.d0 **(-8.d0)) * Ret**2.d0 + 0.0001d0 * Ret + 0.87d0)* (pr/0.71)**(-0.008d0)
 
-        vc = (Ret**(log(Ret) * 0.045d0) * exp(5.3d0) ) / (Ret ** 0.61d0)
+        vc = (Ret**(log(Ret) * 0.045d0) * exp(5.3) ) / (Ret ** 0.61d0)
 
         ! Adequação aos parâmetros padrão
         call AdequaParametro()
         ! Adequação numérica final (usuário)
 
-        prt = 0.905d0
+        filename = '/results/ResultadosGeraisModelados.txt'
 
+        ! ...
 
 
         ! Alocando-se os alocáveis
@@ -72,10 +87,12 @@ program teste
         print*, "L2 = " , L2
         print*, "Li = " , Li
 
+        end do
+
         ! Encerramento
 
         print*, " "
-        print*, "Fim da simulação!"
+        print*, "Fim das simulações!"
 
 end program
 
@@ -107,6 +124,8 @@ subroutine Program()
     call L1norm()
     ! Tirando norma Li
     call Linorm()
+    ! Registrando resultado
+    call EscreverArquivo()
     return
 
     end subroutine Program
@@ -301,7 +320,7 @@ function f(s, i)
     double precision, intent(in) :: s
     integer, intent(in) :: i
     double precision :: f , ff , L
-    f = ( Ret/Pr - ((((L(s))**2.d0 )*Ret**3.d0)/vPrt(i) ) * ff(s)  )
+    f = ( Ret/Pr - ((((L(s))**2 )*Ret**3)/vPrt(i) ) * ff(s)  )
     return
 
 end function f
@@ -309,7 +328,7 @@ end function f
 
 
 
-! importanto o DNS
+! importando o DNS
 subroutine DNSinput()
 
     use prandtll
@@ -421,7 +440,7 @@ subroutine L2norm()
             if((Ret - Tdns(1 , ii)) < e(i) .and. (Ret - Tdns(1 , ii)) > e(i-1) )then
                 ly = (T(i) - T(i-1))*((Ret - Tdns(1,ii)) - e(i-1))/(e(i) - e(i-1))
                 ly = T(i-1) + ly
-                k1 = k1 + (ly - Tdns(2,ii))**2.d0
+                k1 = k1 + (ly - Tdns(2,ii))**2
                 iii = iii + 1
             end if
         end do
@@ -485,3 +504,129 @@ subroutine Linorm()
     return
 
     end subroutine Linorm
+
+
+! Determinando parametros
+subroutine DeterminaParametros()
+
+    use prandtll
+    implicit none
+    allocate(Tdns(12 , 2))
+    Tdns(1, 1) = 150.d0
+    Tdns(1, 2) = 0.025d0
+    Tdns(2, 1) = 150.d0
+    Tdns(2, 2) = 0.71d0
+    Tdns(3, 1) = 395.d0
+    Tdns(3, 2) = 0.025d0
+    Tdns(4, 1) = 395.d0
+    Tdns(4, 2) = 0.71d0
+    Tdns(5, 1) = 395.d0
+    Tdns(5, 2) = 1.d0
+    Tdns(6, 1) = 395.d0
+    Tdns(6, 2) = 2.d0
+    Tdns(7, 1) = 395.d0
+    Tdns(7, 2) = 5.d0
+    Tdns(8, 1) = 395.d0
+    Tdns(8, 2) = 7.d0
+    Tdns(9, 1) = 395.d0
+    Tdns(9, 2) = 10.d0
+    Tdns(10, 1) = 640.d0
+    Tdns(10, 2) = 0.025d0
+    Tdns(11, 1) = 640.d0
+    Tdns(11, 2) = 0.71d0
+    Tdns(12, 1) = 1020.d0
+    Tdns(12, 2) = 0.71d0
+    Ret = Tdns(Parameters , 1)
+    Pr = Tdns(Parameters , 2)
+    deallocate(Tdns)
+    return
+
+    end subroutine DeterminaParametros
+
+
+
+
+! Escreve Arquivo em pasta resultados
+subroutine EscreverArquivo()
+
+    use prandtll
+    implicit none
+    integer :: i
+    double precision :: k1 , k2 , k3 , k4 , k5
+    character(len = :), allocatable :: m
+
+    if(parameters == 1)then
+        allocate(character(len=len(dirname // '/results/temp.txt')) :: m)
+        m = trim(dirname) // '/results/temp.txt'
+        open(unit=10,file=m)
+        deallocate(m)
+        Write(10,*) Ret , Pr , L1 , L2 , Li
+        close(10)
+    elseif(parameters /= y)then
+        allocate(character(len=len(dirname // filename)) :: m)
+        m = trim(dirname) // trim(filename)
+        open(unit=10,file=m)
+        deallocate(m)
+            allocate(character(len=len(dirname // '/results/temp.txt')) :: m)
+            m = trim(dirname) // '/results/temp.txt'
+            open(unit=11,file=m)
+            deallocate(m)
+            do i = 1 , parameters - 1
+                read(11,*) k1 , k2 , k3 , k4 , k5
+                write(10,*) k1 , k2 , k3 , k4 , k5
+            end do
+            close(11)
+        Write(10,*) Ret , Pr , L1 , L2 , Li
+        close(10)
+        allocate(character(len=len(dirname // filename)) :: m)
+        m = trim(dirname) // trim(filename)
+        open(unit=10,file=m)
+        deallocate(m)
+        allocate(character(len=len(dirname // '/results/temp.txt')) :: m)
+        m = trim(dirname) // '/results/temp.txt'
+        open(unit=11,file=m)
+        deallocate(m)
+        do i = 1 , parameters
+        read(10,*) k1 , k2 , k3 , k4 , k5
+        write(11,*) k1 , k2 , k3 , k4 , k5
+        end do
+        close(11)
+        close(10)
+    else
+        allocate(character(len=len(dirname // filename)) :: m)
+        m = trim(dirname) // trim(filename)
+        open(unit=10,file=m)
+        deallocate(m)
+            allocate(character(len=len(dirname // '/results/temp.txt')) :: m)
+            m = trim(dirname) // '/results/temp.txt'
+            open(unit=11,file=m)
+            deallocate(m)
+            do i = 1 , parameters - 1
+                read(11,*) k1 , k2 , k3 , k4 , k5
+                write(10,*) k1 , k2 , k3 , k4 , k5
+            end do
+            close(11)
+        Write(10,*) Ret , Pr , L1 , L2 , Li
+        close(10)
+        allocate(character(len=len(dirname // filename)) :: m)
+        m = trim(dirname) // trim(filename)
+        open(unit=10,file=m)
+        deallocate(m)
+        allocate(character(len=len(dirname // '/results/temp.txt')) :: m)
+        m = trim(dirname) // '/results/temp.txt'
+        open(unit=11,file=m)
+        deallocate(m)
+        do i = 1 , parameters
+        read(10,*) k1 , k2 , k3 , k4 , k5
+        write(11,*) k1 , k2 , k3 , k4 , k5
+        end do
+        close(11)
+        close(10)
+
+
+        print*, "foi"
+        CALL SYSTEM("cd results ; rm -f temp.txt")
+    end if
+    return
+
+    end subroutine EscreverArquivo
