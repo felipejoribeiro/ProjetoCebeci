@@ -31,19 +31,18 @@ plt.show()
 
 # Leitura e Plotagem e gráfico tridimensional com análise geral dos resultados do algorítmo para DNS's gerais para o método ajustado (Prandtl e Cebeci).
 
-# Leitura de arquivos resposta:
 orto = np.loadtxt("results/ResultadosGeraisOrtodoxos.txt", dtype='float')
 C905 = np.loadtxt("results/ResultadosPrtFixoIdealVs26.txt", dtype='float')
 RcCm = np.loadtxt("results/ResultadosPrtFixoIdealVsMod.txt", dtype='float')
 Mode = np.loadtxt("results/ResultadosGeraisModelados.txt", dtype='float')
 
-fig = plt.figure()
-ax = fig.add_subplot(111, projection='3d')
+fig = plt.figure()                                                                # Determining object image
+ax = fig.add_subplot(111, projection='3d')                                        # Adding 3D axis
 
-# xs = orto[: , 0]
-# ys = orto[: , 1]
-# zs = orto[: , 2]
-# ax.scatter(xs, ys, zs , color = "b" , label = 'Literature')
+xs = orto[: , 0]
+ys = orto[: , 1]
+zs = orto[: , 2]
+ax.scatter(xs, ys, zs , color = "b" , label = 'Literature')
 
 xs = Mode[: , 0]
 ys = Mode[: , 1]

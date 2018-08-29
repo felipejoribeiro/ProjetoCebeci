@@ -6,6 +6,7 @@ class functions {
     public:
 
     void CreateSpaceVector();
+    int GetN();
 
 
     private:

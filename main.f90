@@ -57,7 +57,7 @@ program teste
         call AdequaParametro()
         ! Adequação numérica final (usuário)
 
-        filename = '/results/ResultadosGeraisModelados.txt'
+        filename = '/results/indet.txt'
 
         ! ...
 

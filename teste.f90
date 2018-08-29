@@ -27,7 +27,7 @@ program teste
 
         ! Controles numéricos
 
-        N = 400                                                                            ! Número de células
+        N = 1000                                                                            ! Número de células
         incre = 1.d-9                                                                      ! incremento para convergência do método implícito
         R = 1.d0                                                                           ! Raio do canal
         dy = (R/(dble(N) - 0.5d0)) * Ret/R;                                                ! i_1 = dy/2 ... i_n = R
@@ -285,6 +285,7 @@ subroutine TemperatureSimu()
             + T(i-1)*f(e(i) - dy/2.d0 , i - 1) + T(i+1)*f(e(i) + dy/2.0d0, i))/(f(e(i)-dy/2.d0,i-1) &
             + f(e(i) + dy/2.d0, i) )
         end do
+        print*, T(1)
     end do
     return
 
@@ -372,7 +373,6 @@ subroutine DNSinput()
             read(10,*) ly , Tdns(1, i), Tdns(2, i)
     End Do
     close (10)
-    deallocate(m)
     return
 
     end subroutine DNSinput
