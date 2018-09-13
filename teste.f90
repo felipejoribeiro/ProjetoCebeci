@@ -22,28 +22,28 @@ program teste
 
     ! Controle dos parametros
 
-        Ret = 390.d0
-        Pr = 10.d0
+        Ret = 1020.d0
+        Pr = 0.71d0
 
         ! Controles numéricos
 
-        N = 1000                                                                            ! Número de células
+        N = 100                                                                            ! Número de células
         incre = 1.d-9                                                                      ! incremento para convergência do método implícito
         R = 1.d0                                                                           ! Raio do canal
         dy = (R/(dble(N) - 0.5d0)) * Ret/R;                                                ! i_1 = dy/2 ... i_n = R
 
         ! Méta modelos a partir da referência
 
-        prt = ((1.3d0 * 10.d0 ** (-11.d0) ) * Ret**3.d0 - &
-        (7.1d0 * 10.d0 **(-8.d0)) * Ret**2.d0 + 0.0001d0 * Ret + 0.87d0)* (pr/0.71d0)**(-0.008d0)
+        prt = ((4.58738633d0 * 10.d0 ** (-12.d0) ) * Ret**3 - &
+        (5.7497777d0 * 10.d0 **(-8.d0)) * Ret**2.d0 + (9.40210329d0 * 10.d0 ** (-5.d0) )* Ret + 0.87155d0)* (pr/0.71)**(-0.008d0)
 
-        vc = (Ret**(log(Ret) * 0.045d0) * exp(5.3d0) ) / (Ret ** 0.61d0)
+        vc = (Ret**(log(Ret) * 0.04510d0) * exp(5.27533d0) ) / (Ret ** 0.60942d0)
 
         ! Adequação aos parâmetros padrão
         call AdequaParametro()
         ! Adequação numérica final (usuário)
 
-        prt = 0.905d0
+        print*, vc
 
 
 
@@ -250,6 +250,8 @@ function L(position)
 
 
 
+
+
 ! Setagem do vetor Prandtl turbulento
 subroutine Prandtlvector()
 
@@ -262,6 +264,45 @@ subroutine Prandtlvector()
     return
 
     end subroutine Prandtlvector
+
+
+
+
+
+
+subroutine PrandtlvectorDNS640()
+
+    use prandtll
+    implicit none
+    integer :: i , ii , iii
+    double precision :: k1 , k2 , k3 , ly
+    double precision , dimension(:,:) , allocatable :: TPrt
+    character(len=:), allocatable :: m
+    allocate(TPrt(2 , 128))
+    allocate(character(len=len(dirname // '/DNS/Prt_RE_640_071.txt')) :: m)
+    m = trim(dirname) // '/DNS/Prt_RE_640_071.txt'
+    open(unit=10,file= m)
+    Do i = 1 ,  128
+            read(10,*) ii , TPrt(1, i), k1 , k2 , k3 , TPrt(2, i)
+    End Do
+    close(10)
+    k1 = 0
+    k2 = 0
+    do i = 2 , 128
+        do ii = 1 , N
+        if( e(ii) > ( TPrt(1, i-1)) .and. e(ii) < ( TPrt(1, i)) )then
+            k1 = (TPrt(2,i) - TPrt(2,i-1))/(TPrt(1,i) - TPrt(1, i-1))
+            vPrt(N + 1 - ii) = TPrt(2, i-1) + k1 * (e(ii) - TPrt(1, i-1))
+        end if
+     end do
+    end do
+    vPrt(1) = vPrt(2)
+    deallocate(m)
+    return
+
+    end subroutine PrandtlvectorDNS640
+
+
 
 
 
@@ -285,11 +326,57 @@ subroutine TemperatureSimu()
             + T(i-1)*f(e(i) - dy/2.d0 , i - 1) + T(i+1)*f(e(i) + dy/2.0d0, i))/(f(e(i)-dy/2.d0,i-1) &
             + f(e(i) + dy/2.d0, i) )
         end do
-        print*, T(1)
+        !print*, T(1)
     end do
     return
 
     end subroutine TemperatureSimu
+
+
+
+
+    ! Desenvolve o vetor temperatura
+subroutine TemperatureSimu2()
+
+    use prandtll
+    implicit none
+    integer :: i
+    double precision :: k1 , k2 , k3 , f , somatoria
+    do i = 1 , N
+        T(i) = 0.d0
+    end do
+    do i = N , 2 , -1
+
+        k1 = (somatoria(i))/(f(e(i)-dy , i-2)*um)
+        k2 = (somatoria(i))/(f(e(i)-0.5d0*dy , i - 1)*um)
+        k3 = (somatoria(i))/(f(e(i) , i )*um)
+
+        T(i-1) = T(i) - dy * (k1 + 2.d0 * k2 + k3)/4.d0
+    end do
+
+    print*, T
+    return
+
+    end subroutine TemperatureSimu2
+
+
+
+    !Desenvolvimento da integral velocidade
+function somatoria(i)
+
+    use prandtll
+    implicit none
+    integer :: i , ii
+    double precision :: soma , somatoria
+    soma = 0.d0
+    do ii = 1 , i
+        soma = soma + u(i) * dy
+    end do
+    somatoria = soma
+    return
+
+    end function
+
 
 
 
@@ -373,6 +460,7 @@ subroutine DNSinput()
             read(10,*) ly , Tdns(1, i), Tdns(2, i)
     End Do
     close (10)
+    deallocate(m)
     return
 
     end subroutine DNSinput
@@ -417,6 +505,7 @@ subroutine L2norm()
     k1 = 0.d0
     iii = 0
     do i = 2 , N
+
         do ii = 1 , p(1)
             if((Ret - Tdns(1 , ii)) < e(i) .and. (Ret - Tdns(1 , ii)) > e(i-1) )then
                 ly = (T(i) - T(i-1))*((Ret - Tdns(1,ii)) - e(i-1))/(e(i) - e(i-1))
@@ -425,6 +514,7 @@ subroutine L2norm()
                 iii = iii + 1
             end if
         end do
+
     end do
     L2 = sqrt(k1 / (iii))
     return

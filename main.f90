@@ -48,16 +48,17 @@ program teste
 
         ! Méta modelos a partir da referência
 
-        prt = ((1.3d0 * 10.d0 ** (-11.d0) ) * Ret**3 - &
-        (7.1d0 * 10.d0 **(-8.d0)) * Ret**2.d0 + 0.0001d0 * Ret + 0.87d0)* (pr/0.71)**(-0.008d0)
+        prt = ((4.58738633d0 * 10.d0 ** (-12.d0) ) * Ret**3 - &
+        (5.7497777d0 * 10.d0 **(-8.d0)) * Ret**2.d0 + (9.40210329d0 * 10.d0 ** (-5.d0) )* Ret + 0.87155d0)* (pr/0.71)**(-0.008d0)
 
-        vc = (Ret**(log(Ret) * 0.045d0) * exp(5.3) ) / (Ret ** 0.61d0)
+        vc = (Ret**(log(Ret) * 0.04510d0) * exp(5.27533d0) ) / (Ret ** 0.60942d0)
 
         ! Adequação aos parâmetros padrão
         call AdequaParametro()
         ! Adequação numérica final (usuário)
 
-        filename = '/results/indet.txt'
+
+        filename = '/results/arquivogerado.txt'
 
         ! ...
 
@@ -70,6 +71,7 @@ program teste
         allocate (Tdns(2 , p(1)))
         ! Desenvolvimento do método
         call Program()
+
         ! Desalocando-se os desalocáveis
         deallocate(Tdns)
         deallocate(T)
@@ -77,12 +79,13 @@ program teste
         deallocate(e)
         deallocate(u)
 
-
         ! Amostrando resultados
 
         print*, "------------------------------------------------"
         print*, "Ret = " , Ret
         print*, "Pr = " , Pr
+        print*, "Prt = " , prt
+        print*, "A = ", vc
         print*, "L1 = " , L1
         print*, "L2 = " , L2
         print*, "Li = " , Li
@@ -622,9 +625,6 @@ subroutine EscreverArquivo()
         end do
         close(11)
         close(10)
-
-
-        print*, "foi"
         CALL SYSTEM("cd results ; rm -f temp.txt")
     end if
     return

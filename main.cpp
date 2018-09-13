@@ -13,11 +13,19 @@ using boost::multiprecision::cpp_dec_float_50;
 
 int main()
 {
-    cpp_dec_float_50 variavel = cpp_dec_float_50(1) / 7;
+    cpp_dec_float_50 variavel1; // declarou-se uma variável com alta resolução
+    cpp_dec_float_50 variavel2; // declarou-se outra variável com alta precisão.
 
-    variavel = variavel ;
+    variavel1 = cpp_dec_float_50(1) * 1/7;
+
+    variavel2 = cpp_dec_float_50(1) * 1/3;
+
     std::cout.precision(std::numeric_limits<cpp_dec_float_50>::digits10);
-    std::cout << variavel << std::endl;
+    std::cout << variavel1 << std::endl;
+
+    variavel1 = cpp_dec_float_50(4) + variavel2;
+
+    std::cout << variavel1 << std::endl;
 
     return 0;
 
