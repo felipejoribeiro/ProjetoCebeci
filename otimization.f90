@@ -52,7 +52,6 @@ program teste
         allocate(T(N))
         allocate (Tdns(2 , p(1)))
         ! Desenvolvimento do método
-        Print*, "Algorítmo iniciado..."
         call Program()
         ! Desalocando-se os desalocáveis
         deallocate(Tdns)
@@ -67,12 +66,9 @@ program teste
         print*, "------------------------------------------------"
         print*, "Ret = " , Ret
         print*, "Pr = " , Pr
-        print*, "Prt = " , prt
-        print*, "A = ", vc
         print*, "L1 = " , L1
         print*, "L2 = " , L2
         print*, "Li = " , Li
-
 
         ! Encerramento
 

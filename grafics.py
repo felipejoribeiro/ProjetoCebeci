@@ -2,6 +2,7 @@ import math
 import numpy as np
 import matplotlib.pyplot as plt
 from mpl_toolkits.mplot3d import axes3d
+from matplotlib.pyplot import rc
 from matplotlib import cm
 import os
 from os import path
@@ -165,18 +166,71 @@ plt.show()
 
 
 
+######################################################################################### EXEMPLO FORMATACAO
 
 
 
 
+# tamanho = 6
+# aspectratio = 1/1
+
+# dadosin = np.loadtxt("saida3 (1).txt", dtype='float')
+# plt.rc('xtick', labelsize=15)
+# plt.rc('ytick', labelsize=20)
+
+# plt.figure(figsize=(tamanho , tamanho * aspectratio))
+# xs = dadosin[: , 0]
+# ys = dadosin[: , 2]
+# plt.ylim((0, 0.003))
+# plt.ticklabel_format(style='sci', axis='y', scilimits=(0,0))
+# plt.grid(color='black', linestyle=':', linewidth=0.5)
+# plt.rc('xtick', labelsize=15)
+# plt.rc('ytick', labelsize=20)
+# plt.xlabel('xlabel', fontsize=15 )
+# plt.ylabel('ylabel', fontsize=20 )
+# plt.xlabel('CFL')
+# plt.ylabel('Norma L2')
+# plt.plot(xs, ys, 'k', linewidth = '2' , label = "L2")
+# plt.show()
+
+
+
+# plt.figure(figsize=(tamanho , tamanho * aspectratio))
+# xs = dadosin[: , 0]
+# ys = dadosin[: , 3]
+# plt.plot(xs, ys, 'k', linewidth = '2' ,label = "L1" )
+# plt.ylim((0, 0.003))
+# plt.ticklabel_format(style='sci', axis='y', scilimits=(0,0))
+# plt.grid(color='black', linestyle=':', linewidth=0.5)
+# plt.rc('xtick', labelsize=5)
+# plt.rc('ytick', labelsize=5)
+# plt.xlabel('xlabel', fontsize=5 )
+# plt.ylabel('ylabel', fontsize=5 )
+# plt.xlabel('CFL')
+# plt.ylabel('Norma L1')
+# plt.show()
+
+
+
+# plt.figure(figsize=(tamanho , tamanho * aspectratio))
+# xs = dadosin[: , 0]
+# ys = dadosin[: , 3]
+# plt.plot(xs, ys, 'k', linewidth = '2' ,label = "L1" )
+# plt.ylim((0, 0.003))
+# plt.ticklabel_format(style='sci', axis='y', scilimits=(0,0))
+# plt.grid(color='black', linestyle=':', linewidth=0.5)
+# plt.rc('xtick', labelsize=5)
+# plt.rc('ytick', labelsize=5)
+# plt.xlabel('xlabel', fontsize=5 )
+# plt.ylabel('ylabel', fontsize=5 )
+# plt.xlabel('CFL')
+# plt.ylabel('Norma L1')
+# plt.show()
 
 
 
 
-
-
-
-
+##########################################################################################################################################
 
 
 

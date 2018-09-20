@@ -92,13 +92,12 @@
 	"buffers":
 	[
 		{
-			"file": "main.cpp",
+			"file": "grafics.py",
 			"settings":
 			{
-				"buffer_size": 886,
+				"buffer_size": 12206,
 				"encoding": "UTF-8",
-				"line_ending": "Unix",
-				"name": "#include \"main.h\""
+				"line_ending": "Unix"
 			}
 		}
 	],
@@ -496,15 +495,38 @@
 	],
 	"file_history":
 	[
+		"/home/felipe/Downloads/grafics.py",
+		"/home/felipe/Documents/ProjetoCebeci/main.f90",
+		"/home/felipe/Documents/ProjetoCebeci/otimization.f90",
+		"/home/felipe/Documents/ProjetoCebeci/teste.f90",
+		"/home/felipe/Documents/ProjetoCebeci/README",
+		"/home/felipe/Documents/ProjetoCebeci/referencias/posmoderno/prandtlcontinum.f90",
+		"/home/felipe/Documents/ProjetoCebeci/grafics.py",
+		"/home/felipe/Documents/ProjetoCebeci/results/ResultadosPrtFixoIdealVsModnovo.txt",
+		"/home/felipe/Documents/ProjetoCebeci/referencias/posmoderno/analisecontinua/Resultadofinalaristeu.txt",
+		"/home/felipe/Documents/ProjetoCebeci/referencias/posmoderno/prandtlencit.f90",
+		"/home/felipe/Documents/ProjetoCebeci/referencias/posmoderno/analisecontinua/Resultadofinaluaristeu.txt",
+		"/home/felipe/Documents/ProjetoCebeci/results/ResultadosPrtFixoIdealVs26.txt",
+		"/home/felipe/Documents/ProjetoCebeci/referencias/posmoderno/prandtlfinal.f90",
+		"/home/felipe/Documents/ProjetoCebeci/referencias/posmoderno/DNS_RE_150.txt",
+		"/home/felipe/Documents/ProjetoCebeci/referencias/posmoderno/untitled.py",
+		"/home/felipe/Documents/ProjetoCebeci/referencias/posmoderno/resumo do trabalho com meta modelo Prt variavel/untitled.py",
+		"/home/felipe/Documents/ProjetoCebeci/referencias/posmoderno/resumo do trabalho com meta modelo Prt variavel/vetor071.txt",
+		"/home/felipe/Documents/ProjetoCebeci/main.cpp",
+		"/home/felipe/Documents/ProjetoCebeci/results/temp.txt",
+		"/home/felipe/Documents/ProjetoCebeci/referencias/posmoderno/analisecontinua/Processando.txt",
+		"/home/felipe/Documents/ProjetoCebeci/referencias/posmoderno/analisecontinua/fit do Pr pelo Reynolds.jpg",
+		"/home/felipe/Documents/ProjetoCebeci/results/ResultadosPrtVariVs26.txt",
+		"/home/felipe/Documents/ProjetoCebeci/results/ResultadosPrtFixoIdealVsMod.txt",
+		"/home/felipe/Documents/ProjetoCebeci/DNS/Prt_RE_640_071.txt",
+		"/home/felipe/Documents/ProjetoCebeci/plot/myimage.gif",
+		"/home/felipe/Documents/ProjetoCebeci/plot/plot_0.png",
+		"/home/felipe/Documents/ProjetoCebeci/results/Resultadospara071.txt",
+		"/home/felipe/Documents/ProjetoCebeci/results/indet.txt",
 		"/home/felipe/Documents/ProjetoCebeci/functions.h",
 		"/home/felipe/Documents/ProjetoCebeci/functions.cpp",
-		"/home/felipe/Documents/ProjetoCebeci/main.f90",
-		"/home/felipe/Documents/ProjetoCebeci/README",
-		"/home/felipe/Documents/ProjetoCebeci/teste.f90",
-		"/home/felipe/Documents/ProjetoCebeci/grafics.py",
 		"/home/felipe/Documents/ProjetoCebeci/results/ResultadosGeraisModelados.txt",
 		"/home/felipe/Documents/ProjetoCebeci/temp.txt",
-		"/home/felipe/Documents/ProjetoCebeci/results/temp.txt",
 		"/home/felipe/Documents/ProjetoCebeci/results/temp2.txt",
 		"/home/felipe/.config/sublime-text-3/Packages/C++/C++ Single File.sublime-build",
 		"/home/felipe/.config/sublime-text-3/Packages/User/fortran2win.sublime-build",
@@ -515,7 +537,6 @@
 		"/home/felipe/Documents/ProjetoCebeci/results/teste.txt",
 		"/home/felipe/Documents/ProjetoCebeci/DNS/DNS_RE_640_0025.txt",
 		"/home/felipe/Documents/ProjetoCebeci/DNS/DNS_RE_395_0025.txt",
-		"/home/felipe/Documents/ProjetoCebeci/referencias/posmoderno/prandtlfinal.f90",
 		"/home/felipe/Documents/ProjetoCebeci/referencias/pós moderno/prandtlfinal.f90",
 		"/home/felipe/Documents/ProjetoCebeci/DNS/DNS_RE_395_1.txt",
 		"/home/felipe/Documents/ProjetoCebeci/DNS/DNS_RE_395_2.txt",
@@ -578,7 +599,7 @@
 	},
 	"find_in_files":
 	{
-		"height": 0.0,
+		"height": 95.0,
 		"where_history":
 		[
 		]
@@ -588,6 +609,7 @@
 		"case_sensitive": false,
 		"find_history":
 		[
+			"temp",
 			"print",
 			"write",
 			"inport",
@@ -619,28 +641,27 @@
 			[
 				{
 					"buffer": 0,
-					"file": "main.cpp",
+					"file": "grafics.py",
 					"semi_transient": false,
 					"settings":
 					{
-						"buffer_size": 886,
+						"buffer_size": 12206,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								775,
-								775
+								10256,
+								10256
 							]
 						],
 						"settings":
 						{
-							"auto_name": "#include \"main.h\"",
-							"syntax": "Packages/C++/C++.sublime-syntax"
+							"syntax": "Packages/Python/Python.sublime-syntax"
 						},
 						"translation.x": 0.0,
-						"translation.y": 0.0,
+						"translation.y": 2014.0,
 						"zoom_level": 1.0
 					},
 					"stack_index": 0,
@@ -686,7 +707,7 @@
 	},
 	"output.exec":
 	{
-		"height": 211.0
+		"height": 147.0
 	},
 	"output.find_results":
 	{
@@ -742,7 +763,7 @@
 	"show_open_files": false,
 	"show_tabs": true,
 	"side_bar_visible": true,
-	"side_bar_width": 174.0,
+	"side_bar_width": 246.0,
 	"status_bar_visible": true,
 	"template_settings":
 	{
