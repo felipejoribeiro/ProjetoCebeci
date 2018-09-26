@@ -17,18 +17,19 @@ outpath = os.getcwd()    # get current directory
          #Para N = 100 e Re_t = 395
 X = [ -0.04 , -0.035 , -0.03 , -0.025 , -0.020 , -0.015 , -0.01  , -0.008 , -0.007 , -0.006 , -0.005    ,   0    , 0.005 , 0.01 , 0.015 , 0.02 , 0.025 , 0.03 , 0.035 , 0.04]  # V
 Y = [ 1.13  , 0.88  ,  0.65 , 0.45   ,  0.3715,  0.47  , 0.67 ,  0.7763, 0.8263  , 0.8771  , 0.9286   , 1.1944   , 1.46 , 1.75 , 2.03  ,  2.32,  2.61 , 2.91 , 3.20  , 3.51]   # L2
-plt.plot( X, Y, 'k', linewidth = '1' , color = "b" , label = "N = 100" )
+plt.plot( X, Y, 'k', linewidth = '1' , linestyle= '-' , label = "N = 100" )
 
          #Para N = 400 e Re_t = 395
 XX = [ -0.04 , -0.035 , -0.03 , -0.025 ,-0.02 , -0.018 , -0.016 , -0.014 , -0.012 , -0.01  , -0.008 , -0.006 , -0.004 , -0.002 , 0, 0.005 , 0.015 , 0.02 , 0.025 , 0.03 , 0.035 , 0.04]   # V
 YY = [ 1.88  , 1.60   , 1.33  , 1.05    ,0.78  ,  0.67  ,  0.58  ,  0.48  ,  0.41  ,  0.35  ,  0.33   , 0.35  ,   0.40  ,  0.48 , 0.57, 0.83 , 1.41 , 1.71  , 2.01  , 2.32 , 2.63  , 2.94]    # L2
-plt.plot( XX, YY, 'k', linewidth = '1', color = "green" , label = "N = 400")
+plt.plot( XX, YY, 'k', linewidth = '1', linestyle='-' , label = "N = 400")
 
          #Para N = 1000
 X1000 = [ -0.04 , -0.035 , -0.03 , -0.025 , -0.020 , -0.015 , -0.01 , -0.005 , 0 , 0.005 , 0.01  , 0.015 , 0.02 , 0.025 , 0.03 , 0.035 , 0.04] # V
 Y1000 = [  1.93 ,  1.656 ,  1.37 ,  1.101 ,  0.829 ,  0.575 ,  0.37 , 0.3609 ,0.54 ,0.79 , 1.07  , 1.370 , 1.66 , 1.97  , 2.27 , 2.587 , 2.90] # L2
 plt.figure(1)
-plt.plot( X1000, Y1000, 'k', linewidth = '1', color = 'red' , label = 'N = 1000')
+plt.plot( X1000, Y1000, 'k', linewidth = '1', linestyle='-' , label = 'N = 1000')
+plt.grid(color='black', linestyle=':', linewidth=0.5)
 plt.title("Erros no juste de V, independeência de malha")
 plt.legend()
 plt.xlabel('Valores para o número de Cebeci')
@@ -103,6 +104,7 @@ plt.plot( i, ii, 'k', linewidth = '1', color = 'orange' , label = 'Prt = 0.905 a
 plt.legend()
 plt.xlabel('Reynolds turbulento')
 plt.ylabel('Norma L2')
+plt.grid(color='black', linestyle=':', linewidth=0.5)
 # Para Ret = 395
 plt.figure(3)
 i = [orto[2 , 1] , orto[3 , 1] , orto[4 , 1] ,  orto[5 , 1] , orto[6 , 1] , orto[7 , 1] , orto[8 , 1]]
@@ -120,29 +122,31 @@ plt.plot( i, ii, 'k', linewidth = '1', color = 'orange' , label = 'Prt = 0.905 a
 plt.legend()
 plt.xlabel('Prandtl')
 plt.ylabel('Norma L2')
+plt.grid(color='black', linestyle=':', linewidth=0.5)
 plt.show()
 ##########################################################################################################################################
 
 
 # # Fit dos valores numéricos do número de Cebeci:
 
-# #ajuste Prandtl:
-# xPrandtl = np.array([ (150.0) , (395.0) , (640.0)  , (1020.0)])
-# yPrandtl = np.array([(0.884375) , (0.90000000) , (0.90937499) , (0.912499)])
-# zPrandtl = np.polyfit(xPrandtl , yPrandtl , 3)
-# #print(zPrandtl)
-# plt.figure(3)
-# plt.plot( xPrandtl , yPrandtl ,  'k', linewidth = '1', color = 'black' , label = 'Dados numéricos')
-# xPrandtlvontinum = np.arange( (150) , (1020) , 0.1)
-# yPrandtlmodelado =  4.58738633e-12 * np.multiply(xPrandtlvontinum, np.multiply(xPrandtlvontinum, xPrandtlvontinum))-5.74977771e-08 * np.multiply(xPrandtlvontinum, xPrandtlvontinum) + 9.40210329e-05 * xPrandtlvontinum + 8.71550063e-01
-# plt.plot( xPrandtlvontinum , yPrandtlmodelado ,  'k', linewidth = '1', color = 'red' , label = 'ajuste')
-# plt.plot( xPrandtl , (np.zeros(4) + 0.906) ,  'k', linewidth = '1', color = 'blue' , label = 'Prt = 0.905')
-# print()
-# plt.legend()
-# plt.title('Ajuste do valor de Prandtl turbulento')
-# plt.xlabel('Ret')
-# plt.ylabel('Prt')
-
+#ajuste Prandtl:
+xPrandtl = np.array([ (150.0) , (395.0) , (640.0)  , (1020.0)])
+yPrandtl = np.array([(0.885937) , (0.90156) , (0.910937) , (0.91406)])
+zPrandtl = np.polyfit(xPrandtl , yPrandtl , 3)
+print(zPrandtl[1])
+#print(zPrandtl)
+plt.figure(3)
+plt.plot( xPrandtl , yPrandtl ,  'k', linewidth = '1', color = 'black' , label = 'Dados numéricos')
+xPrandtlvontinum = np.arange( (150) , (1020) , 0.1)
+yPrandtlmodelado =  zPrandtl[0] * np.multiply(xPrandtlvontinum, np.multiply(xPrandtlvontinum, xPrandtlvontinum))+ zPrandtl[1] * np.multiply(xPrandtlvontinum, xPrandtlvontinum) + zPrandtl[2] * xPrandtlvontinum + zPrandtl[3]
+plt.plot( xPrandtlvontinum , yPrandtlmodelado ,  'k', linewidth = '1', color = 'red' , label = 'ajuste')
+plt.plot( xPrandtl , (np.zeros(4) + 0.906) ,  'k', linewidth = '1', color = 'blue' , label = 'Prt = 0.905')
+print()
+plt.legend()
+plt.title('Ajuste do valor de Prandtl turbulento')
+plt.xlabel('Ret')
+plt.ylabel('Prt')
+plt.show()
 
 # #ajuste cebeci:
 # xcebeci = np.array([ math.log(150.0) , math.log(395.0) , math.log(640.0)  , math.log(1020.0)])

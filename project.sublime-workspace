@@ -99,6 +99,15 @@
 				"encoding": "UTF-8",
 				"line_ending": "Unix"
 			}
+		},
+		{
+			"file": "otimization.f90",
+			"settings":
+			{
+				"buffer_size": 15092,
+				"encoding": "UTF-8",
+				"line_ending": "Unix"
+			}
 		}
 	],
 	"build_system": "Packages/User/fortran2win.sublime-build",
@@ -450,7 +459,7 @@
 		[
 			[
 				"package",
-				"PackageResourceViewer: Open Resource"
+				"Package Control: Install Package"
 			],
 			[
 				"prv",
@@ -495,6 +504,7 @@
 	],
 	"file_history":
 	[
+		"/home/felipe/version",
 		"/home/felipe/Downloads/grafics.py",
 		"/home/felipe/Documents/ProjetoCebeci/main.f90",
 		"/home/felipe/Documents/ProjetoCebeci/otimization.f90",
@@ -595,7 +605,7 @@
 	],
 	"find":
 	{
-		"height": 24.0
+		"height": 37.0
 	},
 	"find_in_files":
 	{
@@ -609,6 +619,7 @@
 		"case_sensitive": false,
 		"find_history":
 		[
+			"chara",
 			"temp",
 			"print",
 			"write",
@@ -636,7 +647,7 @@
 	"groups":
 	[
 		{
-			"selected": 0,
+			"selected": 1,
 			"sheets":
 			[
 				{
@@ -652,8 +663,8 @@
 						"selection":
 						[
 							[
-								10256,
-								10256
+								3384,
+								3384
 							]
 						],
 						"settings":
@@ -661,7 +672,37 @@
 							"syntax": "Packages/Python/Python.sublime-syntax"
 						},
 						"translation.x": 0.0,
-						"translation.y": 2014.0,
+						"translation.y": 585.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 1,
+					"type": "text"
+				},
+				{
+					"buffer": 1,
+					"file": "otimization.f90",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 15092,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								2049,
+								2049
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/Fortran/grammars/FortranModern.sublime-syntax",
+							"tab_size": 4,
+							"translate_tabs_to_spaces": true
+						},
+						"translation.x": 0.0,
+						"translation.y": 580.0,
 						"zoom_level": 1.0
 					},
 					"stack_index": 0,

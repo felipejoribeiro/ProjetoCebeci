@@ -3,8 +3,8 @@ module prandtll
     double precision , dimension(:) , allocatable :: vPrt , T , u , e
     double precision , dimension(:,:) , allocatable :: Tdns
     integer , dimension(3) :: p
-    double precision:: Ret , Re, Pr , Prt , vc , dy , incre , um, L2 , L1 , Li
-    integer:: N
+    double precision:: Ret , Re, Pr , Prt , vc , dy , incre , um, L2 , L1 , Li, acuracialvo, valorInicial, incremento
+    integer:: N , SIM
     character*100:: dirname
 end module
 
@@ -22,61 +22,148 @@ program teste
 
     ! Controle dos parametros
 
-        Ret = 1020.d0
+        Ret = 150.d0
         Pr = 0.71d0
+
 
         ! Controles numéricos
 
-        N = 100                                                                            ! Número de células
-        incre = 1.d-9                                                                      ! incremento para convergência do método implícito
-        R = 1.d0                                                                           ! Raio do canal
+        incremento = 0.1d0                                                                 ! incremento inicial
+        acuracialvo = 0.001d0                                                              ! Acurácia para os números de Prandtl turbulento ideais.
+        valorInicial = 0.5d0                                                               ! Valor do qual o Prandtl turbulento ira iniciar.
+        N = 400                                                                            ! Número de células.
+        incre = 1.d-9                                                                      ! incremento para convergência do método implícito.
+        R = 1.d0                                                                           ! Raio do canal.
         dy = (R/(dble(N) - 0.5d0)) * Ret/R;                                                ! i_1 = dy/2 ... i_n = R
 
         ! Méta modelos a partir da referência
-
-        prt = ((4.58738633d0 * 10.d0 ** (-12.d0) ) * Ret**3 - &
-        (5.7497777d0 * 10.d0 **(-8.d0)) * Ret**2.d0 + (9.40210329d0 * 10.d0 ** (-5.d0) )* Ret + 0.87155d0)* (pr/0.71)**(-0.008d0)
 
         vc = (Ret**(log(Ret) * 0.04510d0) * exp(5.27533d0) ) / (Ret ** 0.60942d0)
 
         ! Adequação aos parâmetros padrão
         call AdequaParametro()
-        ! Adequação numérica final (usuário)
 
 
 
-        ! Alocando-se os alocáveis
-        allocate(e(N))
-        allocate(u(N))
-        allocate(vPrt(N))
-        allocate(T(N))
-        allocate (Tdns(2 , p(1)))
-        ! Desenvolvimento do método
-        call Program()
-        ! Desalocando-se os desalocáveis
-        deallocate(Tdns)
-        deallocate(T)
-        deallocate(vPrt)
-        deallocate(e)
-        deallocate(u)
+        !inicia o algorítimo evolutivo
+        call evolutivo()
 
 
         ! Amostrando resultados
-
-        print*, "------------------------------------------------"
-        print*, "Ret = " , Ret
-        print*, "Pr = " , Pr
-        print*, "L1 = " , L1
-        print*, "L2 = " , L2
-        print*, "Li = " , Li
-
-        ! Encerramento
-
-        print*, " "
-        print*, "Fim da simulação!"
+        print*, "------------------------------------------------------------------------------"
+        Print*, "Fim da simulação !"
+        Print*, "Ret =" , Ret
+        Print*, "Pr =" , Pr
+        Print*, "N =", N
+        print*,"Prandtl turbulento ideal encontrado : " , Prt
 
 end program
 
+
+
+
+! Algorítimo evolutivo
+subroutine evolutivo()
+
+    use prandtll
+    implicit none
+    character(Len = 200) :: nome1 , nome2 , nome3 , nome4, nome5
+    double precision :: const1 , const2 , const3
+    write(nome1 , "(f8.2)") Ret
+    write(nome2 , "(f4.2)") Pr
+    write(nome3 , "(I5)") N
+    print*, "Algoritmo de otimização iniciado!"
+    print*, "#######################################"
+    print*, "# Reynolds tau = " , trim(nome1) , "             #"
+    print*, "# Prandtl molecular = " , trim(nome2), "            #"
+    print*, "# número de células = " , trim(nome3) , "           #"
+    print*, "#######################################"
+    SIM = 0
+    print*, "---------------------------------------------------------"
+    Prt = valorInicial
+    ! Primeira simulação
+    call simulacao()
+    const1 = L2
+    Prt = Prt + incremento
+    call simulacao()
+    const2 = L2
+    Prt = Prt - 2.d0 * incremento
+    call simulacao()
+    const3 = L2
+    Prt = Prt + incremento
+    print*, "----------"
+        do while(incremento > acuracialvo)
+        if(const1 < const2 .and. const1 < const3)then
+        incremento = incremento/2.d0
+        Prt = Prt + incremento
+        call simulacao()
+        const2 = L2
+        Prt = Prt - 2.d0 * incremento
+        call simulacao()
+        const3 = L2
+        write(nome5 , "(f4.2)") Prt
+        Prt = Prt + incremento
+        print*, "Prt = " ,  trim(nome5) , " incremento =" , incremento
+        print*, "----------"
+        elseif(const1 < const2 .and. const1 > const3)then
+        Prt = Prt - incremento
+        const2 = const1
+        const1 = const3
+        Prt = Prt - incremento
+        call simulacao()
+        const3 = L2
+        Prt = Prt + incremento
+        print*, "<--"
+        print*, "----------"
+        elseif(const1 > const2 .and. const1 < const3)then
+        Prt = Prt + incremento
+        const3 = const1
+        const1 = const2
+        Prt = Prt + incremento
+        call simulacao()
+        const2 = L2
+        Prt = Prt - incremento
+        print*, "-->"
+        print*, "----------"
+        end if
+        end do
+    end subroutine evolutivo
+
+
+
+
+!Simulação numérica
+subroutine simulacao()
+
+    use prandtll
+    implicit none
+    character(Len = 200) :: nome1 , nome2 , nome3
+    SIM = SIM + 1
+    if(SIM < 10)then
+    Write(nome1, "(I1)") SIM
+    elseif(SIM >=10 .and. SIM <100)then
+    Write(nome1, "(I2)") SIM
+    elseif(SIM >=100 .and. SIM <1000)then
+    Write(nome1, "(I3)") SIM
+    end if
+    print*, "simulação: " , trim(nome1)
+    ! Alocando-se os alocáveis
+    allocate(e(N))
+    allocate(u(N))
+    allocate(vPrt(N))
+    allocate(T(N))
+    allocate (Tdns(2 , p(1)))
+    ! Desenvolvimento do método
+    call Program()
+    ! Desalocando-se os desalocáveis
+    deallocate(Tdns)
+    deallocate(T)
+    deallocate(vPrt)
+    deallocate(e)
+    deallocate(u)
+    Write(nome2, "(f4.2)") L2
+    print*, " L2: " , trim(nome2)
+end subroutine simulacao
 
 
 
@@ -86,6 +173,7 @@ end program
 subroutine Program()
 
     use prandtll
+    implicit none
     ! Identificando diretório atual
     Call getcwd( dirname )
     ! Criação do vetor espaco discretizado
@@ -324,7 +412,6 @@ subroutine TemperatureSimu()
             + T(i-1)*f(e(i) - dy/2.d0 , i - 1) + T(i+1)*f(e(i) + dy/2.0d0, i))/(f(e(i)-dy/2.d0,i-1) &
             + f(e(i) + dy/2.d0, i) )
         end do
-        !print*, T(1)
     end do
     return
 
