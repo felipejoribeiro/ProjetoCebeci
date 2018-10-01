@@ -48,17 +48,33 @@ program teste
 
         ! Méta modelos a partir da referência
 
-        prt = ((4.58738633d0 * 10.d0 ** (-12.d0) ) * Ret**3 - &
-        (5.7497777d0 * 10.d0 **(-8.d0)) * Ret**2.d0 + (9.40210329d0 * 10.d0 ** (-5.d0) )* Ret + 0.87155d0)* (pr/0.71)**(-0.008d0)
 
-        vc = (Ret**(log(Ret) * 0.04510d0) * exp(5.27533d0) ) / (Ret ** 0.60942d0)
+
+
+        Prt = - 4.56041707672d0 * 10.d0 ** (-10.d0) * Ret**3 +  9.56902551372d0 * 10.d0 **(-7.d0) * Ret**2 &                               ! Otimizado sem a otimização de cebeci
+        - 0.000617158206068d0 * Ret +  1.01789506426
+
+
+        ! prt = ((4.52901632 * 10.d0 ** (-12.d0) ) * Ret**3 - &
+        !     (5.73952059d0 * 10.d0 **(-8.d0)) * Ret**2.d0 + &
+        !     (9.397008473d0 * 10.d0 ** (-5.d0) )* Ret + 0.873117480)* (pr/0.71)**(-0.008d0)                                                ! Otimizado com a otimização de cebeci
+
+        vc = (Ret**(log(Ret) * 0.04510621d0) * exp(5.27528132d0) ) / (Ret ** 0.60941173d0)                                                ! Otimizado para o menor erro quanto a velocidade.
+
+
+
+
 
         ! Adequação aos parâmetros padrão
         call AdequaParametro()
         ! Adequação numérica final (usuário)
 
 
-        filename = '/results/arquivogerado.txt'
+        filename = '/results/ResultadosPrtvariVs26.txt'
+
+
+        vc = 26
+
 
         ! ...
 

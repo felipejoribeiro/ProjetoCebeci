@@ -23,7 +23,7 @@ program teste
     ! Controle dos parametros
 
         Ret = 1020.d0
-        Pr = 0.71d0
+        Pr = 0.7d0
 
         ! Controles numéricos
 
@@ -43,7 +43,11 @@ program teste
         call AdequaParametro()
         ! Adequação numérica final (usuário)
 
+        prt = 0.905
 
+        vc = 26
+
+        print*, "Método clássico, com incremento = e-9"
 
         ! Alocando-se os alocáveis
         allocate(e(N))

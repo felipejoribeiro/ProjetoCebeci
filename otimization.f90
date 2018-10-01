@@ -38,7 +38,9 @@ program teste
 
         ! Méta modelos a partir da referência
 
-        vc = (Ret**(log(Ret) * 0.04510d0) * exp(5.27533d0) ) / (Ret ** 0.60942d0)
+        vc = (Ret**(log(Ret) * 0.04510621d0) * exp(5.27528132d0) ) / (Ret ** 0.60941173d0)
+
+        vc = 26
 
         ! Adequação aos parâmetros padrão
         call AdequaParametro()
@@ -54,6 +56,7 @@ program teste
         Print*, "Fim da simulação !"
         Print*, "Ret =" , Ret
         Print*, "Pr =" , Pr
+        Print*, "Valor de Cebeci =" , vc
         Print*, "N =", N
         print*,"Prandtl turbulento ideal encontrado : " , Prt
 
