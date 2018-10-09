@@ -41,7 +41,7 @@ program teste
 
         ! Controles numéricos
 
-        N = 400                                                                            ! Número de células
+        N = 40                                                                             ! Número de células
         incre = 1.d-9                                                                      ! incremento para convergência do método implícito
         R = 1.d0                                                                           ! Raio do canal
         dy = (R/(dble(N) - 0.5d0)) * Ret/R;                                                ! i_1 = dy/2 ... i_n = R
@@ -70,7 +70,7 @@ program teste
         ! Adequação numérica final (usuário)
 
 
-        filename = '/results/ResultadosPrtvariVs26.txt'
+        filename = '/results/resultados.txt'
 
 
         vc = 26
@@ -352,7 +352,7 @@ subroutine DNSinput()
 
     use prandtll
     implicit none
-    integer :: i
+    integer :: i, ii
     double precision :: ly
     character(len=:), allocatable :: m
     ! Abertura de arquivo

@@ -22,16 +22,16 @@ program teste
 
     ! Controle dos parametros
 
-        Ret = 150.d0
+        Ret = 1020.d0
         Pr = 0.71d0
 
 
         ! Controles numéricos
 
         incremento = 0.1d0                                                                 ! incremento inicial
-        acuracialvo = 0.001d0                                                              ! Acurácia para os números de Prandtl turbulento ideais.
+        acuracialvo = 0.00001d0                                                            ! Acurácia para os números de Prandtl turbulento ideais.
         valorInicial = 0.5d0                                                               ! Valor do qual o Prandtl turbulento ira iniciar.
-        N = 400                                                                            ! Número de células.
+        N = 40                                                                             ! Número de células.
         incre = 1.d-9                                                                      ! incremento para convergência do método implícito.
         R = 1.d0                                                                           ! Raio do canal.
         dy = (R/(dble(N) - 0.5d0)) * Ret/R;                                                ! i_1 = dy/2 ... i_n = R
@@ -40,7 +40,6 @@ program teste
 
         vc = (Ret**(log(Ret) * 0.04510621d0) * exp(5.27528132d0) ) / (Ret ** 0.60941173d0)
 
-        vc = 26
 
         ! Adequação aos parâmetros padrão
         call AdequaParametro()

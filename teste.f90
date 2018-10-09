@@ -23,11 +23,11 @@ program teste
     ! Controle dos parametros
 
         Ret = 1020.d0
-        Pr = 0.7d0
+        Pr = 0.71d0
 
         ! Controles numéricos
 
-        N = 400                                                                            ! Número de células
+        N = 100                                                                            ! Número de células
         incre = 1.d-9                                                                      ! incremento para convergência do método implícito
         R = 1.d0                                                                           ! Raio do canal
         dy = (R/(dble(N) - 0.5d0)) * Ret/R;                                                ! i_1 = dy/2 ... i_n = R
@@ -43,11 +43,8 @@ program teste
         call AdequaParametro()
         ! Adequação numérica final (usuário)
 
-        prt = 0.905
 
-        vc = 26
 
-        print*, "Método clássico, com incremento = e-9"
 
         ! Alocando-se os alocáveis
         allocate(e(N))
