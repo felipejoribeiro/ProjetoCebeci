@@ -34,23 +34,26 @@ external FTN
 !...........................................................................................................
 ! Parametros
 NP=10                                                                        ! Indivíduos na população
-itermax=10                                                                   ! Número máximo de iterações
-refresh=1                                                                    ! Intervalos de atualização do console
+itermax=100                                                                  ! Número máximo de iterações
+refresh=4                                                                    ! Intervalos de atualização do console
 VTR=-1.0d-3                                                                  ! Acurácia esperada do argumento de saída
 iwrite=7                                                                     ! Unidade de escrita de arquivo.
 Dim_XC=2                                                                     ! Número de variáveis de entrada
-filename = "/results/Gene1020_071.txt"                                       ! Nome do arquivo.
+filename = "/results/Gene150_071_400.txt"                                    ! Nome do arquivo.
+N = 400                                                                      ! Número de células
 allocate(XCmin(Dim_XC) , XCmax(Dim_XC), bestmem_XC(Dim_XC))
 ! Parametros metodológicos
+Ret = 150.d0                                                                 ! Reynolds turbulento
+Pr = 0.71d0                                                                  ! Prandtl molecular
 method=(/0, 1, 0/)                                                           ! Metodologia de mutação
 strategy=6                                                                   ! Stratégias de mutação
 CR_XC=0.5d0                                                                  ! Crossover factor for real decision parameters.
 F_XC=0.8d0                                                                   ! Mutation scaling factor for real decision parameters.
 F_CR=0.8d0                                                                   ! Random combined factor
-XCmin(1)=0.0d0                                                               ! Limite inferior para domínio de algorítmos de entrada
-XCmax(1)=2.0d0                                                               ! Limite superior para domínio de algorítmos de entrada
-XCmin(2)=22.0d0                                                              ! Limite inferior para domínio de algorítmos de entrada
-XCmax(2)=30.0d0                                                              ! Limite superior para domínio de algorítmos de entrada
+XCmin(1)=0.0d0                                                              ! Limite inferior para domínio de algorítmos de entrada
+XCmax(1)=10.0d0                                                               ! Limite superior para domínio de algorítmos de entrada
+XCmin(2)=0.0d0                                                               ! Limite inferior para domínio de algorítmos de entrada
+XCmax(2)=50.0d0                                                              ! Limite superior para domínio de algorítmos de entrada
 !...........................................................................................................
 ! Rotina de escrita em arquivo resultante                                                                  .
 !...........................................................................................................
@@ -60,6 +63,8 @@ call date_and_time(values=time)                                                 
 
 write(unit=iwrite, FMT=11) time(1:3), time(5:7)
 11  format(1x, 'Beginning of Program. Date:', I4, '/', I2,'/', I2, ', Time:', 1x , I2,':',I2,':',I2)          ! Escrita tempo e hora de início.
+
+print*, filename
 
 call DE_Fortran90(FTN, Dim_XC, XCmin, XCmax, VTR, NP, itermax, F_XC,&
                 CR_XC, strategy, refresh, iwrite, bestmem_XC, &                                               ! Chamou o algorítmo evolutivo.
@@ -112,12 +117,8 @@ subroutine FTN(X, objval)
 
     ! Controle dos parametros
 
-        Ret = 1020.d0
-        Pr = 0.71d0
-
         ! Controles numéricos
 
-        N = 100                                                                            ! Número de células
         incre = 1.d-9                                                                      ! incremento para convergência do método implícito
         R = 1.d0                                                                           ! Raio do canal
         dy = (R/(dble(N) - 0.5d0)) * Ret/R;                                                ! i_1 = dy/2 ... i_n = R
@@ -166,6 +167,7 @@ subroutine FTN(X, objval)
         ! Encerramento
 
         ! print*, " "
+        write(13, *) prt ,  vc , L2
         print*, "Fim da simulação!"
 
   objval = L2
@@ -688,176 +690,169 @@ subroutine DE_Fortran90(obj, Dim_XC, XCmin, XCmax, VTR, NP, itermax, F_XC, &
 !                   = other, fixed combined factor provided by the user
 !         method(3) = 1, Saving results in a data file.
 !                   = other, displaying results only.
-     use prandtll
-     implicit none
-     integer, intent(in) :: NP, Dim_XC, itermax, strategy, iwrite, refresh
-     double precision, intent(in) :: VTR, CR_XC
-     double precision :: F_XC, F_CR
-     double precision, dimension(Dim_XC), intent(in) :: XCmin, XCmax
-     double precision, dimension(Dim_XC), intent(inout) :: bestmem_XC
-     double precision, intent(out) :: bestval
-     integer, intent(out) :: nfeval
-     double precision, dimension(NP,Dim_XC) :: pop_XC, bm_XC, mui_XC, mpo_XC, popold_XC, rand_XC, ui_XC
-     integer :: i, ibest, iter
-     integer, dimension(NP) :: rot, a1, a2, a3, a4, a5, rt
-     integer, dimension(4) :: ind
-     double precision :: tempval
-     double precision, dimension(NP) :: val
-     double precision, dimension(Dim_XC) :: bestmemit_XC
-     double precision, dimension(Dim_XC) :: rand_C1
-     integer, dimension(3), intent(in) :: method
-     external  obj
-     intrinsic max, min, random_number, mod, abs, any, all, maxloc
-     interface
-        function randperm(num)
-           implicit none
-           integer, intent(in) :: num
-           integer, dimension(num) :: randperm
-        end function randperm
-     end interface
- !!-----Initialize a population --------------------------------------------!!
+use prandtll
+implicit none
+integer, intent(in) :: NP, Dim_XC, itermax, strategy, iwrite, refresh
+double precision, intent(in) :: VTR, CR_XC
+double precision :: F_XC, F_CR
+double precision, dimension(Dim_XC), intent(in) :: XCmin, XCmax
+double precision, dimension(Dim_XC), intent(inout) :: bestmem_XC
+double precision, intent(out) :: bestval
+integer, intent(out) :: nfeval
+double precision, dimension(NP,Dim_XC) :: pop_XC, bm_XC, mui_XC, mpo_XC, popold_XC, rand_XC, ui_XC
+integer :: i, ibest, iter
+integer, dimension(NP) :: rot, a1, a2, a3, a4, a5, rt
+integer, dimension(4) :: ind
+double precision :: tempval
+double precision, dimension(NP) :: val
+double precision, dimension(Dim_XC) :: bestmemit_XC
+double precision, dimension(Dim_XC) :: rand_C1
+integer, dimension(3), intent(in) :: method
+external  obj
+intrinsic max, min, random_number, mod, abs, any, all, maxloc
+interface
+function randperm(num)
+implicit none
+integer, intent(in) :: num
+integer, dimension(num) :: randperm
+end function randperm
+end interface
+call getcwd(dirname)
+open(unit=13 , file = trim(dirname)//trim(filename) )
+!!-----Initialize a population --------------------------------------------!!
 
-        pop_XC=0.0d0
-        do i=1,NP
-           call random_number(rand_C1)
-           pop_XC(i,:)=XCmin+rand_C1*(XCmax-XCmin)
-        end do
+pop_XC=0.0d0
+do i=1,NP
+  call random_number(rand_C1)
+  pop_XC(i,:)=XCmin+rand_C1*(XCmax-XCmin)
+  end do
 
 !!--------------------------------------------------------------------------!!
 
 !!------Evaluate fitness functions and find the best member-----------------!!
-     val=0.0d0
-     nfeval=0
-     ibest=1
-     call obj(pop_XC(1,:), val(1))
-     bestval=val(1)
-     nfeval=nfeval+1
-     do i=2,NP
-        call obj(pop_XC(i,:), val(i))
-        nfeval=nfeval+1
-        if (val(i) < bestval) then
-           ibest=i
-           bestval=val(i)
-        end if
-     end do
-     bestmemit_XC=pop_XC(ibest,:)
-     bestmem_XC=bestmemit_XC
+val=0.0d0
+nfeval=0
+ibest=1
+call obj(pop_XC(1,:), val(1))
+bestval=val(1)
+nfeval=nfeval+1
+do i=2,NP
+  call obj(pop_XC(i,:), val(i))
+  nfeval=nfeval+1
+  if (val(i) < bestval) then
+      ibest=i
+      bestval=val(i)
+      end if
+  end do
+
+bestmemit_XC=pop_XC(ibest,:)
+bestmem_XC=bestmemit_XC
 !!--------------------------------------------------------------------------!!
 
-     bm_XC=0.0d0
-     rot=(/(i,i=0,NP-1)/)
-     iter=1
+bm_XC=0.0d0
+rot=(/(i,i=0,NP-1)/)
+iter=1
 !!------Perform evolutionary computation------------------------------------!!
-
-     do while (iter <= itermax)
-        popold_XC=pop_XC
+do while (iter <= itermax)
+  popold_XC=pop_XC
 
 !!------Mutation operation--------------------------------------------------!!
-        ind=randperm(4)
-        a1=randperm(NP)
-        rt=mod(rot+ind(1),NP)
-        a2=a1(rt+1)
-        rt=mod(rot+ind(2),NP)
-        a3=a2(rt+1)
-        rt=mod(rot+ind(3),NP)
-        a4=a3(rt+1)
-        rt=mod(rot+ind(4),NP)
-        a5=a4(rt+1)
-        bm_XC=spread(bestmemit_XC, DIM=1, NCOPIES=NP)
-
+  ind=randperm(4)
+  a1=randperm(NP)
+  rt=mod(rot+ind(1),NP)
+  a2=a1(rt+1)
+  rt=mod(rot+ind(2),NP)
+  a3=a2(rt+1)
+  rt=mod(rot+ind(3),NP)
+  a4=a3(rt+1)
+  rt=mod(rot+ind(4),NP)
+  a5=a4(rt+1)
+  bm_XC=spread(bestmemit_XC, DIM=1, NCOPIES=NP)
 !----- Generating a random sacling factor--------------------------------!
-        select case (method(1))
-        case (1)
-           call random_number(F_XC)
-        case(2)
-           call random_number(F_XC)
-           F_XC=2.0d0*F_XC-1.0d0
-        end select
+  select case (method(1))
+  case (1)
+  call random_number(F_XC)
+  case(2)
+  call random_number(F_XC)
+  F_XC=2.0d0*F_XC-1.0d0
+  end select
 
 !---- select a mutation strategy-----------------------------------------!
-        select case (strategy)
-        case (1)
-           ui_XC=bm_XC+F_XC*(popold_XC(a1,:)-popold_XC(a2,:))
+  select case (strategy)
+  case (1)
+  ui_XC=bm_XC+F_XC*(popold_XC(a1,:)-popold_XC(a2,:))
 
-        case default
-           ui_XC=popold_XC(a3,:)+F_XC*(popold_XC(a1,:)-popold_XC(a2,:))
+  case default
+  ui_XC=popold_XC(a3,:)+F_XC*(popold_XC(a1,:)-popold_XC(a2,:))
 
-        case (3)
-           ui_XC=popold_XC+F_XC*(bm_XC-popold_XC+popold_XC(a1,:)-popold_XC(a2,:))
+  case (3)
+  ui_XC=popold_XC+F_XC*(bm_XC-popold_XC+popold_XC(a1,:)-popold_XC(a2,:))
 
-        case (4)
-           ui_XC=bm_XC+F_XC*(popold_XC(a1,:)-popold_XC(a2,:)+popold_XC(a3,:)-popold_XC(a4,:))
+  case (4)
+  ui_XC=bm_XC+F_XC*(popold_XC(a1,:)-popold_XC(a2,:)+popold_XC(a3,:)-popold_XC(a4,:))
 
-        case (5)
-           ui_XC=popold_XC(a5,:)+F_XC*(popold_XC(a1,:)-popold_XC(a2,:)+popold_XC(a3,:) &
-                 -popold_XC(a4,:))
-        case (6) ! A linear crossover combination of bm_XC and popold_XC
-           if (method(2) == 1) call random_number(F_CR)
-           ui_XC=popold_XC+F_CR*(bm_XC-popold_XC)+F_XC*(popold_XC(a1,:)-popold_XC(a2,:))
+  case (5)
+  ui_XC=popold_XC(a5,:)+F_XC*(popold_XC(a1,:)-popold_XC(a2,:)+popold_XC(a3,:) &
+  -popold_XC(a4,:))
+  case (6) ! A linear crossover combination of bm_XC and popold_XC
+  if (method(2) == 1) call random_number(F_CR)
+  ui_XC=popold_XC+F_CR*(bm_XC-popold_XC)+F_XC*(popold_XC(a1,:)-popold_XC(a2,:))
 
-        end select
+  end select
 !!--------------------------------------------------------------------------!!
 !!------Crossover operation-------------------------------------------------!!
-        call random_number(rand_XC)
-           mui_XC=0.0d0
-           mpo_XC=0.0d0
-        where (rand_XC < CR_XC)
-           mui_XC=1.0d0
+  call random_number(rand_XC)
+  mui_XC=0.0d0
+  mpo_XC=0.0d0
+  where (rand_XC < CR_XC)
+  mui_XC=1.0d0
 !           mpo_XC=0.0d0
-        elsewhere
+  elsewhere
 !           mui_XC=0.0d0
-           mpo_XC=1.0d0
-        end where
+  mpo_XC=1.0d0
+  end where
 
-        ui_XC=popold_XC*mpo_XC+ui_XC*mui_XC
+  ui_XC=popold_XC*mpo_XC+ui_XC*mui_XC
 !!--------------------------------------------------------------------------!!
 !!------Evaluate fitness functions and find the best member-----------------!!
-        do i=1,NP
+  do i=1,NP
 !!------Confine each of feasible individuals in the lower-upper bound-------!!
-           ui_XC(i,:)=max(min(ui_XC(i,:),XCmax),XCmin)
-           call obj(ui_XC(i,:), tempval)
-           nfeval=nfeval+1
-           if (tempval < val(i)) then
-              pop_XC(i,:)=ui_XC(i,:)
-              val(i)=tempval
-              if (tempval < bestval) then
-                 bestval=tempval
-                 bestmem_XC=ui_XC(i,:)
-              end if
-           end if
-        end do
-        bestmemit_XC=bestmem_XC
-        if( (refresh > 0) .and. (mod(iter,refresh)==0)) then
-             if (method(3)==1) write(unit=iwrite,FMT=203) iter
-             write(unit=*, FMT=203) iter
-             do i=1,Dim_XC
-                 if (method(3)==1) write(unit=iwrite, FMT=202) i, bestmem_XC(i)
-                 write(*,FMT=202) i,bestmem_XC(i)
-             end do
-             if (method(3)==1) write(unit=iwrite, FMT=201) bestval
-             write(unit=*, FMT=201) bestval
-        end if
-        iter=iter+1
-        if ( bestval <= VTR .and. refresh > 0) then
-           write(unit=iwrite, FMT=*) ' The best fitness is smaller than VTR'
-           write(unit=*, FMT=*) 'The best fitness is smaller than VTR'
-           exit
-        endif
-     end do
+    ui_XC(i,:)=max(min(ui_XC(i,:),XCmax),XCmin)
+    call obj(ui_XC(i,:), tempval)
+    nfeval=nfeval+1
+    if (tempval < val(i)) then
+    pop_XC(i,:)=ui_XC(i,:)
+    val(i)=tempval
+    if (tempval < bestval) then
+    bestval=tempval
+    bestmem_XC=ui_XC(i,:)
+    end if
+    end if
+    end do
+  bestmemit_XC=bestmem_XC
+  if( (refresh > 0) .and. (mod(iter,refresh)==0)) then
+  if (method(3)==1) write(unit=iwrite,FMT=203) iter
+  write(unit=*, FMT=203) iter
+  do i=1,Dim_XC
+    if (method(3)==1) write(unit=iwrite, FMT=202) i, bestmem_XC(i)
+    write(*,FMT=202) i,bestmem_XC(i)
+    end do
+  if (method(3)==1) write(unit=iwrite, FMT=201) bestval
+  write(unit=*, FMT=201) bestval
+  end if
+  iter=iter+1
+  if ( bestval <= VTR .and. refresh > 0) then
+  write(unit=iwrite, FMT=*) ' The best fitness is smaller than VTR'
+  write(unit=*, FMT=*) 'The best fitness is smaller than VTR'
+  exit
+  endif
+  end do
 !!------end the evolutionary computation------------------------------!!
 201 format(2x, 'bestval =', ES14.7, /)
 202 format(5x, 'bestmem_XC(', I3, ') =', ES12.5)
 203 format(2x, 'No. of iteration  =', I8)
-Call getcwd( dirname )
-open(unit = 10, file = trim(dirname) // trim(filename))
-write(10, *) '--------------------------------------------------------'
-write(10, *) 'bestval =' , bestval
-write(10, *) 'No. of iteration  =' , iter
-write(10, *) 'Pr_t =' , bestmem_XC(1)
-write(10, *) 'A =' , bestmem_XC(2)
-close(10)
-
-
+write(13, *) bestmem_XC(1) , bestmem_XC(2) , bestval
+close(13)
 end subroutine DE_Fortran90
 
 

@@ -27,7 +27,7 @@ program teste
 
         ! Controles numéricos
 
-        N = 100                                                                            ! Número de células
+        N = 40                                                                             ! Número de células
         incre = 1.d-9                                                                      ! incremento para convergência do método implícito
         R = 1.d0                                                                           ! Raio do canal
         dy = (R/(dble(N) - 0.5d0)) * Ret/R;                                                ! i_1 = dy/2 ... i_n = R
@@ -43,6 +43,8 @@ program teste
         call AdequaParametro()
         ! Adequação numérica final (usuário)
 
+        prt = 0.85623840439371479d0
+        vc = 27.345294918091163d0
 
 
 

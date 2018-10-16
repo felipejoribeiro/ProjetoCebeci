@@ -10,6 +10,7 @@ teste
 main
 otimization
 otimizationvelocity
+genetic
 
 
 ####################
@@ -17,5 +18,4 @@ otimizationvelocity
 ####################
 
 /referencias/
-/results/
 plot/

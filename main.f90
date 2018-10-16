@@ -41,7 +41,7 @@ program teste
 
         ! Controles numéricos
 
-        N = 40                                                                             ! Número de células
+        N = 400                                                                            ! Número de células
         incre = 1.d-9                                                                      ! incremento para convergência do método implícito
         R = 1.d0                                                                           ! Raio do canal
         dy = (R/(dble(N) - 0.5d0)) * Ret/R;                                                ! i_1 = dy/2 ... i_n = R
@@ -51,18 +51,23 @@ program teste
 
 
 
-        Prt = - 4.56041707672d0 * 10.d0 ** (-10.d0) * Ret**3 +  9.56902551372d0 * 10.d0 **(-7.d0) * Ret**2 &                               ! Otimizado sem a otimização de cebeci
-        - 0.000617158206068d0 * Ret +  1.01789506426
+        !Prt = - 4.56041707672d0 * 10.d0 ** (-10.d0) * Ret**3 +  9.56902551372d0 * 10.d0 **(-7.d0) * Ret**2 &                               ! Otimizado sem a otimização de cebeci
+        !- 0.000617158206068d0 * Ret +  1.01789506426
 
 
         ! prt = ((4.52901632 * 10.d0 ** (-12.d0) ) * Ret**3 - &
         !     (5.73952059d0 * 10.d0 **(-8.d0)) * Ret**2.d0 + &
         !     (9.397008473d0 * 10.d0 ** (-5.d0) )* Ret + 0.873117480)* (pr/0.71)**(-0.008d0)                                                ! Otimizado com a otimização de cebeci
 
-        vc = (Ret**(log(Ret) * 0.04510621d0) * exp(5.27528132d0) ) / (Ret ** 0.60941173d0)                                                ! Otimizado para o menor erro quanto a velocidade.
+
+
+        !vc = (Ret**(log(Ret) * 0.04510621d0) * exp(5.27528132d0) ) / (Ret ** 0.60941173d0)                                                ! Otimizado para o menor erro quanto a velocidade.
 
 
 
+        prt = (3.19791882062d-10 * Ret**3 - 1.08216023658d-06 * Ret**2 +0.00116281300928*Ret+0.449206978959)*(pr/0.71)**(-0.008d0)         ! genetic prandtl
+
+        vc = exp( 0.164405721012 * log(Ret)**3 - 2.87424334318 * log(Ret)**2 +  16.3562873171 * log(Ret) - 26.6310370449 )                 ! genetic cebeci
 
 
         ! Adequação aos parâmetros padrão
@@ -70,10 +75,8 @@ program teste
         ! Adequação numérica final (usuário)
 
 
-        filename = '/results/resultados.txt'
+        filename = '/results/ResultadosGeraisGenetic.txt'
 
-
-        vc = 26
 
 
         ! ...
