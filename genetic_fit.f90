@@ -1,3 +1,4 @@
+! Esse programa executa um fit a partir de otimização.
 module data_HDE                                                                                              ! módulo com parametros base.
     implicit none
     integer :: NP, itermax , strategy, refresh, iwrite , Dim_XC
@@ -38,22 +39,18 @@ itermax=100                                                                  ! N
 refresh=4                                                                    ! Intervalos de atualização do console
 VTR=-1.0d-3                                                                  ! Acurácia esperada do argumento de saída
 iwrite=7                                                                     ! Unidade de escrita de arquivo.
-Dim_XC=2                                                                     ! Número de variáveis de entrada
+Dim_XC=1                                                                     ! Número de variáveis de entrada
 filename = "/results/FITPRANDTL.txt"                                         ! Nome do arquivo.
 N = 400                                                                      ! Número de células
 allocate(XCmin(Dim_XC) , XCmax(Dim_XC), bestmem_XC(Dim_XC))
 ! Parametros metodológicos
-Ret = 395.d0                                                                 ! Reynolds turbulento
-Pr = 10.d0                                                                   ! Prandtl molecular
 method=(/0, 1, 0/)                                                           ! Metodologia de mutação
 strategy=6                                                                   ! Stratégias de mutação
 CR_XC=0.5d0                                                                  ! Crossover factor for real decision parameters.
 F_XC=0.8d0                                                                   ! Mutation scaling factor for real decision parameters.
 F_CR=0.8d0                                                                   ! Random combined factor
-XCmin(1)=0.0d0                                                               ! Limite inferior para domínio de algorítmos de entrada
+XCmin(1)= -10.0d0                                                            ! Limite inferior para domínio de algorítmos de entrada
 XCmax(1)=10.0d0                                                              ! Limite superior para domínio de algorítmos de entrada
-XCmin(2)=0.0d0                                                               ! Limite inferior para domínio de algorítmos de entrada
-XCmax(2)=50.0d0                                                              ! Limite superior para domínio de algorítmos de entrada
 !...........................................................................................................
 ! Rotina de escrita em arquivo resultante                                                                  .
 !...........................................................................................................
@@ -108,69 +105,64 @@ subroutine FTN(X, objval)
   implicit none
   double precision, dimension(Dim_XC), intent(in) :: X
   double precision, intent(out) :: objval
+  double precision :: re1 , re2 , re3
   integer :: i
 
 
   ! Declaram-se as variáveis do programa
 
-    double precision :: R
-
-    ! Controle dos parametros
-
-        ! Controles numéricos
-
-        incre = 1.d-9                                                                      ! incremento para convergência do método implícito
-        R = 1.d0                                                                           ! Raio do canal
-        dy = (R/(dble(N) - 0.5d0)) * Ret/R;                                                ! i_1 = dy/2 ... i_n = R
+    Ret = 395.d0                                                                 ! Reynolds turbulento
+    Pr = 10.d0                                                                   ! Prandtl molecular
 
         ! Méta modelos a partir da referência
 
-        prt = x(1)
+        prt = (3.19791882062d-10 * Ret**3 - 1.08216023658d-06 * Ret**2 +0.00116281300928*Ret+0.449206978959)* &
+        ((Pr/0.71)**(-0.008d0) + x(1) * (Pr - 0.71))
 
-        vc =  x(2) !(Ret**(log(Ret) * 0.04510d0) * exp(5.27533d0) ) / (Ret ** 0.60942d0)
+        ! Amostrando resultados
 
-        ! Adequação aos parâmetros padrão
-        call AdequaParametro()
-        ! Adequação numérica final (usuário)
-
+        print*, "Prt (10) = " , prt
+        re1 = prt
 
 
-        ! Alocando-se os alocáveis
-        allocate(e(N))
-        allocate(u(N))
-        allocate(vPrt(N))
-        allocate(T(N))
-        allocate (Tdns(2 , p(1)))
-        ! Desenvolvimento do método
-        Print*, "Algorítmo iniciado..."
-        call Program()
-        ! Desalocando-se os desalocáveis
-        deallocate(Tdns)
-        deallocate(T)
-        deallocate(vPrt)
-        deallocate(e)
-        deallocate(u)
+
+        Pr = 0.025d0                                                                        ! Prandtl molecular
+
+        ! Méta modelos a partir da referência
+
+        prt = (3.19791882062d-10 * Ret**3 - 1.08216023658d-06 * Ret**2 +0.00116281300928*Ret+0.449206978959)* &
+        ((Pr/0.71)**(-0.008d0) + x(1) * (Pr - 0.71))
+
+        ! Amostrando resultados
+
+        print*, "Prt (0.025) = " , prt
+        re2 = prt
+
+
+
+        Pr = 0.71d0                                                                       ! Prandtl molecular
+
+        ! Méta modelos a partir da referência
+
+        prt = (3.19791882062d-10 * Ret**3 - 1.08216023658d-06 * Ret**2 +0.00116281300928*Ret+0.449206978959)* &
+        ((Pr/0.71)**(-0.008d0) + x(1) * (Pr - 0.71))
 
 
         ! Amostrando resultados
 
-        ! print*, "------------------------------------------------"
-        ! print*, "Ret = " , Ret
-        ! print*, "Pr = " , Pr
-        print*, "Prt = " , prt
-        ! print*, "A = ", vc
-        ! print*, "L1 = " , L1
-        ! print*, "L2 = " , L2
-        ! print*, "Li = " , Li
+        print*, "Prt (0.71) = " , prt
+        re3 = prt
+
 
 
         ! Encerramento
 
         ! print*, " "
-        write(13, *) prt ,  vc , L2
-        print*, "Fim da simulação!"
 
-  objval = L2
+        write(13, *) "resultados:" , re1 ,  re2 , re3
+        print*, "Fim"
+
+  objval = (re1 - 0.88268260782709396d0)**2 + (re2 -   0.92602145583845075d0 )**2 + (re3 - 0.75938280042931627d0)**2
 
 end subroutine FTN
 

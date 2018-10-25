@@ -22,8 +22,8 @@ program teste
 
     ! Controle dos parametros
 
-        Ret = 1020.d0
-        Pr = 0.71d0
+        Ret = 150.d0
+        Pr = 0.025d0
 
 
         ! Controles numéricos

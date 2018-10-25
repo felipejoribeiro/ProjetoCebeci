@@ -55,6 +55,7 @@ program teste
         !- 0.000617158206068d0 * Ret +  1.01789506426
 
 
+
         ! prt = ((4.52901632 * 10.d0 ** (-12.d0) ) * Ret**3 - &
         !     (5.73952059d0 * 10.d0 **(-8.d0)) * Ret**2.d0 + &
         !     (9.397008473d0 * 10.d0 ** (-5.d0) )* Ret + 0.873117480)* (pr/0.71)**(-0.008d0)                                                ! Otimizado com a otimização de cebeci
@@ -65,9 +66,24 @@ program teste
 
 
 
-        prt = (3.19791882062d-10 * Ret**3 - 1.08216023658d-06 * Ret**2 +0.00116281300928*Ret+0.449206978959)*(pr/0.71)**(-0.008d0)         ! genetic prandtl
+        ! prt = (3.19791882062d-10 * Ret**3 - 1.08216023658d-06 * Ret**2 +0.00116281300928*Ret+0.449206978959)*(pr/0.71)**(-0.008d0)         ! genetic prandtl
 
-        vc = exp( 0.164405721012 * log(Ret)**3 - 2.87424334318 * log(Ret)**2 +  16.3562873171 * log(Ret) - 26.6310370449 )                 ! genetic cebeci
+
+
+        vc = exp( 0.164405721012d0 * log(Ret)**3.d0 - 2.87424334318d0 * log(Ret)**2.d0 +  16.3562873171d0 * log(Ret) - &                      ! genetic cebeci
+            26.6310370449d0 )
+
+
+
+
+        prt = (3.19791882062d-10 * Ret**3 - 1.08216023658d-06 * Ret**2 +0.00116281300928d0*Ret+0.449206978959d0)*(pr/0.71d0)** &              ! genetic prandtl com ajuste molecular
+        ((Pr/0.71d0)**(-0.008d0) + 1.8106822d-02 * (Pr - 0.71d0))
+
+
+
+
+
+
 
 
         ! Adequação aos parâmetros padrão
@@ -75,7 +91,7 @@ program teste
         ! Adequação numérica final (usuário)
 
 
-        filename = '/results/ResultadosGeraisGenetic.txt'
+        filename = '/results/ResultadosGeraisGeneticmolecular.txt'
 
 
 

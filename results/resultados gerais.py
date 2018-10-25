@@ -121,7 +121,7 @@ ii = [RcCm[2 , 3] , RcCm[3 , 3] , RcCm[4 , 3] ,  RcCm[5 , 3], RcCm[6 , 3] , RcCm
 plt.plot( i, ii, 'k', linewidth = '1', color = 'purple' , label = 'Prt = 0.905 and A(Ret)')
 i = [Gene[2 , 1] , Gene[3 , 1] , Gene[4 , 1] ,  Gene[5 , 1] , Gene[6 , 1] , Gene[7 , 1] , Gene[8 , 1]]
 ii = [Gene[2 , 3] , Gene[3 , 3] , Gene[4 , 3] ,  Gene[5 , 3], Gene[6 , 3] , Gene[7 , 3] , Gene[8 , 3]]
-plt.plot( i, ii, 'k', linewidth = '1', color = 'red' , label = 'Prt = 0.905 and A(Ret)')
+plt.plot( i, ii, 'k', linewidth = '1', color = 'red' , label = 'Multivariável')
 plt.legend()
 plt.xlabel('Prandtl')
 plt.ylabel('Norma L2')
