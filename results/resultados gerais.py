@@ -22,6 +22,7 @@ Cc905 = np.loadtxt("ResultadosPrtvariVs26.txt", dtype='float')
 RcCm = np.loadtxt("ResultadosPrtFixoIdealVsMod.txt", dtype='float')
 Mode = np.loadtxt("ResultadosGeraisModelados.txt", dtype='float')
 Gene = np.loadtxt("ResultadosGeraisGenetic.txt", dtype='float')
+Genepr = np.loadtxt("ResultadosGeraisGeneticmolecular.txt", dtype='float')
 
 fig = plt.figure(figsize=(11, 6))                                                                # Determining object image
 ax = fig.add_subplot(111, projection='3d')                                                       # Adding 3D axis
@@ -55,6 +56,11 @@ xs = Gene[: , 0]
 ys = Gene[: , 1]
 zs = Gene[: , 3]
 ax.scatter(xs, ys, zs , color = 'red', label = 'Multivariável')
+
+# xs = Genepr[: , 0]
+# ys = Genepr[: , 1]
+# zs = Genepr[: , 3]
+# ax.scatter(xs, ys, zs , color = 'pink', label = 'Multivariável com Pr')
 
 ax.set_xlabel('X Label')
 ax.set_ylabel('Y Label')
@@ -98,6 +104,9 @@ plt.plot( i, ii, 'k', linewidth = '1', color = 'purple' , label = 'Prt = 0.905 a
 i = [Gene[1 , 0] , Gene[3 , 0] , Gene[10 , 0] ,  Gene[11 , 0]]
 ii = [Gene[1 , 3] , Gene[3 , 3] , Gene[10 , 3] ,  Gene[11 , 3]]
 plt.plot( i, ii, 'k', linewidth = '1', color = 'red' , label = 'Multivariável')
+i = [Genepr[1 , 0] , Genepr[3 , 0] , Genepr[10 , 0] ,  Genepr[11 , 0]]
+ii = [Genepr[1 , 3] , Genepr[3 , 3] , Genepr[10 , 3] ,  Genepr[11 , 3]]
+plt.plot( i, ii, 'k', linewidth = '1', color = 'pink' , label = 'Multivariável com Pr')
 plt.legend()
 plt.xlabel('Reynolds turbulento')
 plt.ylabel('Norma L2')
@@ -122,6 +131,9 @@ plt.plot( i, ii, 'k', linewidth = '1', color = 'purple' , label = 'Prt = 0.905 a
 i = [Gene[2 , 1] , Gene[3 , 1] , Gene[4 , 1] ,  Gene[5 , 1] , Gene[6 , 1] , Gene[7 , 1] , Gene[8 , 1]]
 ii = [Gene[2 , 3] , Gene[3 , 3] , Gene[4 , 3] ,  Gene[5 , 3], Gene[6 , 3] , Gene[7 , 3] , Gene[8 , 3]]
 plt.plot( i, ii, 'k', linewidth = '1', color = 'red' , label = 'Multivariável')
+i = [Genepr[2 , 1] , Genepr[3 , 1] , Genepr[4 , 1] ,  Genepr[5 , 1] , Genepr[6 , 1] , Genepr[7 , 1] , Genepr[8 , 1]]
+ii = [Genepr[2 , 3] , Genepr[3 , 3] , Genepr[4 , 3] ,  Genepr[5 , 3], Genepr[6 , 3] , Genepr[7 , 3] , Genepr[8 , 3]]
+plt.plot( i, ii, 'k', linewidth = '1', color = 'pink' , label = 'Multivariável com Pr')
 plt.legend()
 plt.xlabel('Prandtl')
 plt.ylabel('Norma L2')

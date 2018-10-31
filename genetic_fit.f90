@@ -162,7 +162,7 @@ subroutine FTN(X, objval)
         write(13, *) "resultados:" , re1 ,  re2 , re3
         print*, "Fim"
 
-  objval = (re1 - 0.88268260782709396d0)**2 + (re2 -   0.92602145583845075d0 )**2 + (re3 - 0.75938280042931627d0)**2
+  objval = (re1 - 0.88268260782709396d0  )**2 + (re2 -   0.92602145583845075d0 )**2 + (re3 - 0.75938280042931627d0  )**2                   ! Pontos do ajuste.
 
 end subroutine FTN
 

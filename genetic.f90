@@ -38,13 +38,13 @@ itermax=100                                                                  ! N
 refresh=4                                                                    ! Intervalos de atualização do console
 VTR=-1.0d-3                                                                  ! Acurácia esperada do argumento de saída
 iwrite=7                                                                     ! Unidade de escrita de arquivo.
-Dim_XC=2                                                                     ! Número de variáveis de entrada
-filename = "/results/FITPRANDTL.txt"                                         ! Nome do arquivo.
+Dim_XC=1                                                                     ! Número de variáveis de entrada
+filename = "/results/Gene395_0025_400_CeGenetic.txt"                          ! Nome do arquivo.
 N = 400                                                                      ! Número de células
 allocate(XCmin(Dim_XC) , XCmax(Dim_XC), bestmem_XC(Dim_XC))
 ! Parametros metodológicos
 Ret = 395.d0                                                                 ! Reynolds turbulento
-Pr = 10.d0                                                                   ! Prandtl molecular
+Pr = 0.025d0                                                                 ! Prandtl molecular
 method=(/0, 1, 0/)                                                           ! Metodologia de mutação
 strategy=6                                                                   ! Stratégias de mutação
 CR_XC=0.5d0                                                                  ! Crossover factor for real decision parameters.
@@ -52,8 +52,8 @@ F_XC=0.8d0                                                                   ! M
 F_CR=0.8d0                                                                   ! Random combined factor
 XCmin(1)=0.0d0                                                               ! Limite inferior para domínio de algorítmos de entrada
 XCmax(1)=10.0d0                                                              ! Limite superior para domínio de algorítmos de entrada
-XCmin(2)=0.0d0                                                               ! Limite inferior para domínio de algorítmos de entrada
-XCmax(2)=50.0d0                                                              ! Limite superior para domínio de algorítmos de entrada
+! XCmin(2)=0.0d0                                                               ! Limite inferior para domínio de algorítmos de entrada
+! XCmax(2)=50.0d0                                                              ! Limite superior para domínio de algorítmos de entrada
 !...........................................................................................................
 ! Rotina de escrita em arquivo resultante                                                                  .
 !...........................................................................................................
@@ -127,7 +127,15 @@ subroutine FTN(X, objval)
 
         prt = x(1)
 
-        vc =  x(2) !(Ret**(log(Ret) * 0.04510d0) * exp(5.27533d0) ) / (Ret ** 0.60942d0)
+        ! vc = x(2)
+
+        vc = exp( 0.164405721012d0 * log(Ret)**3.d0 - 2.87424334318d0 * log(Ret)**2.d0 +  16.3562873171d0 * log(Ret) - &                      ! genetic cebeci
+            26.6310370449d0 )
+
+
+        ! vc = (Ret**(log(Ret) * 0.04510621d0) * exp(5.27528132d0) ) / (Ret ** 0.60941173d0)                                                      ! Otimizado para o menor erro quanto a velocidade.
+
+
 
         ! Adequação aos parâmetros padrão
         call AdequaParametro()
@@ -167,7 +175,7 @@ subroutine FTN(X, objval)
         ! Encerramento
 
         ! print*, " "
-        write(13, *) prt ,  vc , L2
+        write(13, *) prt , vc , L2
         print*, "Fim da simulação!"
 
   objval = L2
