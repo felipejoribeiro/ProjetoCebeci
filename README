@@ -15,87 +15,115 @@
 
 Resumo do projeto:
 
-	+ Parâmetros base dos códigos:
+    + Programas:
 
-		-
-
-	+ Programas:
-
-		- main.f90            (simulations in FORTRAN)
-		- main.py             (simulations in python)
-		- main.cpp            (main file of simulations in c++)
-		- functions.h         (header file of simulations in c++)
-		- functions.cpp       (file with the functions in c++)
-        - grafics.py          (various graphics, for knowing for what, view grafics.py as follows)
-		- teste.f90           (Quest from the professor)
-
-
-    + grafics.py:
-
-        - Análise do ajuste para a constante V no ajuste do Pr_t, a partir do programa "teste.f90"
-        - Comparação das análises gerais em um gráfico completo 3D
-        - Exemplos para estudo do matplotlib.
+        - main.f90                        (simulations in FORTRAN)
+        - main.py                         (simulations in python)
+        - main.cpp                        (main file of simulations in c++)
+        - functions.h                     (header file of simulations in c++)
+        - functions.cpp                   (file with the functions in c++)
+        - *.py                            (various graphics and other tools, for knowing what, view grafics.py as follows)
+        - teste.f90                       (A way of testing without write files, easy test)
+        - otimization.f90                 (Autoral routine for finding good Prandtls values)
+        - otimizationvelocity.f90         (Autoral routine for finding good Cebeci values)
+        - genetic.f90                     (Diferential evolution capable of multivariable optimization)
+        - genetic_fit.f90                 (Diferential evolution for fiting curves)
 
 
-	+ DNS disponível:
+    + results:
 
-		- 150  | 0.71
-		- 395  | 0.025 , 0.71 , 1 , 2 , 5 , 7 , 10
-		- 640  | 0.025 , 0.71
-		- 1020 | 0.71
-
-	+ Meta modelos que serão textados em todo o domínio de DNS's:
-
-		- Valores médios do DNS
-		- Prandtl turbulento fixo
-		- Prandtl turbulento em função do Reynolds
-		- Prandtl turbulento em função do Reynolds e do Prandtl.
-
-	+ Valores médios do DNS:
-
-		- 150  | 0.9501
-		- 395  | 0.8519
-		- 640  | 0.8505
-		- 1020 |   !
-
-	+ Fixo:
-
-		- Prt = 0.906
-
-		- 150  | 0.884  |  28.610
-		- 395  | 0.900  |  25.677
-		- 640  | 0.909  |  25.001
-		- 1020 | 0.912  |  25.002
-
-	+ Em função do Reynolds:
-
-        -                       -12      3                   -8       2                             -5
-		- Pr  = 4.58738633   . 10    . Re   - 5.7497777   . 10    . Re    +   9.40210329   . 10  . Re +   0.87155
-        -   t                            t                            t                              t
+        - ajustecebeciclassico.py         (Contain DATA from the classic adjust for the cebeci value for minimum velocity error)
+        - calculadora.f90                 (Simple program for fast fortran math problem)
+        - genetic_scatering.py            (scatering from data from the genetic adjusts)
+        - misc.py                         (learning python code, just a bunch of random stuff)
+        - plotfit_prt_A.py                (Fit for the numerical data for create the adjusted models)
+        - resultados gerais.py            (The most representative graphics)
+        - Gene<RET>_<Pr>_<N>_<misc>.txt   (Results from genetic optimization  -->    Prt     A      L2 )
+        - ResultadosGeraisGenetic.txt     (Results for Prt and A adjusted on genetic multivariable optimization)
+        - ResultadosGeraisModelados.txt   (Cebeci optimized for the velocity, and Prandt optimized with this cebeci)
+        - ResultadosGeraisOrtodoxos.txt   (Prt = 0.71  and A = 26  (Others with "Resultados", idem) ->  Ret  Pr  L1  L2  Li)
+        - ResultadosPrtFixoIdealVs26.txt  (Prt = 0.905 and A = 26)
+        - ResultadosPrtFixoIdealVsMod.txt (Prt = 0.905 and A(Ret))
+        - ResultadosPrtvariVs26.txt       (Prt(Ret, Pr) and A = 26)
+        - Others ....                     (Ignorable.)
 
 
-        - prt = (4.58738633d0 * 10.d0 ** (-12.d0) ) * Ret**3 -(5.7497777d0 * 10.d0 **(-8.d0)) * Ret**2.d0 + (9.40210329d0 * 10.d0 ** (-5.d0) )* Ret + 0.87155d0
+    + DNS disponível: 15
 
-	+ Em função do Reynolds e do Prandtl :
+        - 150  | 0.71
+        - 395  | 0.025 , 0.71 , 1 , 2 , 5 , 7 , 10
+        - 640  | 0.025 , 0.71
+        - 1020 | 0.71
 
-        -                                                                                                                     -0.008
-        - (                      -12      3                   -8       2                             -5              )   ( Pr )
-        - (Pr  = 4.58738633   . 10    . Re   - 5.7497777   . 10    . Re    +   9.40210329   . 10  . Re +   0.87155   ) . (----)
-        - (  t                            t                            t                              t              )   (0.71)
-        -
+    + Meta modelos que serão textados em todo o domínio de DNS's:
+
+        - Valores médios do DNS
+        - Prandtl turbulento fixo
+        - Prandtl turbulento em função do Reynolds  
+        - Prandtl turbulento em função do Reynolds e do Prandtl.
+        - Valor de cebeci ajustado para a velocidade.
+        - Valor de cebeci e Prandtl turbulento ajustados no algoritmo genetico. 
+
+    + Valores médios do DNS:
+
+        - 150  | 0.9501
+        - 395  | 0.8519
+        - 640  | 0.8505
+        - 1020 |   !
+
+    + Fixo:
+
+        - For Fixe Prandtl and classic Cebeci: 
+
+          150  | 0.905  |  26
+          395  | 0.905  |  26
+          640  | 0.905  |  26
+          1020 | 0.905  |  26
+
+        - For Fixe classic Cebeci: 
+
+          150  | 0.94531  |  26
+          395  | 0.89531  |  26
+          640  | 0.89531  |  26
+          1020 | 0.89999  |  26
+
+        - For Cebeci optimized for velocity:
+
+          150  | 0.885937  |  28.616180
+          395  | 0.90156   |  25.673782
+          640  | 0.910937  |  25.001266
+          1020 | 0.91406   |  25.002136
+
+        - For Prandtl and Cebeci optimized genetic:
+
+          150  | 0.600359  |  46.7302895
+          395  | 0.759382  |  34.9387665
+          640  | 0.833985  |  30.1149344
+          1020 | 0.848762  |  29.9213880
 
 
-        - prt = ((4.58738633d0 * 10.d0 ** (-12.d0) ) * Ret**3 -(5.7497777d0 * 10.d0 **(-8.d0)) * Ret**2.d0 + (9.40210329d0 * 10.d0 ** (-5.d0) )* Ret + 0.87155d0)* (pr/0.71)**(-0.008d0)
 
-    + Meta modelo da constante de Cebeci:
+    + Meta modelo em função comente do reynolds e levando A = 26 (meta modelo clássico, o primeiro) :
 
-        -          ln(Ret)0.0451   5.2753
-    	-       Ret             . e
-    	- A =  -----------0.6094------
-    	-              Ret
-        -
+        - Prt = - 4.56041707672d0 * 10.d0 ** (-10.d0) * Ret**3 +  9.56902551372d0 * 10.d0 **(-7.d0) * Ret**2 - 0.000617158206068d0 * Ret +  1.01789506426
 
-        - A = (Ret**(log(Ret) * 0.04510d0) * exp(5.27533d0) ) / (Ret ** 0.60942d0)
+    + Em função do Reynolds e do Prandtl (valor modelado para o cebeci ajustado para a menor velocidade):
+
+        prt = ((4.52901632 * 10.d0 ** (-12.d0) ) * Ret**3 - (5.73952059d0 * 10.d0 **(-8.d0)) * Ret**2.d0 + (9.397008473d0 * 10.d0 ** (-5.d0) )* Ret + 0.873117480)* (pr/0.71)**(-0.008d0)                                                
+
+        vc = (Ret**(log(Ret) * 0.04510621d0) * exp(5.27528132d0) ) / (Ret ** 0.60941173d0)
+
+    + Meta modelo genético :
+
+        prt = (3.19791882062d-10 * Ret**3 - 1.08216023658d-06 * Ret**2 +0.00116281300928*Ret+0.449206978959)*(pr/0.71)**(-0.008d0)       
+
+        vc = exp( 0.164405721012d0 * log(Ret)**3.d0 - 2.87424334318d0 * log(Ret)**2.d0 +  16.3562873171d0 * log(Ret) - 26.6310370449d0 )
+
+    + Ajuste quanto ao PRandtl molecular para este modelo.
+
+        prt = (3.19791882062d-10 * Ret**3 - 1.08216023658d-06 * Ret**2 +0.00116281300928d0*Ret+0.449206978959d0)*((Pr/0.71d0)**(-0.008d0) + 1.8106822d-02 * (Pr - 0.71d0))
+
+
 
 
 

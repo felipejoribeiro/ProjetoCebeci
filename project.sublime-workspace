@@ -109,7 +109,16 @@
 			{
 				"buffer_size": 17733,
 				"encoding": "UTF-8",
-				"line_ending": "Unix"
+				"line_ending": "Windows"
+			}
+		},
+		{
+			"file": "genetic.f90",
+			"settings":
+			{
+				"buffer_size": 27018,
+				"encoding": "UTF-8",
+				"line_ending": "Windows"
 			}
 		},
 		{
@@ -118,11 +127,20 @@
 			{
 				"buffer_size": 14967,
 				"encoding": "UTF-8",
-				"line_ending": "Unix"
+				"line_ending": "Windows"
+			}
+		},
+		{
+			"file": "/C/Users/felip/AppData/Roaming/Sublime Text 3/Packages/User/fortran.sublime-build",
+			"settings":
+			{
+				"buffer_size": 479,
+				"encoding": "UTF-8",
+				"line_ending": "Windows"
 			}
 		}
 	],
-	"build_system": "Packages/Python/Python.sublime-build",
+	"build_system": "Packages/User/fortran.sublime-build",
 	"build_system_choices":
 	[
 		[
@@ -292,6 +310,74 @@
 					"Run"
 				],
 				[
+					"Packages/User/fortran.sublime-build",
+					""
+				]
+			],
+			[
+				"Packages/User/fortran.sublime-build",
+				""
+			]
+		],
+		[
+			[
+				[
+					"Packages/Fortran/build-systems/GFortran.sublime-build",
+					""
+				],
+				[
+					"Packages/Fortran/build-systems/GFortran.sublime-build",
+					"Run"
+				],
+				[
+					"Packages/User/fortran.sublime-build",
+					""
+				],
+				[
+					"Packages/User/fortran.sublime-build",
+					"Ru"
+				]
+			],
+			[
+				"Packages/User/fortran.sublime-build",
+				"Ru"
+			]
+		],
+		[
+			[
+				[
+					"Packages/Fortran/build-systems/GFortran.sublime-build",
+					""
+				],
+				[
+					"Packages/Fortran/build-systems/GFortran.sublime-build",
+					"Run"
+				],
+				[
+					"Packages/User/fortran.sublime-build",
+					""
+				],
+				[
+					"Packages/User/fortran.sublime-build",
+					"Run"
+				]
+			],
+			[
+				"Packages/User/fortran.sublime-build",
+				"Run"
+			]
+		],
+		[
+			[
+				[
+					"Packages/Fortran/build-systems/GFortran.sublime-build",
+					""
+				],
+				[
+					"Packages/Fortran/build-systems/GFortran.sublime-build",
+					"Run"
+				],
+				[
 					"Packages/User/fortran2win.sublime-build",
 					""
 				]
@@ -382,6 +468,22 @@
 			],
 			[
 				"Packages/User/fortrandif.sublime-build",
+				""
+			]
+		],
+		[
+			[
+				[
+					"Packages/Python/Python.sublime-build",
+					""
+				],
+				[
+					"Packages/Python/Python.sublime-build",
+					"Syntax Check"
+				]
+			],
+			[
+				"Packages/Python/Python.sublime-build",
 				""
 			]
 		],
@@ -540,10 +642,15 @@
 	},
 	"expanded_folders":
 	[
-		"/home/felipe/Documents/ProjetoCebeci"
+		"/E/WORK/programing/fortran/ProjetoCebeci",
+		"/E/WORK/programing/fortran/ProjetoCebeci/results"
 	],
 	"file_history":
 	[
+		"/E/WORK/programing/fortran/ProjetoCebeci/README",
+		"/E/WORK/programing/fortran/ProjetoCebeci/results/plotfit_prt_A.py",
+		"/E/WORK/programing/fortran/ProjetoCebeci/results/genetic_scatering.py",
+		"/E/WORK/programing/fortran/ProjetoCebeci/otimization.f90",
 		"/home/felipe/Documents/ProjetoCebeci/genetic_fit.f90",
 		"/home/felipe/Documents/ProjetoCebeci/results/resultados gerais.py",
 		"/home/felipe/Documents/ProjetoCebeci/results/calculadora.f90",
@@ -667,15 +774,11 @@
 		"/home/felipe/Documents/programing/game 1/engine cubos/cubos.cpp",
 		"/home/felipe/Documents/programing/game 1/engine cubos/cubos.h",
 		"/home/felipe/Documents/programing/c++/pure code/main.cpp",
-		"/home/felipe/Documents/programing/c++/pure code/FBullCowGame.cpp",
-		"/home/felipe/Documents/programing/c++/pure code/FBullCowGame.h",
-		"/home/felipe/Documents/programing/game 1/piloto/cubos.h",
-		"/home/felipe/Documents/programing/game 1/piloto/cubos.cpp",
-		"/home/felipe/Documents/programing/Experimental/IC.ARISTEU - Fluidos !!/programas/tempfinal.f90"
+		"/home/felipe/Documents/programing/c++/pure code/FBullCowGame.cpp"
 	],
 	"find":
 	{
-		"height": 37.0
+		"height": 24.0
 	},
 	"find_in_files":
 	{
@@ -742,25 +845,70 @@
 						"selection":
 						[
 							[
-								3205,
-								3205
+								0,
+								0
 							]
 						],
 						"settings":
 						{
+							"SL.13.region_keys":
+							[
+							],
+							"SL.14.region_keys":
+							[
+							],
 							"syntax": "Packages/Fortran/grammars/FortranModern.sublime-syntax",
 							"tab_size": 4,
 							"translate_tabs_to_spaces": true
 						},
 						"translation.x": 0.0,
-						"translation.y": 7999.0,
+						"translation.y": 5535.0,
 						"zoom_level": 1.0
 					},
-					"stack_index": 1,
+					"stack_index": 3,
 					"type": "text"
 				},
 				{
 					"buffer": 1,
+					"file": "genetic.f90",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 27018,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								0,
+								0
+							]
+						],
+						"settings":
+						{
+							"SL.14.region_keys":
+							[
+							],
+							"SL.15.region_keys":
+							[
+							],
+							"SL.63.region_keys":
+							[
+							],
+							"syntax": "Packages/Fortran/grammars/FortranModern.sublime-syntax",
+							"tab_size": 4,
+							"translate_tabs_to_spaces": true
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 0,
+					"type": "text"
+				},
+				{
+					"buffer": 2,
 					"file": "teste.f90",
 					"semi_transient": false,
 					"settings":
@@ -772,13 +920,61 @@
 						"selection":
 						[
 							[
-								641,
-								641
+								0,
+								0
 							]
 						],
 						"settings":
 						{
+							"SL.14.region_keys":
+							[
+							],
+							"SL.15.region_keys":
+							[
+							],
+							"SL.16.region_keys":
+							[
+							],
+							"SL.30.region_keys":
+							[
+							],
 							"syntax": "Packages/Fortran/grammars/FortranModern.sublime-syntax",
+							"tab_size": 4,
+							"translate_tabs_to_spaces": true
+						},
+						"translation.x": 0.0,
+						"translation.y": 495.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 1,
+					"type": "text"
+				},
+				{
+					"buffer": 3,
+					"file": "/C/Users/felip/AppData/Roaming/Sublime Text 3/Packages/User/fortran.sublime-build",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 479,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								479,
+								479
+							]
+						],
+						"settings":
+						{
+							"SL.103.region_keys":
+							[
+							],
+							"SL.19.region_keys":
+							[
+							],
+							"syntax": "Packages/JavaScript/JSON.sublime-syntax",
 							"tab_size": 4,
 							"translate_tabs_to_spaces": true
 						},
@@ -786,7 +982,7 @@
 						"translation.y": 0.0,
 						"zoom_level": 1.0
 					},
-					"stack_index": 0,
+					"stack_index": 2,
 					"type": "text"
 				}
 			]
@@ -794,7 +990,7 @@
 	],
 	"incremental_find":
 	{
-		"height": 22.0
+		"height": 24.0
 	},
 	"input":
 	{
@@ -839,7 +1035,7 @@
 	"project": "project.sublime-project",
 	"replace":
 	{
-		"height": 40.0
+		"height": 44.0
 	},
 	"save_all_on_build": true,
 	"select_file":
