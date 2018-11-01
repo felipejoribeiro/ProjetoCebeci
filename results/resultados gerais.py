@@ -57,10 +57,10 @@ ys = Gene[: , 1]
 zs = Gene[: , 3]
 ax.scatter(xs, ys, zs , color = 'red', label = 'Multivariável')
 
-# xs = Genepr[: , 0]
-# ys = Genepr[: , 1]
-# zs = Genepr[: , 3]
-# ax.scatter(xs, ys, zs , color = 'pink', label = 'Multivariável com Pr')
+xs = Genepr[: , 0]
+ys = Genepr[: , 1]
+zs = Genepr[: , 3]
+ax.scatter(xs, ys, zs , color = 'pink', label = 'Multivariável com Pr')
 
 ax.set_xlabel('X Label')
 ax.set_ylabel('Y Label')

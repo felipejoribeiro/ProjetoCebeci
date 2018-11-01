@@ -119,10 +119,13 @@ subroutine FTN(X, objval)
         prt = (3.19791882062d-10 * Ret**3 - 1.08216023658d-06 * Ret**2 +0.00116281300928*Ret+0.449206978959)* &
         ((Pr/0.71)**(-0.008d0) + x(1) * (Pr - 0.71))
 
+        vc = exp( 0.164405721012d0 * log(Ret)**3.d0 - 2.87424334318d0 * log(Ret)**2.d0 +  16.3562873171d0 * log(Ret) - &                      ! genetic cebeci com ajuste molecular
+            26.6310370449d0 ) * (Pr/ 0.71) ** x(1)
+
         ! Amostrando resultados
 
         print*, "Prt (10) = " , prt
-        re1 = prt
+        re1 = vc
 
 
 
@@ -133,10 +136,13 @@ subroutine FTN(X, objval)
         prt = (3.19791882062d-10 * Ret**3 - 1.08216023658d-06 * Ret**2 +0.00116281300928*Ret+0.449206978959)* &
         ((Pr/0.71)**(-0.008d0) + x(1) * (Pr - 0.71))
 
+        vc = exp( 0.164405721012d0 * log(Ret)**3.d0 - 2.87424334318d0 * log(Ret)**2.d0 +  16.3562873171d0 * log(Ret) - &                      ! genetic cebeci com ajuste molecular
+            26.6310370449d0 ) * (Pr/ 0.71) ** x(1)
+
         ! Amostrando resultados
 
         print*, "Prt (0.025) = " , prt
-        re2 = prt
+        re2 = vc
 
 
 
@@ -147,11 +153,14 @@ subroutine FTN(X, objval)
         prt = (3.19791882062d-10 * Ret**3 - 1.08216023658d-06 * Ret**2 +0.00116281300928*Ret+0.449206978959)* &
         ((Pr/0.71)**(-0.008d0) + x(1) * (Pr - 0.71))
 
+        vc = exp( 0.164405721012d0 * log(Ret)**3.d0 - 2.87424334318d0 * log(Ret)**2.d0 +  16.3562873171d0 * log(Ret) - &                      ! genetic cebeci com ajuste molecular
+            26.6310370449d0 ) * (Pr/ 0.71) ** x(1)
+
 
         ! Amostrando resultados
 
         print*, "Prt (0.71) = " , prt
-        re3 = prt
+        re3 = vc
 
 
 
@@ -162,7 +171,7 @@ subroutine FTN(X, objval)
         write(13, *) "resultados:" , re1 ,  re2 , re3
         print*, "Fim"
 
-  objval = (re1 - 0.88268260782709396d0  )**2 + (re2 -   0.92602145583845075d0 )**2 + (re3 - 0.75938280042931627d0  )**2                   ! Pontos do ajuste.
+  objval = (re1 - 24.580929316521150d0  )**2 + (re3 - 34.938766556086925d0 )**2 + (re2 -   44.154084117062176d0 )**2                   ! Pontos do ajuste.
 
 end subroutine FTN
 
