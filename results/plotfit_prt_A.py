@@ -121,4 +121,21 @@ plt.title('Ajuste do valor de Cebeci, genetic')
 plt.xlabel('Ret')
 plt.ylabel('A')
 plt.show()
+
+
+
+
+
+
+#ajuste com o algorítmo genético diferencial do Prt e Cebeci com influencia do Prandtl molecular:
+
+
+
+
+
+
+
+
+
+
 ##########################################################################################################################################
