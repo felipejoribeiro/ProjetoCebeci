@@ -6,7 +6,7 @@ program calculadora
     integer :: N
 Call getcwd( dirname )
 N = 400
-pr = 0.71d0
+pr = 10.d0
 Ret = 1020.d0
 metodo = '_Prt0905_A26'
 
@@ -26,5 +26,5 @@ Prt = - 4.56041707672d0 * 10.d0 ** (-10.d0) * Ret**3 +  9.56902551372d0 * 10.d0 
 print*, prt , vc
 
     write(*,FMT=201) trim(dirname) , Ret, Pr , N , trim(metodo)
-    201     format( A ,'/results/graficos/image',F5.0,'_', F4.2,'_', I3 , A ,".txt")
+    201     format( A ,'/results/graficos/image',F5.0,'_', F5.2,'_', I3 , A ,".txt")
 end program
