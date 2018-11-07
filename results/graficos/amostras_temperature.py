@@ -5,6 +5,7 @@ import os
 from os import path
 
 path = os.getcwd()
+
 path = path.replace('results/graficos' , '')
 plt.rc('text', usetex=True)
 plt.rc('font', family='serif')
@@ -35,49 +36,45 @@ for i in range(1 , 400):
 
 
 
-
-
 ######################## Gráfico do Prandtl...
 
+plt.figure(figsize=(tamanho , tamanho * aspectratio))
+
+prandtl = np.loadtxt(path + "DNS/Prt_RE_640_071.txt", dtype='float')
+spaco = prandtl[: , 1]
+prt = prandtl[: , 5]
+
+plt.plot(spaco / 640 ,prt , color='black' , linestyle=":" , label=r"$Re_\tau = 640$ , $Pr = 0.71$")
+
+prandtl = np.loadtxt(path + "DNS/Prt_RE_640_0025.txt", dtype='float' )
+spaco = prandtl[: , 1]
+prt = prandtl[: , 5]
+
+plt.plot(spaco /640,prt , color='black', linestyle="--" , label=r"$Re_\tau = 640$ , $Pr = 0.025$")
+
+prandtl = np.loadtxt(path + "DNS/Prt_RE_395_071.txt", dtype='float')
+spaco = prandtl[: , 1]
+prt = prandtl[: , 5]
+
+plt.plot(spaco /395,prt, color='black', linestyle="-" , label=r"$Re_\tau = 395$ , $Pr = 0.71$")
+
+prandtl = np.loadtxt(path + "DNS/Prt_RE_395_0025.txt", dtype='float' )
+spaco = prandtl[: , 1]
+prt = prandtl[: , 5]
+
+plt.plot(spaco /395,prt, color='black', linestyle="-.", label=r"$Re_\tau = 395$ , $Pr = 0.025$")
 
 
+plt.xlabel(r'  $ \tilde{y} $ ',fontsize=28)
+plt.ylabel(r'$ Pr_t $',fontsize=28)
+plt.subplots_adjust(top=0.9 , bottom=0.17)
+plt.xlim(0,1)
+plt.legend(fontsize=17)
+plt.ticklabel_format(style='sci', axis='x', scilimits=(0,0) , fontsize= 20)
+plt.ticklabel_format(style='sci', axis='y', scilimits=(0,0) , fontsize= 30)
+plt.savefig('images/DNS_PRt.png')
+plt.show(block=False)
 
-# prandtl = np.loadtxt(path + "DNS/Prt_RE_640_071.txt", dtype='float')
-# spaco = prandtl[: , 1]
-# prt = prandtl[: , 5]
-
-# plt.plot(spaco / 640 ,prt , color='black' , linestyle=":" , label=r"$Re_\tau = 640$ , $Pr = 0.71$")
-
-# prandtl = np.loadtxt(path + "DNS/Prt_RE_640_0025.txt", dtype='float' )
-# spaco = prandtl[: , 1]
-# prt = prandtl[: , 5]
-
-# plt.plot(spaco /640,prt , color='black', linestyle="--" , label=r"$Re_\tau = 640$ , $Pr = 0.025$")
-
-# prandtl = np.loadtxt(path + "DNS/Prt_RE_395_071.txt", dtype='float')
-# spaco = prandtl[: , 1]
-# prt = prandtl[: , 5]
-
-# plt.plot(spaco /395,prt, color='black', linestyle="-" , label=r"$Re_\tau = 395$ , $Pr = 0.71$")
-
-# prandtl = np.loadtxt(path + "DNS/Prt_RE_395_0025.txt", dtype='float' )
-# spaco = prandtl[: , 1]
-# prt = prandtl[: , 5]
-
-# plt.plot(spaco /395,prt, color='black', linestyle="-.", label=r"$Re_\tau = 395$ , $Pr = 0.025$")
-
-
-
-# plt.figure(figsize=(tamanho , tamanho * aspectratio))
-# plt.xlabel(r'  $ \tilde{y} $ ',fontsize=28)
-# plt.ylabel(r'$ Pr_t $',fontsize=28)
-# plt.subplots_adjust(top=0.9 , bottom=0.17)
-# plt.xlim(0,1)
-# plt.legend(fontsize=17)
-# plt.ticklabel_format(style='sci', axis='x', scilimits=(0,0) , fontsize= 20)
-# plt.ticklabel_format(style='sci', axis='y', scilimits=(0,0) , fontsize= 30)
-# plt.savefig('images/DNS_PRt.png')
-# plt.show(block=False)
 
 
 
@@ -86,8 +83,12 @@ for i in range(1 , 400):
 
 ####################### Gráficos gerais das temperaturas...
 
+
 dados = np.loadtxt("image" + Ret + "._" + str(Pr)  + "_400_" + metodo + ".txt", dtype='float')
 dns = np.loadtxt(path + "DNS/DNS_RE_"+dnss + ".txt", dtype='float')
+
+
+
 
 
 
@@ -103,6 +104,9 @@ plt.plot(dns[:, 1]- int(Ret) , dns[:, 2])
 plt.xlim(- int(Ret) , int(Ret))
 plt.ylim(0 , max([max(dados) , max(dns[:, 2])]) * 1.2)
 plt.show()
+
+
+
 
 
 

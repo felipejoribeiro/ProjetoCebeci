@@ -852,7 +852,7 @@ do while (iter <= itermax)
 201 format(2x, 'bestval =', ES14.7, /)
 202 format(5x, 'bestmem_XC(', I3, ') =', ES12.5)
 203 format(2x, 'No. of iteration  =', I8)
-write(13, *) bestmem_XC(1) , bestmem_XC(2) , bestval
+write(13, *) bestmem_XC(1) , bestval
 close(13)
 end subroutine DE_Fortran90
 
