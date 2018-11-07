@@ -39,12 +39,12 @@ refresh=4                                                                    ! I
 VTR=-1.0d-3                                                                  ! Acurácia esperada do argumento de saída
 iwrite=7                                                                     ! Unidade de escrita de arquivo.
 Dim_XC=1                                                                     ! Número de variáveis de entrada
-filename = "/results/Gene395_0025_400_CeGenetic.txt"                          ! Nome do arquivo.
+filename = "/results/Gene395_5_400_Cefisico.txt"                          ! Nome do arquivo.
 N = 400                                                                      ! Número de células
 allocate(XCmin(Dim_XC) , XCmax(Dim_XC), bestmem_XC(Dim_XC))
 ! Parametros metodológicos
 Ret = 395.d0                                                                 ! Reynolds turbulento
-Pr = 0.025d0                                                                 ! Prandtl molecular
+Pr = 5.d0                                                                    ! Prandtl molecular
 method=(/0, 1, 0/)                                                           ! Metodologia de mutação
 strategy=6                                                                   ! Stratégias de mutação
 CR_XC=0.5d0                                                                  ! Crossover factor for real decision parameters.
@@ -129,11 +129,11 @@ subroutine FTN(X, objval)
 
         ! vc = x(2)
 
-        vc = exp( 0.164405721012d0 * log(Ret)**3.d0 - 2.87424334318d0 * log(Ret)**2.d0 +  16.3562873171d0 * log(Ret) - &                      ! genetic cebeci
-            26.6310370449d0 )
+        ! vc = exp( 0.164405721012d0 * log(Ret)**3.d0 - 2.87424334318d0 * log(Ret)**2.d0 +  16.3562873171d0 * log(Ret) - &                      ! genetic cebeci
+        !     26.6310370449d0 )
 
 
-        ! vc = (Ret**(log(Ret) * 0.04510621d0) * exp(5.27528132d0) ) / (Ret ** 0.60941173d0)                                                      ! Otimizado para o menor erro quanto a velocidade.
+        vc = (Ret**(log(Ret) * 0.04510621d0) * exp(5.27528132d0) ) / (Ret ** 0.60941173d0)                                                      ! Otimizado para o menor erro quanto a velocidade.
 
 
 
@@ -150,7 +150,7 @@ subroutine FTN(X, objval)
         allocate(T(N))
         allocate (Tdns(2 , p(1)))
         ! Desenvolvimento do método
-        Print*, "Algorítmo iniciado..."
+        Print*, "Algorithm started..."
         call Program()
         ! Desalocando-se os desalocáveis
         deallocate(Tdns)
@@ -176,7 +176,7 @@ subroutine FTN(X, objval)
 
         ! print*, " "
         write(13, *) prt , vc , L2
-        print*, "Fim da simulação!"
+        print*, "End of simulation!"
 
   objval = L2
 

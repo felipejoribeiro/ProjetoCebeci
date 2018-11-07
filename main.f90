@@ -5,7 +5,8 @@ module prandtll
     integer , dimension(3) :: p
     double precision:: Ret , Re, Pr , Prt , vc , dy , incre , um, L2 , L1 , Li
     integer:: N , y , Parameters
-    character*100:: dirname , filename
+    character*100:: dirname , filename , metodo
+    Logical:: criar_imagem , salvar_resultados
 end module
 
 
@@ -45,28 +46,39 @@ program teste
         incre = 1.d-9                                                                      ! incremento para convergência do método implícito
         R = 1.d0                                                                           ! Raio do canal
         dy = (R/(dble(N) - 0.5d0)) * Ret/R;                                                ! i_1 = dy/2 ... i_n = R
+        criar_imagem = .true.                                                              ! cria-se arquivo de imagem?
+        salvar_resultados = .true.                                                         ! Salva-se resultados?
+        metodo = '_Prt(Ret)_Avelocity'!'_Prt(Ret)_A26' !'_classico'  !'_Prt0905_A26'       ! metodo de execução do programa.
+        filename = '/results/ResultadosGeraisGeneticmolecular.txt'                         ! nome do arquivo resultados salvo.
+
 
         ! Méta modelos a partir da referência
 
+        ! Prt = 0.905d0                                                                                                                       ! Otimização unica para 1020
 
 
+        ! Prt = 0.71                                                                                                                          !valor classico
 
-        !Prt = - 4.56041707672d0 * 10.d0 ** (-10.d0) * Ret**3 +  9.56902551372d0 * 10.d0 **(-7.d0) * Ret**2 &                               ! Otimizado sem a otimização de cebeci
-        !- 0.000617158206068d0 * Ret +  1.01789506426
+
+        ! vc = 26                                                                                                                             ! Valor classico
+
+
+        ! Prt = - 4.56041707672d0 * 10.d0 ** (-10.d0) * Ret**3 +  9.56902551372d0 * 10.d0 **(-7.d0) * Ret**2 &                               ! Otimizado sem a otimização de cebeci
+        ! - 0.000617158206068d0 * Ret +  1.01789506426
 
 
 
         ! prt = ((4.52901632 * 10.d0 ** (-12.d0) ) * Ret**3 - &
-        !     (5.73952059d0 * 10.d0 **(-8.d0)) * Ret**2.d0 + &
-        !     (9.397008473d0 * 10.d0 ** (-5.d0) )* Ret + 0.873117480)* (pr/0.71)**(-0.008d0)                                                ! Otimizado com a otimização de cebeci
+            ! (5.73952059d0 * 10.d0 **(-8.d0)) * Ret**2.d0 + &
+            ! (9.397008473d0 * 10.d0 ** (-5.d0) )* Ret + 0.873117480)* (pr/0.71)**(-0.008d0)                                                ! Otimizado com a otimização de cebeci
 
 
 
-        !vc = (Ret**(log(Ret) * 0.04510621d0) * exp(5.27528132d0) ) / (Ret ** 0.60941173d0)                                                ! Otimizado para o menor erro quanto a velocidade.
+        ! vc = (Ret**(log(Ret) * 0.04510621d0) * exp(5.27528132d0) ) / (Ret ** 0.60941173d0)                                                 ! Otimizado para o menor erro quanto a velocidade.
 
 
 
-        ! prt = (3.19791882062d-10 * Ret**3 - 1.08216023658d-06 * Ret**2 +0.00116281300928*Ret+0.449206978959)*(pr/0.71)**(-0.008d0)         ! genetic prandtl
+        ! prt = (3.19791882062d-10 * Ret**3 - 1.08216023658d-06 * Ret**2 +0.00116281300928*Ret+0.449206978959)*(pr/0.71)**(-0.008d0)            ! genetic prandtl
 
 
 
@@ -76,20 +88,14 @@ program teste
 
 
 
-        prt = (3.19791882062d-10 * Ret**3 - 1.08216023658d-06 * Ret**2 +0.00116281300928d0*Ret+0.449206978959d0)*(pr/0.71d0)** &              ! genetic prandtl com ajuste molecular
+        prt = (3.19791882062d-10 * Ret**3 - 1.08216023658d-06 * Ret**2 +0.00116281300928d0*Ret+0.449206978959d0)* &                          ! genetic prandtl com ajuste molecular
         ((Pr/0.71d0)**(-0.008d0) + 1.8106822d-02 * (Pr - 0.71d0))
 
 
 
 
         vc = exp( 0.164405721012d0 * log(Ret)**3.d0 - 2.87424334318d0 * log(Ret)**2.d0 +  16.3562873171d0 * log(Ret) - &                      ! genetic cebeci com ajuste molecular
-            26.6310370449d0 ) * (1 + x(1) * (Pr - 0.71))
-
-
-
-
-
-
+            26.6310370449d0 )
 
 
         ! Adequação aos parâmetros padrão
@@ -97,8 +103,9 @@ program teste
         ! Adequação numérica final (usuário)
 
 
-        filename = '/results/ResultadosGeraisGeneticmolecular.txt'
 
+
+        print*, "Initiated algorithm"
 
 
         ! ...
@@ -136,7 +143,7 @@ program teste
         ! Encerramento
 
         print*, " "
-        print*, "Fim das simulações!"
+        print*, "End of simulations!"
 
 end program
 
@@ -169,7 +176,13 @@ subroutine Program()
     ! Tirando norma Li
     call Linorm()
     ! Registrando resultado
-    call EscreverArquivo()
+    if(salvar_resultados)then
+        call EscreverArquivo()
+        end if
+    ! Salvar foto
+    if(criar_imagem)then
+        call CriarImagem()
+        end if
     return
 
     end subroutine Program
@@ -671,3 +684,23 @@ subroutine EscreverArquivo()
     return
 
     end subroutine EscreverArquivo
+
+
+
+! Cria imagem temperatura.
+subroutine CriarImagem()
+
+    use prandtll
+    implicit none
+    character*200 :: imagename
+    integer:: i
+
+    write(imagename,FMT=187) trim(dirname) , Ret, Pr , N , trim(metodo)
+    187     format( A ,'/results/graficos/image',F5.0,'_', F4.2,'_', I3 , A ,".txt")
+    open(unit=10,file=imagename)
+    do i = 1 , N
+        write(10,*) T(i)
+        end do
+    close(10)
+    return
+    end subroutine CriarImagem

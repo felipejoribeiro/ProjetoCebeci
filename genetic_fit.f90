@@ -42,7 +42,7 @@ iwrite=7                                                                     ! U
 Dim_XC=1                                                                     ! Número de variáveis de entrada
 filename = "/results/FITPRANDTL.txt"                                         ! Nome do arquivo.
 N = 400                                                                      ! Número de células
-allocate(XCmin(Dim_XC) , XCmax(Dim_XC), bestmem_XC(Dim_XC))
+allocate(XCmin(Dim_XC) , XCmax(Dim_XC) , bestmem_XC(Dim_XC))
 ! Parametros metodológicos
 method=(/0, 1, 0/)                                                           ! Metodologia de mutação
 strategy=6                                                                   ! Stratégias de mutação
