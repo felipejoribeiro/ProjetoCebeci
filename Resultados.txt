@@ -1,9 +1,1 @@
- Beginning of Program. Date:2018/11/ 7, Time:  7:44:36
-  NP=  10    No. function call =     1010
-  mehtod(1:3) =  0  1  0
-  F_XC = 0.800  CR_XC = 0.500  F_CR = 0.364
-
-  Bestval= 1.5860353E+01
-  best_XC(  1) =-8.1490496E-02
-
- End of Program. Date:2018/11/ 7, Time:  7:44:36
+ Beginning of Program. Date:2018/11/ 7, Time: 10:50:37

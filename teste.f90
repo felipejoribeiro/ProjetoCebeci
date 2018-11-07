@@ -1,11 +1,11 @@
 !variaveis globais definidas (para que as funções que as tenham)
 module prandtll
     double precision , dimension(:) , allocatable :: vPrt , T , u , e
-    double precision , dimension(:,:) , allocatable :: Tdns
+    double precision , dimension(:,:) , allocatable :: Tdns , Udns
     integer , dimension(3) :: p
     double precision:: Ret , Re, Pr , Prt , vc , dy , incre , um, L2 , L1 , Li
     integer:: N
-    character*100:: dirname
+    character*100:: dirname , metodo
 end module
 
 
@@ -22,7 +22,7 @@ program teste
 
     ! Controle dos parametros
 
-        Ret = 1020.d0
+        Ret = 640.d0
         Pr = 0.71d0
 
         ! Controles numéricos
@@ -31,13 +31,14 @@ program teste
         incre = 1.d-9                                                                      ! incremento para convergência do método implícito
         R = 1.d0                                                                           ! Raio do canal
         dy = (R/(dble(N) - 0.5d0)) * Ret/R;                                                ! i_1 = dy/2 ... i_n = R
+        metodo = 'temp'!'_Amodeled' !_classico'
 
         ! Méta modelos a partir da referência
 
 
 
-        Prt = - 4.56041707672d0 * 10.d0 ** (-10.d0) * Ret**3 +  9.56902551372d0 * 10.d0 **(-7.d0) * Ret**2 &                               ! Otimizado sem a otimização de cebeci
-        - 0.000617158206068d0 * Ret +  1.01789506426
+        ! Prt = - 4.56041707672d0 * 10.d0 ** (-10.d0) * Ret**3 +  9.56902551372d0 * 10.d0 **(-7.d0) * Ret**2 &                               ! Otimizado sem a otimização de cebeci
+         ! - 0.000617158206068d0 * Ret +  1.01789506426
 
 
 
@@ -47,7 +48,7 @@ program teste
 
 
 
-        ! vc = (Ret**(log(Ret) * 0.04510621d0) * exp(5.27528132d0) ) / (Ret ** 0.60941173d0)                                                ! Otimizado para o menor erro quanto a velocidade.
+        vc = (Ret**(log(Ret) * 0.04510621d0) * exp(5.27528132d0) ) / (Ret ** 0.60941173d0)                                                ! Otimizado para o menor erro quanto a velocidade.
 
 
 
@@ -60,8 +61,8 @@ program teste
         ! Adequação numérica final (usuário)
 
 
-        vc = 26
 
+        vc = 26
 
         ! Alocando-se os alocáveis
         allocate(e(N))
@@ -69,11 +70,13 @@ program teste
         allocate(vPrt(N))
         allocate(T(N))
         allocate (Tdns(2 , p(1)))
+        allocate (Udns(2 , p(2)))
         ! Desenvolvimento do método
         Print*, "Algorítmo iniciado..."
         call Program()
         ! Desalocando-se os desalocáveis
         deallocate(Tdns)
+        deallocate(Udns)
         deallocate(T)
         deallocate(vPrt)
         deallocate(e)
@@ -97,6 +100,8 @@ program teste
         print*, " "
         print*, "Fim da simulação!"
 
+
+        read(*,*)
 end program
 
 
@@ -114,19 +119,23 @@ subroutine Program()
     call SpaceVector()
     ! Simulação do vetor velocidade e valor médio
     call VelocitySimu()
-    call VelocityMedia()
-    ! Setagem do vetor Prandtl turbulento
-    call Prandtlvector()
-    ! Simulação do vetor temperatura
-    call TemperatureSimu()
+    ! call VelocityMedia()
+    !Setagem do vetor Prandtl turbulento
+    ! call Prandtlvector()
+    !Simulação do vetor temperatura
+    ! call TemperatureSimu()
     ! Importando o DNS
-    Call DNSinput()
+    ! Call DNSinput()
+    ! Importando o DNS da velocidade
+    Call DNSinputvelo()
     ! Tirando norma L2
-    call L2norm()
+    call L2norm(u)
     ! Tirando norma L1
-    call L1norm()
-    ! Tirando norma Li
-    call Linorm()
+    call L1norm(u)
+    !Tirando norma Li
+    call Linorm(u)
+    ! criando imagem
+    ! call CriarImagem(T)
     return
 
     end subroutine Program
@@ -144,39 +153,51 @@ subroutine AdequaParametro()
     use prandtll
     if(Ret == 1020.d0 .and. Pr == 0.71d0)then
         p(1) = 224
+        p(2) = 224
         Re = 41441.d0
     elseif(Ret == 150.d0 .and. Pr == 0.71d0)then
         p(1) = 73
+        p(2) = 64
         Re = 4560.d0
     elseif(Ret == 150.d0 .and. Pr == 0.025d0)then
         p(1) = 73
+        p(2) = 64
         Re = 4560.d0
     elseif(Ret == 640.d0 .and. Pr == 0.71d0)then
         p(1) = 128
+        p(2) = 128
         Re = 24428.d0
     elseif(Ret == 640.d0 .and. Pr == 0.025d0)then
         p(1) = 128
+        p(2) = 128
         Re = 24428.d0
     elseif(Ret == 395.d0 .and. Pr == 10.d0)then
         p(1) = 240
+        p(2) = 96
         Re = 14062.d0
     elseif(Ret == 395.d0 .and. Pr == 0.71d0)then
         p(1) = 96
+        p(2) = 96
         Re = 14062.d0
     elseif(Ret == 395.d0 .and. Pr == 7.d0)then
         p(1) = 240
+        p(2) = 96
         Re = 14062.d0
     elseif(Ret == 395.d0 .and. Pr == 5.d0)then
         p(1) = 240
+        p(2) = 96
         Re = 14062.d0
     elseif(Ret == 395.d0 .and. Pr == 2.d0)then
         p(1) = 240
+        p(2) = 96
         Re = 14062.d0
     elseif(Ret == 395.d0 .and. Pr == 1.d0)then
         p(1) = 240
+        p(2) = 96
         Re = 14062.d0
     elseif(Ret == 395.d0 .and. Pr == 0.025d0)then
         p(1) = 96
+        p(2) = 224
         Re = 14062.d0
     end if
     return
@@ -488,6 +509,79 @@ subroutine DNSinput()
 
 
 
+
+subroutine DNSinputvelo()
+
+    use prandtll
+    implicit none
+    integer :: i
+    double precision :: ly
+    character(len=:), allocatable :: m
+    ! Abertura de arquivo
+    if (Ret == 1020.d0 .and. Pr == 0.71d0)then
+        allocate(character(len=len(dirname // '/DNS/DNS_RE_1000.txt')) :: m)
+        m = trim(dirname) // '/DNS/DNS_RE_1000.txt'
+        open(unit=10,file= m)
+    elseif(Ret == 150.d0 .and. Pr == 0.71d0)then
+        allocate(character(len=len(dirname // '/DNS/DNS_RE_150.txt')) :: m)
+        m = trim(dirname) // '/DNS/DNS_RE_150.txt'
+        open(unit=10,file=m)
+    elseif(Ret == 150.d0 .and. Pr == 0.025d0)then
+        allocate(character(len=len(dirname // '/DNS/DNS_RE_150.txt')) :: m)
+        m = trim(dirname) // '/DNS/DNS_RE_150.txt'
+        open(unit=10,file=m)
+    elseif(Ret == 640.d0 .and. Pr == 0.71d0)then
+        allocate(character(len=len(dirname // '/DNS/DNS_RE_640.txt')):: m)
+        m = trim(dirname) // '/DNS/DNS_RE_640.txt'
+        open(unit=10,file=m)
+    elseif(Ret == 640.d0 .and. Pr == 0.025d0)then
+        allocate(character(len=len(dirname // '/DNS/DNS_RE_640.txt')):: m)
+        m = trim(dirname) // '/DNS/DNS_RE_640.txt'
+        open(unit=10,file=m)
+    elseif(Ret == 395.d0 .and. Pr == 0.71d0)then
+        allocate(character(len=len(dirname // '/DNS/DNS_RE_395.txt')) :: m)
+        m = trim(dirname) // '/DNS/DNS_RE_395.txt'
+        open(unit=10,file=m)
+    elseif(Ret == 395.d0 .and. Pr == 10.d0)then
+        allocate(character(len=len(dirname // '/DNS/DNS_RE_395.txt')) :: m)
+        m = trim(dirname) // '/DNS/DNS_RE_395.txt'
+        open(unit=10,file=m)
+    elseif(Ret == 395.d0 .and. Pr == 7.d0)then
+        allocate(character(len=len(dirname // '/DNS/DNS_RE_395.txt')) :: m)
+        m = trim(dirname) // '/DNS/DNS_RE_395.txt'
+        open(unit=10,file=m)
+    elseif(Ret == 395.d0 .and. Pr == 5.d0)then
+        allocate(character(len=len(dirname // '/DNS/DNS_RE_395.txt')) :: m)
+        m = trim(dirname) // '/DNS/DNS_RE_395.txt'
+        open(unit=10,file=m)
+    elseif(Ret == 395.d0 .and. Pr == 2.d0)then
+        allocate(character(len=len(dirname // '/DNS/DNS_RE_395.txt')) :: m)
+        m = trim(dirname) // '/DNS/DNS_RE_395.txt'
+        open(unit=10,file=m)
+    elseif(Ret == 395.d0 .and. Pr == 1.d0)then
+        allocate(character(len=len(dirname // '/DNS/DNS_RE_395.txt')) :: m)
+        m = trim(dirname) // '/DNS/DNS_RE_395.txt'
+        open(unit=10,file=m)
+    elseif(Ret == 395.d0 .and. Pr == 0.025d0)then
+        allocate(character(len=len(dirname // '/DNS/DNS_RE_395.txt')) :: m)
+        m = trim(dirname) // '/DNS/DNS_RE_395.txt'
+        open(unit=10,file=m)
+    end if
+    ! Leitura
+    Do i = 1 ,  p(2)
+            read(10,*) ly , Udns(1, i), Udns(2, i)
+    End Do
+    close (10)
+    deallocate(m)
+    return
+
+    end subroutine DNSinputvelo
+
+
+
+
+
+
 ! Tira espaços do meio de string
 subroutine SOUT(string)
 
@@ -516,14 +610,29 @@ subroutine SOUT(string)
 
 
 ! Tira a norma L2 da temperatura
-subroutine L2norm()
+subroutine L2norm(M)
 
     use prandtll
     implicit none
     double precision :: ly , k1
+    double precision , dimension(N):: M
     integer :: i , ii , iii
     k1 = 0.d0
     iii = 0
+    if(M(1) == u(1))then
+    do i = 2 , N
+
+        do ii = 1 , p(2)
+            if((Ret - Udns(1 , ii)) < e(i) .and. (Ret - Udns(1 , ii)) > e(i-1) )then
+                ly = (u(i) - u(i-1))*((Ret - Udns(1,ii)) - e(i-1))/(e(i) - e(i-1))
+                ly = u(i-1) + ly
+                k1 = k1 + (ly - Udns(2,ii))**2.d0
+                iii = iii + 1
+            end if
+        end do
+    end do
+    L2 = sqrt(k1 / (iii))
+    else
     do i = 2 , N
 
         do ii = 1 , p(1)
@@ -534,9 +643,9 @@ subroutine L2norm()
                 iii = iii + 1
             end if
         end do
-
     end do
     L2 = sqrt(k1 / (iii))
+    end if
     return
 
     end subroutine L2norm
@@ -545,14 +654,28 @@ subroutine L2norm()
 
 
 ! Tirando norma L1 da temperatura
-subroutine L1norm()
+subroutine L1norm(M)
 
     use prandtll
     implicit none
     double precision :: ly , k1
+    double precision , dimension(N):: M
     integer :: i , ii , iii
     k1 = 0.d0
     iii = 0
+    if(M(1) == u(1))then
+    do i = 2 , N
+        do ii = 1 , p(2)
+            if((Ret - Udns(1 , ii)) < e(i) .and. (Ret - Udns(1 , ii)) > e(i-1) )then
+                ly = (u(i) - u(i-1))*((Ret - Udns(1,ii)) - e(i-1))/(e(i) - e(i-1))
+                ly = u(i-1) + ly
+                k1 = k1 + abs(ly - Udns(2,ii))
+                iii = iii + 1
+            end if
+        end do
+    end do
+    L1 = k1 / iii
+    else
     do i = 2 , N
         do ii = 1 , p(1)
             if((Ret - Tdns(1 , ii)) < e(i) .and. (Ret - Tdns(1 , ii)) > e(i-1) )then
@@ -564,6 +687,7 @@ subroutine L1norm()
         end do
     end do
     L1 = k1 / iii
+    end if
     return
 
     end subroutine L1norm
@@ -572,11 +696,12 @@ subroutine L1norm()
 
 
 ! Tirando a L infinito da temperatura
-subroutine Linorm()
+subroutine Linorm(M)
 
     use prandtll
     implicit none
-    double precision :: ly , k1
+    double precision :: ly , k1 , k2
+    double precision , dimension(N):: M
     integer :: i , ii , iii
     k1 = 0.d0
     iii = 0
@@ -591,7 +716,55 @@ subroutine Linorm()
             end if
         end do
     end do
+    k2 = 0.d0
+    iii = 0
+    do i = 2 , N
+        do ii = 1 , p(2)
+            if((Ret - Udns(1 , ii)) < e(i) .and. (Ret - Udns(1 , ii)) > e(i-1) )then
+                ly = (u(i) - u(i-1))*((Ret - Udns(1,ii)) - e(i-1))/(e(i) - e(i-1))
+                ly = u(i-1) + ly
+                if(abs(ly - Udns(2,ii)) > k2)then
+                    k2 = abs(ly - Udns(2,ii))
+                end if
+            end if
+        end do
+    end do
+
+    if(M(1) == u(1))then
+    Li = k2
+    else
     Li = k1
+    end if
     return
 
     end subroutine Linorm
+
+
+
+
+
+    ! Cria imagem temperatura.
+subroutine CriarImagem(M)
+
+    use prandtll
+    implicit none
+    character*200 :: imagename
+    double precision , dimension(N):: M
+    integer:: i
+    if(M(1) == u(1))then
+    write(imagename,FMT=188) trim(dirname) , Ret,  N , trim(metodo)
+188     format( A ,'/results/graficos/image',F5.0,'_', I3 , A ,".txt")
+    else
+    write(imagename,FMT=200) trim(dirname) , Ret, Pr , N , trim(metodo)
+200     format( A ,'/results/graficos/image',F5.0,'_', F4.2,'_', I3 , A ,".txt")
+    end if
+
+
+
+    open(unit=10,file=imagename)
+    do i = 1 , N
+        write(10,*) M(i)
+        end do
+    close(10)
+    return
+    end subroutine CriarImagem
