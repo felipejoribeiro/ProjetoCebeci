@@ -22,16 +22,16 @@ program teste
 
     ! Controle dos parametros
 
-        Ret = 150.d0
-        Pr = 0.025d0
+        Ret = 395.d0
+        Pr = 10.d0
 
 
         ! Controles numéricos
 
-        incremento = 0.1d0                                                                 ! incremento inicial
+        incremento = 1.d0                                                                  ! incremento inicial
         acuracialvo = 0.00001d0                                                            ! Acurácia para os números de Prandtl turbulento ideais.
-        valorInicial = 0.5d0                                                               ! Valor do qual o Prandtl turbulento ira iniciar.
-        N = 40                                                                             ! Número de células.
+        valorInicial = 20.d0                                                               ! Valor do qual o Prandtl turbulento ira iniciar.
+        N = 400                                                                            ! Número de células.
         incre = 1.d-9                                                                      ! incremento para convergência do método implícito.
         R = 1.d0                                                                           ! Raio do canal.
         dy = (R/(dble(N) - 0.5d0)) * Ret/R;                                                ! i_1 = dy/2 ... i_n = R
@@ -59,6 +59,13 @@ program teste
         Print*, "N =", N
         print*,"Prandtl turbulento ideal encontrado : " , Prt
 
+
+        print*, ''
+        print*, ''
+        print*, ''
+        print*, ''
+        print*, "END OF ROUTINE"
+        read(*,*)
 end program
 
 

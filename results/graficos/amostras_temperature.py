@@ -18,11 +18,11 @@ plt.rc('font',**{'family':'serif','serif':['Times']})
 plt.rcParams.update({'font.size': 32})
 
 
-Ret = " 640"          #oq ta no image
-dnss = "640"     #oq ta no DNS
-Pr = "_0.71"            #oq ta no image, para velocidade, ""
+Ret = "1020"          #oq ta no image
+dnss = "1000"     #oq ta no DNS
+Pr = "" #"_0.71"            #oq ta no image, para velocidade, ""
 e = np.zeros(400)
-metodo =                 # Segundo oq ta no image
+metodo = "Avelocity"                 # Segundo oq ta no image
 
 tamanho = 10
 aspectratio = 0.5
@@ -101,10 +101,10 @@ plt.legend(fontsize=35 , frameon=False)
 ax = plt.gca()
 
 label = ax.set_xlabel(r' \textbf{ $ \tilde{y} $ }',fontsize=35)
-ax.xaxis.set_label_coords(0.98, -0.025)
+ax.xaxis.set_label_coords(0.84, -0.025)
 
 label = ax.set_ylabel(r'\textbf{$ \tilde{\overline{T^\ast}} $}',fontsize=38)
-ax.yaxis.set_label_coords(-0.03, 0.70)
+ax.yaxis.set_label_coords(-0.03, 0.55)
 
 
 plt.savefig('images/Temperature_' + dnss + '_' + metodo + '.png' , bbox_inches='tight')
