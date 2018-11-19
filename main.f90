@@ -3,7 +3,7 @@ module prandtll
     double precision , dimension(:) , allocatable :: vPrt , T , u , e
     double precision , dimension(:,:) , allocatable :: Tdns
     integer , dimension(3) :: p
-    double precision:: Ret , Re, Pr , Prt , vc , dy , incre , um, L2 , L1 , Li
+    double precision:: Ret , Re, Pr , Prt , vc , vct , dy , incre , um, L2 , L1 , Li
     integer:: N , y , Parameters
     character*100:: dirname , filename , metodo
     Logical:: criar_imagem , salvar_resultados
@@ -20,6 +20,7 @@ program teste
     ! Declaram-se as variáveis do programa
 
     double precision :: R
+    character*100 :: titulo
 
     ! Controle dos parametros
     y = 12
@@ -42,17 +43,19 @@ program teste
 
         ! Controles numéricos
 
-        N = 400                                                                            ! Número de células
-        incre = 1.d-9                                                                      ! incremento para convergência do método implícito
-        R = 1.d0                                                                           ! Raio do canal
-        dy = (R/(dble(N) - 0.5d0)) * Ret/R;                                                ! i_1 = dy/2 ... i_n = R
-        criar_imagem = .true.                                                              ! cria-se arquivo de imagem?
-        salvar_resultados = .true.                                                         ! Salva-se resultados?
-        metodo = '_Prt(Ret)_Avelocity'!'_Prt(Ret)_A26' !'_classico'  !'_Prt0905_A26'       ! metodo de execução do programa.
-        filename = '/results/ResultadosGeraisGeneticmolecular.txt'                         ! nome do arquivo resultados salvo.
-
+        N = 400                                                                                        ! Número de células
+        incre = 1.d-9                                                                                  ! incremento para convergência do método implícito
+        R = 1.d0                                                                                       ! Raio do canal
+        dy = (R/(dble(N) - 0.5d0)) * Ret/R;                                                            ! i_1 = dy/2 ... i_n = R
+        criar_imagem = .false.                                                                         ! cria-se arquivo de imagem?
+        salvar_resultados = .false.                                                                    ! Salva-se resultados?
+        metodo = '_Genetic' !'_Prt(Ret)_Avelocity'!'_Prt(Ret)_A26' !'_classico'  !'_Prt0905_A26'       ! metodo de execução do programa.
+        filename = '/results/ResultadosGeraisGenetic.txt'                                              ! nome do arquivo resultados salvo.
+        titulo = 'simulação com vc modelado para a velocidade'                                         ! nome da janela.
 
         ! Méta modelos a partir da referência
+
+
 
         ! Prt = 0.905d0                                                                                                                       ! Otimização unica para 1020
 
@@ -60,7 +63,7 @@ program teste
         ! Prt = 0.71                                                                                                                          !valor classico
 
 
-        ! vc = 26                                                                                                                             ! Valor classico
+        ! vct = 26                                                                                                                             ! Valor classico
 
 
         ! Prt = - 4.56041707672d0 * 10.d0 ** (-10.d0) * Ret**3 +  9.56902551372d0 * 10.d0 **(-7.d0) * Ret**2 &                               ! Otimizado sem a otimização de cebeci
@@ -68,14 +71,14 @@ program teste
 
 
 
-        ! prt = ((4.52901632 * 10.d0 ** (-12.d0) ) * Ret**3 - &
-            ! (5.73952059d0 * 10.d0 **(-8.d0)) * Ret**2.d0 + &
-            ! (9.397008473d0 * 10.d0 ** (-5.d0) )* Ret + 0.873117480)* (pr/0.71)**(-0.008d0)                                                ! Otimizado com a otimização de cebeci
+        prt = ((4.52901632 * 10.d0 ** (-12.d0) ) * Ret**3 - &
+            (5.73952059d0 * 10.d0 **(-8.d0)) * Ret**2.d0 + &
+            (9.397008473d0 * 10.d0 ** (-5.d0) )* Ret + 0.873117480)* (pr/0.71)**(-0.008d0)                                                    ! Otimizado com a otimização de cebeci
 
 
 
-        ! vc = (Ret**(log(Ret) * 0.04510621d0) * exp(5.27528132d0) ) / (Ret ** 0.60941173d0)                                                 ! Otimizado para o menor erro quanto a velocidade.
-
+        vc = (Ret**(log(Ret) * 0.04510621d0) * exp(5.27528132d0) ) / (Ret ** 0.60941173d0)                                                    ! Otimizado para o menor erro quanto a velocidade.
+        vct = vc
 
 
         ! prt = (3.19791882062d-10 * Ret**3 - 1.08216023658d-06 * Ret**2 +0.00116281300928*Ret+0.449206978959)*(pr/0.71)**(-0.008d0)            ! genetic prandtl
@@ -88,14 +91,14 @@ program teste
 
 
 
-        prt = (3.19791882062d-10 * Ret**3 - 1.08216023658d-06 * Ret**2 +0.00116281300928d0*Ret+0.449206978959d0)* &                          ! genetic prandtl com ajuste molecular
-        ((Pr/0.71d0)**(-0.008d0) + 1.8106822d-02 * (Pr - 0.71d0))
+        ! prt = (3.19791882062d-10 * Ret**3 - 1.08216023658d-06 * Ret**2 +0.00116281300928d0*Ret+0.449206978959d0)                          ! genetic prandtl com ajuste molecular
 
 
 
 
-        vc = exp( 0.164405721012d0 * log(Ret)**3.d0 - 2.87424334318d0 * log(Ret)**2.d0 +  16.3562873171d0 * log(Ret) - &                      ! genetic cebeci com ajuste molecular
-            26.6310370449d0 )
+
+        ! vc = exp( 0.164405721012d0 * log(Ret)**3.d0 - 2.87424334318d0 * log(Ret)**2.d0 +  16.3562873171d0 * log(Ret) - &                      ! genetic cebeci com ajuste molecular
+        !     26.6310370449d0 )
 
 
         ! Adequação aos parâmetros padrão
@@ -104,11 +107,9 @@ program teste
 
 
 
-
+        print*, titulo
         print*, "Initiated algorithm"
 
-
-        ! ...
 
 
         ! Alocando-se os alocáveis
@@ -144,6 +145,7 @@ program teste
 
         print*, " "
         print*, "End of simulations!"
+        read(*,*)
 
 end program
 
@@ -376,12 +378,25 @@ function f(s, i)
     implicit none
     double precision, intent(in) :: s
     integer, intent(in) :: i
-    double precision :: f , ff , L
-    f = ( Ret/Pr - ((((L(s))**2 )*Ret**3)/vPrt(i) ) * ff(s)  )
+    double precision :: f , ff , Lt
+    f = ( Ret/Pr - ((((Lt(s))**2.d0 )*Ret**3.d0)/vPrt(i) ) * ff(s)  )
     return
 
 end function f
 
+
+
+! Lt(Y)
+function Lt(position)
+
+    use prandtll
+    implicit none
+    double precision :: Lt
+    double precision, intent(in) :: position
+    Lt = dble((0.14d0 - 0.08d0 * (position/Ret)**2.d0 - 0.06d0*(position/Ret)**4.d0 )*(1.d0 - exp((position/Ret - 1.d0)*Ret/vct)))
+    return
+
+end function Lt
 
 
 
