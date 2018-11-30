@@ -19,11 +19,13 @@ vc = exp( 0.164405721012d0 * log(Ret)**3.d0 - 2.87424334318d0 * log(Ret)**2.d0 +
             26.6310370449d0 )
 
 
-Prt = - 4.56041707672d0 * 10.d0 ** (-10.d0) * Ret**3 +  9.56902551372d0 * 10.d0 **(-7.d0) * Ret**2 &                               ! Otimizado sem a otimização de cebeci
-- 0.000617158206068d0 * Ret +  1.01789506426
+! Prt = - 4.56041707672d0 * 10.d0 ** (-10.d0) * Ret**3 +  9.56902551372d0 * 10.d0 **(-7.d0) * Ret**2 &                               ! Otimizado sem a otimização de cebeci
+! - 0.000617158206068d0 * Ret +  1.01789506426
+
+prt = (Ret**(0.164405721* (log(Ret))**2 - 2.874243343* log(Ret) + 16.356287317 ) )/(exp(26.631037045))
 
 
-print*, prt , vc
+print*, prt , vc 
 
     write(*,FMT=201) trim(dirname) , Ret, Pr , N , trim(metodo)
     201     format( A ,'/results/graficos/image',F5.0,'_', F5.2,'_', I3 , A ,".txt")

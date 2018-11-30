@@ -1,25 +1,38 @@
 import numpy as np
 import matplotlib.pyplot as plt
+import matplotlib as mpl
 import math
 import os
 from os import path
+import platform
 
 path = os.getcwd()
 
-path = path.replace('results/graficos' , '')
+if platform.system() == "Windows":
+    path = path.replace('results\graficos' , '')
+else :
+    path = path.replace('results/graficos' , '')
+
 plt.rc('text', usetex=True)
-plt.rc('font',**{'family':'serif','serif':['Times']})
+if platform.system() == "Windows":
+    plt.rc('font',**{'family':'DejaVu Sans','serif':['Times']})
+else :
+    plt.rc('font',**{'family':'serif','serif':['Times']})
+
+
+# plt.rc('font',**{'family':'serif'})
+# plt.rc('text', usetex=True)
+
 
 #########################
 ##    controles        ##
 #########################
 
-
 plt.rcParams.update({'font.size': 32})
 
 
-Ret = "1020"          #oq ta no images
-dnss = "1000_071"     #oq ta no DNS
+Ret = " 640"          #oq ta no images
+dnss = "640_071"     #oq ta no DNS
 Pr = "_0.71"            #oq ta no images, para velocidade, ""
 e = np.zeros(400)
 metodo = "Genetic"                 # Segundo oq ta no image
@@ -86,14 +99,19 @@ aspectratio = 0.4
 plt.figure(figsize=(tamanho , tamanho * aspectratio))
 
 dados = np.loadtxt("image" + Ret + "." + Pr  + "_400_" + metodo + ".txt", dtype='float')
-dns = np.loadtxt(path + "DNS/DNS_RE_"+dnss + ".txt", dtype='float')
+if platform.system() == "Windows":
+    dns = np.loadtxt(path + "\DNS\DNS_RE_"+dnss + ".txt", dtype='float')
+else :
+    dns = np.loadtxt(path + "DNS/DNS_RE_"+dnss + ".txt", dtype='float')
+
+
 
 
 plt.plot(e , dados , color='black' , linestyle='-', label= r'Simulated')
-plt.plot(- e , dados , color='black', linestyle='-', label= r'Simulated')
+plt.plot(- e , dados , color='black', linestyle='-')
 
 plt.plot(int(Ret) - dns[:, 1] , dns[:, 2] , color='black' , linestyle='-.', label= r'Dns')
-plt.plot(dns[:, 1]- int(Ret) , dns[:, 2] , color='black' , linestyle='-.', label= r'Dns')
+plt.plot(dns[:, 1]- int(Ret) , dns[:, 2] , color='black' , linestyle='-.')
 
 plt.xlim(- int(Ret) , int(Ret))
 plt.ylim(0 , max([max(dados) , max(dns[:, 2])]) * 1.2)
@@ -101,13 +119,16 @@ plt.legend(fontsize=35 , frameon=False)
 ax = plt.gca()
 
 label = ax.set_xlabel(r' \textbf{ $ \tilde{y} $ }',fontsize=35)
-ax.xaxis.set_label_coords(0.94, -0.025)
+ax.xaxis.set_label_coords(0.99, -0.025)
 
 label = ax.set_ylabel(r'\textbf{$ \tilde{\overline{T^\ast}} $}',fontsize=38)
-ax.yaxis.set_label_coords(-0.03, 0.75)
+ax.yaxis.set_label_coords(-0.03, 0.65)
 
+if platform.system() == "Windows":
+    plt.savefig('images\Temperature_' + dnss + '_' + metodo + '.png' , bbox_inches='tight')
+else:
+    plt.savefig('images/Temperature_' + dnss + '_' + metodo + '.png' , bbox_inches='tight')
 
-plt.savefig('images/Temperature_' + dnss + '_' + metodo + '.png' , bbox_inches='tight')
 plt.subplots_adjust(top=0.9 , bottom=0.15)
 plt.show()
 
