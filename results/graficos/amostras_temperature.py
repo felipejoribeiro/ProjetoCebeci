@@ -35,7 +35,7 @@ Ret = " 640"          #oq ta no images
 dnss = "640_071"     #oq ta no DNS
 Pr = "_0.71"            #oq ta no images, para velocidade, ""
 e = np.zeros(400)
-metodo = "Genetic"                 # Segundo oq ta no image
+metodo = "Genetic2temperature"                 # Segundo oq ta no image
 
 tamanho = 10
 aspectratio = 0.5
@@ -50,42 +50,42 @@ for i in range(1 , 400):
 
 ######################## Gráfico do Prandtl...
 
-# plt.figure(figsize=(tamanho , tamanho * aspectratio))
+plt.figure(figsize=(tamanho , tamanho * aspectratio))
 
-# prandtl = np.loadtxt(path + "DNS/Prt_RE_640_071.txt", dtype='float')
-# spaco = prandtl[: , 1]
-# prt = prandtl[: , 5]
+prandtl = np.loadtxt(path + "DNS/Prt_RE_640_071.txt", dtype='float')
+spaco = prandtl[: , 1]
+prt = prandtl[: , 5]
 
-# plt.plot(spaco / 640 ,prt , color='black' , linestyle=":" , label=r"$Re_\tau = 640$ , $Pr = 0.71$")
+plt.plot(spaco / 640 ,prt , color='black' , linestyle=":" , label=r"$Re_\tau = 640$ , $Pr = 0.71$")
 
-# prandtl = np.loadtxt(path + "DNS/Prt_RE_640_0025.txt", dtype='float' )
-# spaco = prandtl[: , 1]
-# prt = prandtl[: , 5]
+prandtl = np.loadtxt(path + "DNS/Prt_RE_640_0025.txt", dtype='float' )
+spaco = prandtl[: , 1]
+prt = prandtl[: , 5]
 
-# plt.plot(spaco /640,prt , color='black', linestyle="--" , label=r"$Re_\tau = 640$ , $Pr = 0.025$")
+plt.plot(spaco /640,prt , color='black', linestyle="--" , label=r"$Re_\tau = 640$ , $Pr = 0.025$")
 
-# prandtl = np.loadtxt(path + "DNS/Prt_RE_395_071.txt", dtype='float')
-# spaco = prandtl[: , 1]
-# prt = prandtl[: , 5]
+prandtl = np.loadtxt(path + "DNS/Prt_RE_395_071.txt", dtype='float')
+spaco = prandtl[: , 1]
+prt = prandtl[: , 5]
 
-# plt.plot(spaco /395,prt, color='black', linestyle="-" , label=r"$Re_\tau = 395$ , $Pr = 0.71$")
+plt.plot(spaco /395,prt, color='black', linestyle="-" , label=r"$Re_\tau = 395$ , $Pr = 0.71$")
 
-# prandtl = np.loadtxt(path + "DNS/Prt_RE_395_0025.txt", dtype='float' )
-# spaco = prandtl[: , 1]
-# prt = prandtl[: , 5]
+prandtl = np.loadtxt(path + "DNS/Prt_RE_395_0025.txt", dtype='float' )
+spaco = prandtl[: , 1]
+prt = prandtl[: , 5]
 
-# plt.plot(spaco /395,prt, color='black', linestyle="-.", label=r"$Re_\tau = 395$ , $Pr = 0.025$")
+plt.plot(spaco /395,prt, color='black', linestyle="-.", label=r"$Re_\tau = 395$ , $Pr = 0.025$")
 
 
-# plt.xlabel(r'  $ {\tilde{y}}/{Re_\tau} $ ',fontsize=31)
-# plt.ylabel(r'$ Pr_t $',fontsize=31)
-# plt.subplots_adjust(top=0.9 , bottom=0.19)
-# plt.xlim(0,1)
-# plt.legend(fontsize=21 , frameon=False)
-# plt.ticklabel_format(style='sci', axis='x', scilimits=(0,0) , fontsize= 20)
-# plt.ticklabel_format(style='sci', axis='y', scilimits=(0,0) , fontsize= 30)
-# plt.savefig('images/DNS_PRt.png')
-# plt.show(block=False)
+plt.xlabel(r'  $ {\tilde{y}}/{Re_\tau} $ ',fontsize=20)
+plt.ylabel(r'$ Pr_t $',fontsize=20)
+plt.subplots_adjust(top=0.9 , bottom=0.19)
+plt.xlim(0,1)
+plt.legend(fontsize=21 , frameon=False)
+plt.ticklabel_format(style='sci', axis='x', scilimits=(0,0) , fontsize= 10)
+plt.ticklabel_format(style='sci', axis='y', scilimits=(0,0) , fontsize= 10)
+plt.savefig('images/DNS_PRt.png')
+plt.show(block=False)
 
 
 
@@ -107,10 +107,10 @@ else :
 
 
 
-plt.plot(e , dados , color='black' , linestyle='-', label= r'Simulated')
+plt.plot(e , dados , color='black' , linestyle='-', label= r'Present Work')
 plt.plot(- e , dados , color='black', linestyle='-')
 
-plt.plot(int(Ret) - dns[:, 1] , dns[:, 2] , color='black' , linestyle='-.', label= r'Dns')
+plt.plot(int(Ret) - dns[:, 1] , dns[:, 2] , color='black' , linestyle='-.', label= r'DNS')
 plt.plot(dns[:, 1]- int(Ret) , dns[:, 2] , color='black' , linestyle='-.')
 
 plt.xlim(- int(Ret) , int(Ret))
@@ -122,7 +122,7 @@ label = ax.set_xlabel(r' \textbf{ $ \tilde{y} $ }',fontsize=35)
 ax.xaxis.set_label_coords(0.99, -0.025)
 
 label = ax.set_ylabel(r'\textbf{$ \tilde{\overline{T^\ast}} $}',fontsize=38)
-ax.yaxis.set_label_coords(-0.03, 0.65)
+ax.yaxis.set_label_coords(-0.03, 0.75)
 
 if platform.system() == "Windows":
     plt.savefig('images\Temperature_' + dnss + '_' + metodo + '.png' , bbox_inches='tight')

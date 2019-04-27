@@ -6,9 +6,9 @@ program calculadora
     integer :: N
 Call getcwd( dirname )
 N = 400
-pr = 10.d0
-Ret = 1020.d0
-metodo = '_Prt0905_A26'
+pr = 0.71d0
+Ret = 150.d0
+! metodo = '_Prt0905_A26'
 
 
 prt = ((4.52901632 * 10.d0 ** (-12.d0) ) * Ret**3 - &
@@ -25,8 +25,25 @@ vc = exp( 0.164405721012d0 * log(Ret)**3.d0 - 2.87424334318d0 * log(Ret)**2.d0 +
 prt = (Ret**(0.164405721* (log(Ret))**2 - 2.874243343* log(Ret) + 16.356287317 ) )/(exp(26.631037045))
 
 
-print*, prt , vc 
 
-    write(*,FMT=201) trim(dirname) , Ret, Pr , N , trim(metodo)
-    201     format( A ,'/results/graficos/image',F5.0,'_', F5.2,'_', I3 , A ,".txt")
+
+
+
+Prt = -2.48916601371e-10 * Ret**3 +  3.60362337151e-07 * Ret**2 +  3.79213671785e-05 * Ret +  0.71234674305                                 ! genetic with 2 temperature
+
+
+
+vc = exp( 0.0395059904287 * log(Ret)**3 -0.758759596012 * log(Ret)**2  + 4.66369525666 * log(Ret) -5.6703426304 )                    ! genetic with 2 temperatures cebeci
+
+
+
+
+
+
+
+
+print*, prt , vc
+
+    ! write(*,FMT=201) trim(dirname) , Ret, Pr , N , trim(metodo)
+    ! 201     format( A ,'/results/graficos/image',F5.0,'_', F5.2,'_', I3 , A ,".txt")
 end program

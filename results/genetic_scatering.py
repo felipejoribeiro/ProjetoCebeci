@@ -5,7 +5,7 @@ from mpl_toolkits.mplot3d import axes3d
 
 
 
-scater = np.loadtxt("Gene395_071_400.txt", dtype='float')
+scater = np.loadtxt("Gene395_071_400_Ce2temperature.txt", dtype='float')
 
 
 fig = plt.figure()

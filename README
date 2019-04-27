@@ -17,35 +17,36 @@ Resumo do projeto:
 
     + Programas:
 
-        - main.f90                        (simulations in FORTRAN)
-        - main.py                         (simulations in python)
-        - main.cpp                        (main file of simulations in c++)
-        - functions.h                     (header file of simulations in c++)
-        - functions.cpp                   (file with the functions in c++)
-        - *.py                            (various graphics and other tools, for knowing what, view grafics.py as follows)
-        - teste.f90                       (A way of testing without write files, easy test)
-        - otimization.f90                 (Autoral routine for finding good Prandtls values)
-        - otimizationvelocity.f90         (Autoral routine for finding good Cebeci values)
-        - genetic.f90                     (Diferential evolution capable of multivariable optimization)
-        - genetic_fit.f90                 (Diferential evolution for fiting curves)
+        - main.f90                             (simulations in FORTRAN)
+        - main.py                              (simulations in python)
+        - main.cpp                             (main file of simulations in c++)
+        - functions.h                          (header file of simulations in c++)
+        - functions.cpp                        (file with the functions in c++)
+        - *.py                                 (various graphics and other tools, for knowing what, view grafics.py as follows)
+        - teste.f90                            (A way of testing without write files, easy test)
+        - otimization.f90                      (Autoral routine for finding good Prandtls values)
+        - otimizationvelocity.f90              (Autoral routine for finding good Cebeci values)
+        - genetic.f90                          (Diferential evolution capable of multivariable optimization)
+        - genetic_fit.f90                      (Diferential evolution for fiting curves)
 
 
     + results:
 
-        - ajustecebeciclassico.py         (Contain DATA from the classic adjust for the cebeci value for minimum velocity error)
-        - calculadora.f90                 (Simple program for fast fortran math problem)
-        - genetic_scatering.py            (scatering from data from the genetic adjusts)
-        - misc.py                         (learning python code, just a bunch of random stuff)
-        - plotfit_prt_A.py                (Fit for the numerical data for create the adjusted models)
-        - resultados gerais.py            (The most representative graphics)
-        - Gene<RET>_<Pr>_<N>_<misc>.txt   (Results from genetic optimization  -->    Prt     A      L2 )
-        - ResultadosGeraisGenetic.txt     (Results for Prt and A adjusted on genetic multivariable optimization)
-        - ResultadosGeraisModelados.txt   (Cebeci optimized for the velocity, and Prandt optimized with this cebeci)
-        - ResultadosGeraisOrtodoxos.txt   (Prt = 0.71  and A = 26  (Others with "Resultados", idem) ->  Ret  Pr  L1  L2  Li)
-        - ResultadosPrtFixoIdealVs26.txt  (Prt = 0.905 and A = 26)
-        - ResultadosPrtFixoIdealVsMod.txt (Prt = 0.905 and A(Ret))
-        - ResultadosPrtvariVs26.txt       (Prt(Ret, Pr) and A = 26)
-        - Others ....                     (Ignorable.)
+        - ajustecebeciclassico.py              (Contain DATA from the classic adjust for the cebeci value for minimum velocity error)
+        - calculadora.f90                      (Simple program for fast fortran math problem)
+        - genetic_scatering.py                 (scatering from data from the genetic adjusts)
+        - misc.py                              (learning python code, just a bunch of random stuff)
+        - plotfit_prt_A.py                     (Fit for the numerical data for create the adjusted models)
+        - resultados gerais.py                 (The most representative graphics)
+        - Gene<RET>_<Pr>_<N>_<misc>.txt        (Results from genetic optimization  -->    Prt     A      L2 )
+        - ResultadosGeraisGenetic.txt          (Results for Prt and A adjusted on genetic multivariable optimization)
+        - ResultadosGeraisModelados.txt        (Cebeci optimized for the velocity, and Prandt optimized with this cebeci)
+        - ResultadosGeraisOrtodoxos.txt        (Prt = 0.71  and A = 26  (Others with "Resultados", idem) ->  Ret  Pr  L1  L2  Li)
+        - ResultadosPrtFixoIdealVs26.txt       (Prt = 0.905 and A = 26)
+        - ResultadosPrtFixoIdealVsMod.txt      (Prt = 0.905 and A(Ret))
+        - ResultadosPrtvariVs26.txt            (Prt(Ret, Pr) and A = 26)
+        - ResultadosdoublePrt.txt              (dinamic cebeci optimized to de velocity, thermal cebecy and turbulent prandtl multivariable optimization)
+        - Others ....                          (Ignorable.)
 
 
     + DNS disponível: 15
@@ -59,10 +60,10 @@ Resumo do projeto:
 
         - Valores médios do DNS
         - Prandtl turbulento fixo
-        - Prandtl turbulento em função do Reynolds  
+        - Prandtl turbulento em função do Reynolds
         - Prandtl turbulento em função do Reynolds e do Prandtl.
         - Valor de cebeci ajustado para a velocidade.
-        - Valor de cebeci e Prandtl turbulento ajustados no algoritmo genetico. 
+        - Valor de cebeci e Prandtl turbulento ajustados no algoritmo genetico.
 
     + Valores médios do DNS:
 
@@ -73,14 +74,14 @@ Resumo do projeto:
 
     + Fixo:
 
-        - For Fixe Prandtl and classic Cebeci: 
+        - For Fixe Prandtl and classic Cebeci:
 
           150  | 0.905  |  26
           395  | 0.905  |  26
           640  | 0.905  |  26
           1020 | 0.905  |  26
 
-        - For Fixe classic Cebeci: 
+        - For Fixe classic Cebeci:
 
           150  | 0.94531  |  26
           395  | 0.89531  |  26
@@ -109,17 +110,17 @@ Resumo do projeto:
 
     + Em função do Reynolds e do Prandtl (valor modelado para o cebeci ajustado para a menor velocidade):
 
-        prt = ((4.52901632 * 10.d0 ** (-12.d0) ) * Ret**3 - (5.73952059d0 * 10.d0 **(-8.d0)) * Ret**2.d0 + (9.397008473d0 * 10.d0 ** (-5.d0) )* Ret + 0.873117480)* (pr/0.71)**(-0.008d0)                                                
+        prt = ((4.52901632 * 10.d0 ** (-12.d0) ) * Ret**3 - (5.73952059d0 * 10.d0 **(-8.d0)) * Ret**2.d0 + (9.397008473d0 * 10.d0 ** (-5.d0) )* Ret + 0.873117480)* (pr/0.71)**(-0.008d0)
 
         vc = (Ret**(log(Ret) * 0.04510621d0) * exp(5.27528132d0) ) / (Ret ** 0.60941173d0)
 
     + Meta modelo genético :
 
-        prt = (3.19791882062d-10 * Ret**3 - 1.08216023658d-06 * Ret**2 +0.00116281300928*Ret+0.449206978959)*(pr/0.71)**(-0.008d0)       
+        prt = (3.19791882062d-10 * Ret**3 - 1.08216023658d-06 * Ret**2 +0.00116281300928*Ret+0.449206978959)*(pr/0.71)**(-0.008d0)
 
         vc = exp( 0.164405721012d0 * log(Ret)**3.d0 - 2.87424334318d0 * log(Ret)**2.d0 +  16.3562873171d0 * log(Ret) - 26.6310370449d0 )
 
-    + Ajuste quanto ao PRandtl molecular para este modelo.
+    + Ajuste quanto ao Prandtl molecular para este modelo.
 
         prt = (3.19791882062d-10 * Ret**3 - 1.08216023658d-06 * Ret**2 +0.00116281300928d0*Ret+0.449206978959d0)*((Pr/0.71d0)**(-0.008d0) + 1.8106822d-02 * (Pr - 0.71d0))
 

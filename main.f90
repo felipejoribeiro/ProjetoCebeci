@@ -43,16 +43,19 @@ program teste
 
         ! Controles numéricos
 
-        N = 400                                                                                        ! Número de células
-        incre = 1.d-9                                                                                  ! incremento para convergência do método implícito
-        R = 1.d0                                                                                       ! Raio do canal
-        dy = (R/(dble(N) - 0.5d0)) * Ret/R;                                                            ! i_1 = dy/2 ... i_n = R
-        criar_imagem = .false.                                                                         ! cria-se arquivo de imagem?
-        salvar_resultados = .false.                                                                    ! Salva-se resultados?
-        metodo = '_Genetic' !'_Prt(Ret)_Avelocity'!'_Prt(Ret)_A26' !'_classico'  !'_Prt0905_A26'       ! metodo de execução do programa.
-        filename = '/results/ResultadosGeraisGenetic.txt'                                              ! nome do arquivo resultados salvo.
-        titulo = 'simulação com vc modelado para a velocidade'                                         ! nome da janela.
+        N = 400                                                                                                    ! Número de células
+        incre = 1.d-9                                                                                              ! incremento para convergência do método implícito
+        R = 1.d0                                                                                                   ! Raio do canal
+        dy = (R/(dble(N) - 0.5d0)) * Ret/R;                                                                        ! i_1 = dy/2 ... i_n = R
+        criar_imagem = .true.                                                                                      ! cria-se arquivo de imagem?
+        salvar_resultados = .true.                                                                                 ! Salva-se resultados?
+        metodo = '_Genetic2temperature' !'_Prt(Ret)_Avelocity'!'_Prt(Ret)_A26' !'_classico'  !'_Prt0905_A26'       ! metodo de execução do programa.
+        filename = '/results/ResultadosGeraisGenetic2temperature.txt'                                              ! nome do arquivo resultados salvo.
+        titulo = 'simulação com dois vc, um diamico e um genetic'                                                  ! nome da janela.
 
+
+
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
         ! Méta modelos a partir da referência
 
 
@@ -71,14 +74,16 @@ program teste
 
 
 
-        prt = ((4.52901632 * 10.d0 ** (-12.d0) ) * Ret**3 - &
-            (5.73952059d0 * 10.d0 **(-8.d0)) * Ret**2.d0 + &
-            (9.397008473d0 * 10.d0 ** (-5.d0) )* Ret + 0.873117480)* (pr/0.71)**(-0.008d0)                                                    ! Otimizado com a otimização de cebeci
+        ! prt = ((4.52901632 * 10.d0 ** (-12.d0) ) * Ret**3 - &
+        !     (5.73952059d0 * 10.d0 **(-8.d0)) * Ret**2.d0 + &
+        !     (9.397008473d0 * 10.d0 ** (-5.d0) )* Ret + 0.873117480)* (pr/0.71)**(-0.008d0)                                                    ! Otimizado com a otimização de cebeci
 
 
 
         vc = (Ret**(log(Ret) * 0.04510621d0) * exp(5.27528132d0) ) / (Ret ** 0.60941173d0)                                                    ! Otimizado para o menor erro quanto a velocidade.
-        vct = vc
+
+
+        ! vct = vc
 
 
         ! prt = (3.19791882062d-10 * Ret**3 - 1.08216023658d-06 * Ret**2 +0.00116281300928*Ret+0.449206978959)*(pr/0.71)**(-0.008d0)            ! genetic prandtl
@@ -99,6 +104,20 @@ program teste
 
         ! vc = exp( 0.164405721012d0 * log(Ret)**3.d0 - 2.87424334318d0 * log(Ret)**2.d0 +  16.3562873171d0 * log(Ret) - &                      ! genetic cebeci com ajuste molecular
         !     26.6310370449d0 )
+
+
+
+        Prt = -2.48916601371e-10 * Ret**3 +  3.60362337151e-07 * Ret**2 +  3.79213671785e-05 * Ret +  0.71234674305                                 ! genetic with 2 temperature
+
+
+
+        vct = exp( 0.0395059904287 * log(Ret)**3 -0.758759596012 * log(Ret)**2  + 4.66369525666 * log(Ret) -5.6703426304 )                    ! genetic with 2 temperatures cebeci
+
+
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+
+
+
 
 
         ! Adequação aos parâmetros padrão
@@ -135,6 +154,7 @@ program teste
         print*, "Pr = " , Pr
         print*, "Prt = " , prt
         print*, "A = ", vc
+        print*, "A_termico = ", vct
         print*, "L1 = " , L1
         print*, "L2 = " , L2
         print*, "Li = " , Li
@@ -363,6 +383,7 @@ subroutine TemperatureSimu()
             + T(i-1)*f(e(i) - dy/2.d0 , i - 1) + T(i+1)*f(e(i) + dy/2.0d0, i))/(f(e(i)-dy/2.d0,i-1) &
             + f(e(i) + dy/2.d0, i) )
         end do
+        ! print*, T(1)
     end do
     return
 
@@ -378,25 +399,43 @@ function f(s, i)
     implicit none
     double precision, intent(in) :: s
     integer, intent(in) :: i
-    double precision :: f , ff , Lt
-    f = ( Ret/Pr - ((((Lt(s))**2.d0 )*Ret**3.d0)/vPrt(i) ) * ff(s)  )
+    double precision :: f , ff2 , Lt
+    f = ( Ret/Pr - ((((Lt(s))**2.d0 )*Ret**3.d0)/prt ) * ff2(s)  )
     return
 
 end function f
 
 
 
-! Lt(Y)
+! L(Y)
 function Lt(position)
 
     use prandtll
     implicit none
     double precision :: Lt
     double precision, intent(in) :: position
-    Lt = dble((0.14d0 - 0.08d0 * (position/Ret)**2.d0 - 0.06d0*(position/Ret)**4.d0 )*(1.d0 - exp((position/Ret - 1.d0)*Ret/vct)))
+    Lt = ((0.14d0 - 0.08d0 * (position/Ret)**2.d0 - 0.06d0*(position/Ret)**4.d0 )*(1.d0 - exp((position/Ret - 1.d0)*Ret/vct)))
     return
 
-end function Lt
+    end function Lt
+
+
+
+
+
+! du/dy(y)
+function ff2(position)
+
+    use prandtll
+    implicit none
+    double precision :: ff2 , Lt
+    double precision, intent(in) :: position
+    ff2 = ( -2.d0 * position * (1.d0/Ret)/( 1.d0 + sqrt(1.d0 + 4.d0 * (Lt(position))**2.d0 *Ret * position)))
+    return
+
+    end function ff2
+
+
 
 
 
