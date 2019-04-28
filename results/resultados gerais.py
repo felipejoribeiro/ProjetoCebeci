@@ -102,27 +102,27 @@ aspectratio = 0.5
 plt.figure(figsize=(tamanho , tamanho * aspectratio))
 i = [orto[1 , 0] , orto[3 , 0] , orto[10 , 0] ,  orto[11 , 0]]
 ii = [orto[1 , 3] , orto[3 , 3] , orto[10 , 3] ,  orto[11 , 3]]
-plt.plot( i, ii, color = 'black' , linestyle='-', label = r'$Pr_t = 0.71$ and $A = 26$')
+plt.plot( i, ii, color = 'black' , linestyle='-', label = r'$Pr_t = 0.71$ and $A_t = A_d = 26$')
 i = [C905[1 , 0] , C905[3 , 0] , C905[10 , 0] ,  C905[11 , 0]]
 ii = [C905[1 , 3] , C905[3 , 3] , C905[10 , 3] ,  C905[11 , 3] ]
-plt.plot( i, ii, color = 'black' , linestyle='-.' , label = r'$Pr_t = 0.905$ and $A = 26$')
+plt.plot( i, ii, color = 'black' , linestyle='-.' , label = r'$Pr_t = 0.905$ and $A_t = A_d = 26$')
 i = [Cc905[1 , 0] , Cc905[3 , 0] , Cc905[10 , 0] ,  Cc905[11 , 0]]
 ii = [Cc905[1 , 3] , Cc905[3 , 3] , Cc905[10 , 3] ,  Cc905[11 , 3]]
-plt.plot( i, ii, color = 'black' , linestyle='--' , label = r'$Pr_t(Re_\tau)$ and $A = 26$')
+plt.plot( i, ii, color = 'black' , linestyle='--' , label = r'$Pr_t(Re_\tau)$ (Eq.26) and $A_t = A_d = 26$')
 i = [Mode[1 , 0] , Mode[3 , 0] , Mode[10 , 0] ,  Mode[11 , 0]]
 ii = [Mode[1 , 3] , Mode[3 , 3] , Mode[10 , 3] ,  Mode[11 , 3]]
-plt.plot( i, ii, color = 'black' , linestyle=(0, (1,1)), label = r'$Pr_t(Re_\tau)$ and $A(Re_\tau)$')
+plt.plot( i, ii, color = 'black' , linestyle=(0, (1,1)), label = r'$Pr_t(Re_\tau)$ (Eq.28) and $A_d(Re_\tau) = A_t(Re_\tau)$(Eq.27)')
 # i = [RcCm[1 , 0] , RcCm[3 , 0] , RcCm[10 , 0] ,  RcCm[11 , 0]]
 # ii = [RcCm[1 , 3] , RcCm[3 , 3] , RcCm[10 , 3] ,  RcCm[11 , 3]]
 # plt.plot( i, ii, 'k', linewidth = '1', color = 'purple' , label = 'Prt = 0.905 and A(Ret)')
 i = [Gene[1 , 0] , Gene[3 , 0] , Gene[10 , 0] ,  Gene[11 , 0]]
 ii = [Gene[1 , 3] , Gene[3 , 3] , Gene[10 , 3] ,  Gene[11 , 3]]
-plt.plot( i, ii, color = 'black' , linestyle=(0, (1,10)) , label = r'Multi-objective')
+plt.plot( i, ii, color = 'black' , linestyle=(0, (1,10)) , label = r'$Pr_t(Re_\tau)$ (Eq.30), $A_d(Re_\tau)(Eq.27) and A_t(Re_\tau) (Eq.29)$')
 # i = [Genepr[1 , 0] , Genepr[3 , 0] , Genepr[10 , 0] ,  Genepr[11 , 0]]
 # ii = [Genepr[1 , 3] , Genepr[3 , 3] , Genepr[10 , 3] ,  Genepr[11 , 3]]
 # plt.plot( i, ii, 'k', linewidth = '1', color = 'pink' , label = 'Multivariável com Pr')
 plt.xlabel(r'\textbf{$  Re_\tau $}')
-plt.ylabel(r' L2 norm')
+plt.ylabel(r'\textbf{$  L2_{t} $}')
 plt.legend(fontsize=20 , frameon=False)
 # plt.grid(color='black', linestyle=':', linewidth=0.5)
 # Para Ret = 395
@@ -161,4 +161,37 @@ else:
 
 plt.subplots_adjust(top=0.95 , bottom=0.19)
 plt.show()
+
+
+
+# Resultados gerais da velocidade.
+# Para Pr = 0.71
+tamanho = 10
+aspectratio = 0.5
+plt.figure(figsize=(tamanho , tamanho * aspectratio))
+
+i = [150, 395, 640, 1020]
+ii = [0.47 , 0.17 , 0.23 ,  0.23]
+plt.plot( i, ii, color = 'black' ,linestyle='-.' , label = r'$A_d = 26$')
+
+
+i = [150, 395, 640, 1020]
+ii = [0.28 , 0.16 , 0.14 ,  0.13]
+plt.plot( i, ii, color = 'black' , label = r'$A_d(Re_\tau)(Eq.27)$')
+
+
+plt.xlabel(r'\textbf{$  Re_\tau $}')
+plt.ylabel(r'\textbf{$  L2_{d} $}')
+plt.legend(fontsize=20 , frameon=False)
+
+
+if platform.system() == "Windows":
+    plt.savefig('graficos\images\gerais_velo.pdf' , bbox_inches='tight')
+else:
+    plt.savefig('graficos/images/gerais_velo.pdf' , bbox_inches='tight')
+
+
+plt.subplots_adjust(top=0.95 , bottom=0.19)
+plt.show()
+
 ##########################################################################################################################################
