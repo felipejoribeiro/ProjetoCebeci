@@ -36,52 +36,52 @@ Mode = np.loadtxt("ResultadosGeraisModelados.txt", dtype='float')
 Gene = np.loadtxt("ResultadosGeraisGenetic.txt", dtype='float')
 Gene2p = np.loadtxt("ResultadosGeraisGenetic2temperature.txt", dtype='float')
 
-fig = plt.figure(figsize=(11, 6))                                                                # Determining object image
-ax = fig.add_subplot(111, projection='3d')                                                       # Adding 3D axis
+# fig = plt.figure(figsize=(11, 6))                                                                # Determining object image
+# ax = fig.add_subplot(111, projection='3d')                                                       # Adding 3D axis
 
-xs = orto[: , 0]
-ys = orto[: , 1]
-zs = orto[: , 3]
-ax.scatter(xs, ys, zs , color = "b" , label = 'Prt = 0.71 and A = 26')
+# xs = orto[: , 0]
+# ys = orto[: , 1]
+# zs = orto[: , 3]
+# ax.scatter(xs, ys, zs , color = "b" , label = 'Prt = 0.71 and A = 26')
 
-xs = C905[: , 0]
-ys = C905[: , 1]
-zs = C905[: , 3]
-ax.scatter(xs, ys, zs , color = 'orange', label = 'Prt = 0.905 and A = 26')
+# xs = C905[: , 0]
+# ys = C905[: , 1]
+# zs = C905[: , 3]
+# ax.scatter(xs, ys, zs , color = 'orange', label = 'Prt = 0.905 and A = 26')
 
-xs = Mode[: , 0]
-ys = Mode[: , 1]
-zs = Mode[: , 3]
-ax.scatter(xs, ys, zs , color = 'black', label = 'Prt(Rey, Pr) and A(Rey)')
+# xs = Mode[: , 0]
+# ys = Mode[: , 1]
+# zs = Mode[: , 3]
+# ax.scatter(xs, ys, zs , color = 'black', label = 'Prt(Rey, Pr) and A(Rey)')
 
-xs = Cc905[: , 0]
-ys = Cc905[: , 1]
-zs = Cc905[: , 3]
-ax.scatter(xs, ys, zs , color = 'green', label = 'Prt(Rey) and A = 26')
+# xs = Cc905[: , 0]
+# ys = Cc905[: , 1]
+# zs = Cc905[: , 3]
+# ax.scatter(xs, ys, zs , color = 'green', label = 'Prt(Rey) and A = 26')
 
-xs = RcCm[: , 0]
-ys = RcCm[: , 1]
-zs = RcCm[: , 3]
-ax.scatter(xs, ys, zs , color = 'purple', label = 'Prt = 0.905 and A(Ret)')
+# xs = RcCm[: , 0]
+# ys = RcCm[: , 1]
+# zs = RcCm[: , 3]
+# ax.scatter(xs, ys, zs , color = 'purple', label = 'Prt = 0.905 and A(Ret)')
 
-xs = Gene[: , 0]
-ys = Gene[: , 1]
-zs = Gene[: , 3]
-ax.scatter(xs, ys, zs , color = 'red', label = 'Multivariavel')
+# xs = Gene[: , 0]
+# ys = Gene[: , 1]
+# zs = Gene[: , 3]
+# ax.scatter(xs, ys, zs , color = 'red', label = 'Multivariavel')
 
-xs = Gene2p[: , 0]
-ys = Gene2p[: , 1]
-zs = Gene2p[: , 3]
-ax.scatter(xs, ys, zs , color = 'pink', label = 'Multivariavel com 2 A')
+# xs = Gene2p[: , 0]
+# ys = Gene2p[: , 1]
+# zs = Gene2p[: , 3]
+# ax.scatter(xs, ys, zs , color = 'pink', label = 'Multivariavel com 2 A')
 
-ax.set_xlabel('X Label')
-ax.set_ylabel('Y Label')
-ax.set_zlabel('Z Label')
-plt.title('Analise geral dos metodos')
-ax.set_xlabel('Reynolds turbulento')
-ax.set_ylabel('Prandtl')
-ax.set_zlabel('norma L2')
-ax.legend()
+# ax.set_xlabel('X Label')
+# ax.set_ylabel('Y Label')
+# ax.set_zlabel('Z Label')
+# plt.title('Analise geral dos metodos')
+# ax.set_xlabel('Reynolds turbulento')
+# ax.set_ylabel('Prandtl')
+# ax.set_zlabel('norma L2')
+# ax.legend()
 
 
 # cria o video
@@ -116,13 +116,13 @@ ii = [Cc905[1 , 3] , Cc905[3 , 3] , Cc905[10 , 3] ,  Cc905[11 , 3]]
 plt.plot( i, ii, color = 'black' , linestyle='--' , label = r'$Pr_t(Re_\tau)$ (Eq.26) and $A_t = A_d = 26$')
 i = [Mode[1 , 0] , Mode[3 , 0] , Mode[10 , 0] ,  Mode[11 , 0]]
 ii = [Mode[1 , 3] , Mode[3 , 3] , Mode[10 , 3] ,  Mode[11 , 3]]
-plt.plot( i, ii, color = 'black' , linestyle=(0, (1,1)), label = r'$Pr_t(Re_\tau)$ (Eq.28) and $A_d(Re_\tau) = A_t(Re_\tau)$(Eq.27)')
+plt.plot( i, ii, color = 'black' , linestyle=(0, (1,1)), label = r'$Pr_t(Re_\tau)$ (Eq.28) and $A_d(Re_\tau) = A_t(Re_\tau)$ (Eq.27)')
 # i = [RcCm[1 , 0] , RcCm[3 , 0] , RcCm[10 , 0] ,  RcCm[11 , 0]]
 # ii = [RcCm[1 , 3] , RcCm[3 , 3] , RcCm[10 , 3] ,  RcCm[11 , 3]]
 # plt.plot( i, ii, 'k', linewidth = '1', color = 'purple' , label = 'Prt = 0.905 and A(Ret)')
 i = [Gene[1 , 0] , Gene[3 , 0] , Gene[10 , 0] ,  Gene[11 , 0]]
 ii = [Gene[1 , 3] , Gene[3 , 3] , Gene[10 , 3] ,  Gene[11 , 3]]
-plt.plot( i, ii, color = 'black' , linestyle=(0, (1,10)) , label = r'$Pr_t(Re_\tau)$ (Eq.30), $A_d(Re_\tau)(Eq.27) and A_t(Re_\tau) (Eq.29)$')
+plt.plot( i, ii, color = 'black' , linestyle=(0, (1,10)) , label = r'$Pr_t(Re_\tau)$ (Eq.30), $A_d(Re_\tau)$ (Eq.27) and $A_t(Re_\tau)$ (Eq.29)')
 # i = [Genepr[1 , 0] , Genepr[3 , 0] , Genepr[10 , 0] ,  Genepr[11 , 0]]
 # ii = [Genepr[1 , 3] , Genepr[3 , 3] , Genepr[10 , 3] ,  Genepr[11 , 3]]
 # plt.plot( i, ii, 'k', linewidth = '1', color = 'pink' , label = 'Multivariável com Pr')
