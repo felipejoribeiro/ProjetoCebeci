@@ -3,7 +3,7 @@ module prandtll
     double precision , dimension(:) , allocatable :: vPrt , T , u , e
     double precision , dimension(:,:) , allocatable :: Tdns , Udns
     integer , dimension(3) :: p
-    double precision:: Ret , Re, Pr , Prt , vc , dy , incre , um, L2 , L1 , Li
+    double precision:: Ret , Re, Pr , Prt , vc , dy , incre , um, L2 , L1 , Li, vct
     integer:: N
     character*100:: dirname , metodo
 end module
@@ -22,7 +22,7 @@ program teste
 
     ! Controle dos parametros
 
-        Ret = 640.d0
+        Ret = 150.d0
         Pr = 0.71d0
 
         ! Controles numéricos
@@ -31,7 +31,7 @@ program teste
         incre = 1.d-9                                                                      ! incremento para convergência do método implícito
         R = 1.d0                                                                           ! Raio do canal
         dy = (R/(dble(N) - 0.5d0)) * Ret/R;                                                ! i_1 = dy/2 ... i_n = R
-        metodo = 'temp'!'_Amodeled' !_classico'
+        ! metodo = 'temp'!'_Amodeled' !_classico'
 
         ! Méta modelos a partir da referência
 
@@ -50,11 +50,18 @@ program teste
 
         vc = (Ret**(log(Ret) * 0.04510621d0) * exp(5.27528132d0) ) / (Ret ** 0.60941173d0)                                                ! Otimizado para o menor erro quanto a velocidade.
 
+        !vct = vc
 
 
         ! prt = (3.19791882062d-10 * Ret**3 - 1.08216023658d-06 * Ret**2 +0.00116281300928*Ret+0.449206978959)*(pr/0.71)**(-0.008d0)         ! genetic prandtl
 
         ! vc = exp( 0.164405721012 * log(Ret)**3 - 2.87424334318 * log(Ret)**2 +  16.3562873171 * log(Ret) - 26.6310370449 )                 ! genetic cebeci
+
+
+        Prt = 1.3133364162028245d0                                 ! genetic with 2 temperature
+
+
+        vct = 70.000160142086798d0                                                ! genetic with 2 temperatures cebeci
 
         ! Adequação aos parâmetros padrão
         call AdequaParametro()
@@ -62,7 +69,7 @@ program teste
 
 
 
-        vc = 26
+        ! vc = 26
 
         ! Alocando-se os alocáveis
         allocate(e(N))
@@ -119,13 +126,13 @@ subroutine Program()
     call SpaceVector()
     ! Simulação do vetor velocidade e valor médio
     call VelocitySimu()
-    ! call VelocityMedia()
+    call VelocityMedia()
     !Setagem do vetor Prandtl turbulento
-    ! call Prandtlvector()
+    call Prandtlvector()
     !Simulação do vetor temperatura
-    ! call TemperatureSimu()
+    call TemperatureSimu()
     ! Importando o DNS
-    ! Call DNSinput()
+    Call DNSinput()
     ! Importando o DNS da velocidade
     Call DNSinputvelo()
     ! Tirando norma L2
@@ -375,33 +382,6 @@ subroutine TemperatureSimu()
 
 
 
-
-    ! Desenvolve o vetor temperatura
-subroutine TemperatureSimu2()
-
-    use prandtll
-    implicit none
-    integer :: i
-    double precision :: k1 , k2 , k3 , f , somatoria
-    do i = 1 , N
-        T(i) = 0.d0
-    end do
-    do i = N , 2 , -1
-
-        k1 = (somatoria(i))/(f(e(i)-dy , i-2)*um)
-        k2 = (somatoria(i))/(f(e(i)-0.5d0*dy , i - 1)*um)
-        k3 = (somatoria(i))/(f(e(i) , i )*um)
-
-        T(i-1) = T(i) - dy * (k1 + 2.d0 * k2 + k3)/4.d0
-    end do
-
-    print*, T
-    return
-
-    end subroutine TemperatureSimu2
-
-
-
     !Desenvolvimento da integral velocidade
 function somatoria(i)
 
@@ -430,10 +410,44 @@ function f(s, i)
     double precision, intent(in) :: s
     integer, intent(in) :: i
     double precision :: f , ff , L
-    f = ( Ret/Pr - ((((L(s))**2.d0 )*Ret**3.d0)/vPrt(i) ) * ff(s)  )
+    f = ( Ret/Pr - ((((L(s))**2.d0 )*Ret**3.d0)/Prt ) * ff(s)  )
     return
 
 end function f
+
+
+
+
+
+! du/dy(y)
+function fft(position)
+
+    use prandtll
+    implicit none
+    double precision :: fft , Lt
+    double precision, intent(in) :: position
+    fft = ( -2.d0 * position * (1.d0/Ret)/( 1.d0 + sqrt(1.d0 + 4.d0 * (Lt(position))**2.d0 *Ret * position)))
+    return
+
+    end function fft
+
+
+
+
+! L(Y)
+function Lt(position)
+
+    use prandtll
+    implicit none
+    double precision :: Lt
+    double precision, intent(in) :: position
+    Lt = ((0.14d0 - 0.08d0 * (position/Ret)**2.d0 - 0.06d0*(position/Ret)**4.d0 )*(1.d0 - exp((position/Ret - 1.d0)*Ret/vct)))
+    return
+
+    end function Lt
+
+
+
 
 
 

@@ -34,54 +34,56 @@ Cc905 = np.loadtxt("ResultadosPrtvariVs26.txt", dtype='float')
 RcCm = np.loadtxt("ResultadosPrtFixoIdealVsMod.txt", dtype='float')
 Mode = np.loadtxt("ResultadosGeraisModelados.txt", dtype='float')
 Gene = np.loadtxt("ResultadosGeraisGenetic.txt", dtype='float')
-Genepr = np.loadtxt("ResultadosGeraisGeneticmolecular.txt", dtype='float')
+Gene2p = np.loadtxt("ResultadosGeraisGenetic2temperature.txt", dtype='float')
 
-# fig = plt.figure(figsize=(11, 6))                                                                # Determining object image
-# ax = fig.add_subplot(111, projection='3d')                                                       # Adding 3D axis
+fig = plt.figure(figsize=(11, 6))                                                                # Determining object image
+ax = fig.add_subplot(111, projection='3d')                                                       # Adding 3D axis
 
-# xs = orto[: , 0]
-# ys = orto[: , 1]
-# zs = orto[: , 3]
-# ax.scatter(xs, ys, zs , color = "b" , label = 'Prt = 0.71 and A = 26')
+xs = orto[: , 0]
+ys = orto[: , 1]
+zs = orto[: , 3]
+ax.scatter(xs, ys, zs , color = "b" , label = 'Prt = 0.71 and A = 26')
 
-# xs = Mode[: , 0]
-# ys = Mode[: , 1]
-# zs = Mode[: , 3]
-# ax.scatter(xs, ys, zs , color = 'black', label = 'Prt(Rey, Pr) and A(Rey)')
+xs = C905[: , 0]
+ys = C905[: , 1]
+zs = C905[: , 3]
+ax.scatter(xs, ys, zs , color = 'orange', label = 'Prt = 0.905 and A = 26')
 
-# xs = C905[: , 0]
-# ys = C905[: , 1]
-# zs = C905[: , 3]
-# ax.scatter(xs, ys, zs , color = 'orange', label = 'Prt = 0.905 and A = 26')
+xs = Mode[: , 0]
+ys = Mode[: , 1]
+zs = Mode[: , 3]
+ax.scatter(xs, ys, zs , color = 'black', label = 'Prt(Rey, Pr) and A(Rey)')
 
-# xs = Cc905[: , 0]
-# ys = Cc905[: , 1]
-# zs = Cc905[: , 3]
-# ax.scatter(xs, ys, zs , color = 'green', label = 'Prt(Rey) and A = 26')
+xs = Cc905[: , 0]
+ys = Cc905[: , 1]
+zs = Cc905[: , 3]
+ax.scatter(xs, ys, zs , color = 'green', label = 'Prt(Rey) and A = 26')
 
-# xs = RcCm[: , 0]
-# ys = RcCm[: , 1]
-# zs = RcCm[: , 3]
-# ax.scatter(xs, ys, zs , color = 'purple', label = 'Prt = 0.905 and A(Ret)')
+xs = RcCm[: , 0]
+ys = RcCm[: , 1]
+zs = RcCm[: , 3]
+ax.scatter(xs, ys, zs , color = 'purple', label = 'Prt = 0.905 and A(Ret)')
 
-# xs = Gene[: , 0]
-# ys = Gene[: , 1]
-# zs = Gene[: , 3]
-# ax.scatter(xs, ys, zs , color = 'red', label = 'Multivariável')
+xs = Gene[: , 0]
+ys = Gene[: , 1]
+zs = Gene[: , 3]
+ax.scatter(xs, ys, zs , color = 'red', label = 'Multivariavel')
 
-# xs = Genepr[: , 0]
-# ys = Genepr[: , 1]
-# zs = Genepr[: , 3]
-# ax.scatter(xs, ys, zs , color = 'pink', label = 'Multivariável com Pr')
+xs = Gene2p[: , 0]
+ys = Gene2p[: , 1]
+zs = Gene2p[: , 3]
+ax.scatter(xs, ys, zs , color = 'pink', label = 'Multivariavel com 2 A')
 
-# ax.set_xlabel('X Label')
-# ax.set_ylabel('Y Label')
-# ax.set_zlabel('Z Label')
-# plt.title('Análise geral dos métodos')
-# ax.set_xlabel('Reynolds turbulento')
-# ax.set_ylabel('Prandtl')
-# ax.set_zlabel('norma L2')
-# ax.legend()
+ax.set_xlabel('X Label')
+ax.set_ylabel('Y Label')
+ax.set_zlabel('Z Label')
+plt.title('Analise geral dos metodos')
+ax.set_xlabel('Reynolds turbulento')
+ax.set_ylabel('Prandtl')
+ax.set_zlabel('norma L2')
+ax.legend()
+
+
 # cria o video
 # ii = 0
 # for i in range (0, 360 , 2):
@@ -97,8 +99,11 @@ Genepr = np.loadtxt("ResultadosGeraisGeneticmolecular.txt", dtype='float')
 
 # Cortes do gráfico tridimensional acima.
 # Para Pr = 0.71
+
+
+
 tamanho = 10
-aspectratio = 0.5
+aspectratio = 0.4
 plt.figure(figsize=(tamanho , tamanho * aspectratio))
 i = [orto[1 , 0] , orto[3 , 0] , orto[10 , 0] ,  orto[11 , 0]]
 ii = [orto[1 , 3] , orto[3 , 3] , orto[10 , 3] ,  orto[11 , 3]]
@@ -126,6 +131,8 @@ plt.ylabel(r'\textbf{$  L2_{t} $}')
 plt.legend(fontsize=20 , frameon=False)
 # plt.grid(color='black', linestyle=':', linewidth=0.5)
 # Para Ret = 395
+
+
 # plt.figure(3)
 # i = [orto[2 , 1] , orto[3 , 1] , orto[4 , 1] ,  orto[5 , 1] , orto[6 , 1] , orto[7 , 1] , orto[8 , 1]]
 # ii = [orto[2 , 3] , orto[3 , 3] , orto[4 , 3] ,  orto[5 , 3], orto[6 , 3] , orto[7 , 3] , orto[8 , 3]]
@@ -159,7 +166,7 @@ plt.legend(fontsize=20 , frameon=False)
 #     plt.savefig('graficos/images/gerais.pdf' , bbox_inches='tight')
 
 
-plt.subplots_adjust(top=0.95 , bottom=0.19)
+# plt.subplots_adjust(top=0.95 , bottom=0.19)
 plt.show()
 
 
