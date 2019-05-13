@@ -22,7 +22,7 @@ else :
 
 
 
-plt.rcParams.update({'font.size': 27})
+plt.rcParams.update({'font.size': 18})
 
 ##########################################################################################################################################
 # Leitura e Plotagem e gráfico tridimensional com análise geral dos resultados do algorítmo para DNS's gerais para o método ajustado (Prandtl e Cebeci).
@@ -153,10 +153,10 @@ plt.legend(fontsize=20 , frameon=False)
 # plt.ylabel('Norma L2')
 # plt.grid(color='black', linestyle=':', linewidth=0.5)
 
-if platform.system() == "Windows":
-    plt.savefig('graficos\images\gerais.pdf' , bbox_inches='tight')
-else:
-    plt.savefig('graficos/images/gerais.pdf' , bbox_inches='tight')
+# if platform.system() == "Windows":
+#     plt.savefig('graficos\images\gerais.pdf' , bbox_inches='tight')
+# else:
+#     plt.savefig('graficos/images/gerais.pdf' , bbox_inches='tight')
 
 
 plt.subplots_adjust(top=0.95 , bottom=0.19)
@@ -185,10 +185,10 @@ plt.ylabel(r'\textbf{$  L2_{d} $}')
 plt.legend(fontsize=20 , frameon=False)
 
 
-if platform.system() == "Windows":
-    plt.savefig('graficos\images\gerais_velo.pdf' , bbox_inches='tight')
-else:
-    plt.savefig('graficos/images/gerais_velo.pdf' , bbox_inches='tight')
+# if platform.system() == "Windows":
+#     plt.savefig('graficos\images\gerais_velo.pdf' , bbox_inches='tight')
+# else:
+#     plt.savefig('graficos/images/gerais_velo.pdf' , bbox_inches='tight')
 
 
 plt.subplots_adjust(top=0.95 , bottom=0.19)

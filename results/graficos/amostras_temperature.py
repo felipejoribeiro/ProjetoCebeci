@@ -124,10 +124,10 @@ ax.xaxis.set_label_coords(0.99, -0.025)
 label = ax.set_ylabel(r'\textbf{$ \tilde{\overline{T^\ast}} $}',fontsize=38)
 ax.yaxis.set_label_coords(-0.03, 0.65)
 
-if platform.system() == "Windows":
-    plt.savefig('images\Temperature_' + dnss + '_' + metodo + '.png' , bbox_inches='tight')
-else:
-    plt.savefig('images/Temperature_' + dnss + '_' + metodo + '.png' , bbox_inches='tight')
+# if platform.system() == "Windows":
+#     plt.savefig('images\Temperature_' + dnss + '_' + metodo + '.png' , bbox_inches='tight')
+# else:
+#     plt.savefig('images/Temperature_' + dnss + '_' + metodo + '.png' , bbox_inches='tight')
 
 plt.subplots_adjust(top=0.9 , bottom=0.15)
 plt.show()
