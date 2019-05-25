@@ -110,7 +110,7 @@ ii = [orto[1 , 3] , orto[3 , 3] , orto[10 , 3] ,  orto[11 , 3]]
 plt.plot( i, ii, color = 'black' , linestyle='-', label = r'$Pr_t = 0.71$ and $A_t = A_d = 26$')
 i = [C905[1 , 0] , C905[3 , 0] , C905[10 , 0] ,  C905[11 , 0]]
 ii = [C905[1 , 3] , C905[3 , 3] , C905[10 , 3] ,  C905[11 , 3] ]
-plt.plot( i, ii, color = 'black' , linestyle='-.' , label = r'$Pr_t = 0.905$ and $A_t = A_d = 26$')
+plt.plot( i, ii, color = 'black' , linestyle='-.' , label = r'$Pr_t = 0.9$ and $A_t = A_d = 26$')
 i = [Cc905[1 , 0] , Cc905[3 , 0] , Cc905[10 , 0] ,  Cc905[11 , 0]]
 ii = [Cc905[1 , 3] , Cc905[3 , 3] , Cc905[10 , 3] ,  Cc905[11 , 3]]
 plt.plot( i, ii, color = 'black' , linestyle='--' , label = r'$Pr_t(Re_\tau)$ (Eq.26) and $A_t = A_d = 26$')
