@@ -5,17 +5,18 @@ from mpl_toolkits.mplot3d import axes3d
 from matplotlib.pyplot import rc
 from matplotlib import cm
 import os
+#import pandas as pd
 from os import path
 import platform
 
 outpath = os.getcwd()    # get current directory
 
 
-plt.rc('text', usetex=True)
-if platform.system() == "Windows":
-    plt.rc('font',**{'family':'DejaVu Sans','serif':['Times']})
-else :
-    plt.rc('font',**{'family':'serif','serif':['Times']})
+# plt.rc('text', usetex=True)
+# if platform.system() == "Windows":
+#     plt.rc('font',**{'family':'DejaVu Sans','serif':['Times']})
+# else :
+#     plt.rc('font',**{'family':'serif','serif':['Times']})
 
 # plt.rc('font',**{'family':'serif'})
 # plt.rc('text', usetex=True)
@@ -199,6 +200,37 @@ plt.legend(fontsize=20 , frameon=False)
 
 
 plt.subplots_adjust(top=0.95 , bottom=0.19)
+plt.show()
+
+
+
+
+
+# foguete
+teste1 = np.loadtxt("TESTE20.TXT", dtype='float')
+
+#teste_x = [] 
+#teste_y = []
+#print(len( teste1[:,0])
+
+#teste_x = teste1[:,1]
+#print(test_x)
+
+
+# for i in range( len( teste1[:,0] ) - 190  ):
+# 	teste_y[i].append( int(teste1[i,0]))
+# 	teste_x[i].append( int(teste1[i,1]))
+
+
+# #df = test1
+
+# #print(teste1)
+
+# plt.plot( teste_x , teste_y)
+plt.scatter(teste1[:,1] , -0.0002190040966974671 * teste1[:,0] + 1845.5358778426132 )
+
+
+
 plt.show()
 
 ##########################################################################################################################################
